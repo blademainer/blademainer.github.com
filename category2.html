@@ -1,0 +1,16 @@
+---
+layout:     default
+title:      blademainer的文章分类
+keywords: Category, 分类, blademainer
+---
+<div>
+	<ul>
+		{% for category in site.categories %}
+		<li class="category-list">
+			<div class="category-title">
+				<a href="/categories/{{ category | first }}/" title="{{ category | first }}">{{ category | first }}<span class="category-post"> ( {{ category | last | size }} ) </span></a>
+			</div>
+		</li>
+		{% endfor %}
+	</ul>
+</div>

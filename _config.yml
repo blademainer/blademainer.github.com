@@ -1,0 +1,108 @@
+markdown: rdiscount
+pygments: true
+plugins: ./_plugins
+paginate: 5
+
+safe: false
+
+#站点基础配置
+title: Blademainer
+subTitle: World's blademainer.
+description: 这是 blademainer 的博客，我将在这里记录下我生活工作中的点点滴滴~
+url: http://blademainer.github.io
+feed: /atom.xml
+
+#相册配置
+#gallery:
+  # path to the gallery
+#  dir: photos
+  # title for gallery index
+#  title: "Photo"
+  # title prefix for gallery page. title=title_prefix+gallery_name
+#  title_prefix: "Photo: "
+  # field to control sorting of galleries for the index page
+  # (possible values are: title, date_time, best_image)
+#  sort_field: "date_time"
+  # sizes for thumbnails
+#  thumbnail_size:
+#    x: 400
+#    y: 400
+  # custom configuration for individual gallery
+  # best_image is image for the index page (defaults to last image)
+#  galleries:
+#    2013:
+#      best_image: DSC_0029.JPG
+#    me:
+#      best_image: 1.jpg
+#    ShaoGuan:
+#      best_image: P31207-144521.jpg
+#    Brother's Wedding:
+#      best_image: IMG_1741.JPG
+
+#菜单配置
+nav:
+  - text: 首页
+    url: /index.html
+  - text: 分类
+    url: /category.html  
+  - text: 标签
+    url: /tags.html
+  - text: 文章归档
+    url: /archives.html
+  - text: 作品
+    url: /works.html
+  - text: 相册
+    url: /gallery/photos/
+  - text: 联系我
+    url: /contact.html
+  - text: 博客源代码
+    url: https://github.com/blademainer/blademainer.github.com
+
+#theme config
+themes: /themes/violet
+
+#配置你喜欢的顶部背景图片
+headimg:
+  - item: /themes/violet/images/hdbg01.jpg
+  - item: /themes/violet/images/hdbg02.jpg
+  - item: /themes/violet/images/hdbg03.jpg
+  - item: /themes/violet/images/hdbg04.jpg
+  - item: /themes/violet/images/hdbg05.jpg
+  - item: /themes/violet/images/hdbg06.jpg
+  - item: /themes/violet/images/hdbg07.jpg
+  - item: /themes/violet/images/hdbg08.jpg
+
+#关注我
+follow:
+  - class: fa-google-plus
+    url: http://blademainer.github.io/
+  - class: fa-facebook
+    url: http://blademainer.github.io/
+  - class: fa-github
+    url: http://github.com/blademainer
+  - class: fa-weibo
+    url: http://weibo.com/u/3717669090
+  - class: fa-renren
+    url: http://blademainer.github.io/
+  - class: fa-pinterest
+    url: http://blademainer.github.io/
+  - class: fa-twitter
+    url: http://blademainer.github.io/
+  - class: fa-rss
+    url: http://blademainer.github.io/atom.xml
+  - class: fa-link
+    url: http://jia58960.me
+
+#作者信息
+author:
+  link: /contact.html
+  img: /images/whoiam.jpg
+
+#评论信息
+disqus:
+  config: false
+  id: blademainer
+
+duoshuo:
+  config: true
+  id: blademainer

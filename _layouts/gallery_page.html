@@ -1,0 +1,77 @@
+---
+layout: default
+---
+<!-- Add mousewheel plugin (this is optional) -->
+<!--<script type="text/javascript" src="/js/jquery-1.10.1.min.js"></script>-->
+<script type="text/javascript" src="/js/jquery.mousewheel-3.0.6.pack.js"></script>
+<!-- Add fancyBox main JS and CSS files -->
+<script type="text/javascript" src="/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<link rel="stylesheet" type="text/css" href="/fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
+
+<!-- Add Thumbnail helper (this is optional) -->
+<link rel="stylesheet" type="text/css" href="/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />
+<script type="text/javascript" src="/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+
+<!-- Add Button helper (this is optional) -->
+<link rel="stylesheet" type="text/css" href="/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
+<script type="text/javascript" src="/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		/*
+		 *  Simple image gallery. Uses default settings
+		 */
+
+		$('.fancybox').fancybox();
+
+		/*
+		 *  Button helper. Disable animations, hide close button, change title type and content
+		 */
+
+		$('.fancybox-buttons').fancybox({
+			openEffect  : 'none',
+			closeEffect : 'none',
+			changeFade : 'middle',
+			nextspeed: 500,
+			prevSpeed  : 500,
+			closeBtn  : false,
+
+			helpers : {
+				title : {
+					type : 'inside'
+				},
+				buttons	: {}
+			},
+
+			afterLoad : function() {
+				this.title = '第 ' + (this.index + 1) + ' 张，共 ' + this.group.length + '张' + (this.title ? ' - ' + this.title : '');
+			}
+		});
+
+
+	});
+</script>
+
+<h1 class="gallery-page-title"><a href="/{{ site.gallery.dir }}">{{ page.title }}</a></h1>
+<hr />
+{% for image in page.images %}
+    <div class="gallery-image-wrapper">
+        <a class="fancybox-buttons" data-fancybox-group="button" href="{{ image }}"{% if site.gallery.lightbox %} rel="lightbox[{{ page.gallery }}]"{% endif %}>
+            <img class="gallery-image" src="thumbs/{{ image }}" />
+        </a>
+    </div>
+{% endfor %}
+
+<div class="comment">
+    {% if site.disqus.config %}
+        <div class="comment-cnt">
+            <div id="disqus_thread"></div>
+        </div>
+    {% else %}
+        {% if site.duoshuo.config %}
+        <div class="comment-cnt">
+            <div class="ds-thread"></div>
+        </div>
+        {% endif %}
+    {% endif %}
+</div>

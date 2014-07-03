@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+     **
+     * Author:         blademainer
+     * Contact:        blademainer@gmail.com
+     **
+    -->
+    <meta charset="utf-8" />
+    <title>
+        
+            Category: css
+                 
+    </title>
+    <meta name="generator" content="Jekyll" />
+    <meta name="author" content="" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!-- //页面样式 -->
+    <link rel="stylesheet" href="/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="/css/jquery-ui-1.8.18.custom.css" type="text/css" />
+    <link rel="alternate" type="application/atom+xml" title="Recent Entries" href="/atom.xml" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Spirax' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" href="http://blademainer.github.io/themes/violet/images/favicon.ico" type="image/x-icon" />
+    <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body id="violet">
+    <div class="page-wrapper">
+        <section class="head" id="violet-head">
+            <header class="header" id="violet-header">
+                <h1 class="logo"><a href="http://blademainer.github.io">Blademainer</a></h1>
+                <h2 class="subtitle">World's blademainer.</h2>
+            </header>
+            <nav class="nav" id="violet-nav">
+                <ul class="nav-list">
+                    
+                    
+                    
+                    <li class="nav-item ">
+                        <a href="/index.html">
+                            首页
+                        </a>
+                        
+                    </li>
+                    
+                    
+                    
+                    <li class="nav-item ">
+                        <a href="/category.html">
+                            分类
+                        </a>
+                        
+                    </li>
+                    
+                    
+                    
+                    <li class="nav-item ">
+                        <a href="/archives.html">
+                            文章归档
+                        </a>
+                        
+                    </li>
+                    
+                    
+                    
+                    <li class="nav-item ">
+                        <a href="/works.html">
+                            作品
+                        </a>
+                        
+                    </li>
+                    
+                    
+                    
+                    <li class="nav-item ">
+                        <a href="http://blademainer.github.io/">
+                            联系我
+                        </a>
+                        
+                    </li>
+                    
+                    
+                    
+                    <li class="nav-item ">
+                        <a href="https://github.com/blademainer/blademainer.github.com">
+                            博客源代码
+                        </a>
+                        
+                    </li>
+                    
+					<li>
+						<form class="navbar-search" action="/search.html" method="get">
+						  <input name="query" type="text" class="search-query" size="25" placeholder="search" style="color: rgb(173, 159, 159);font-size: 13px;">
+						</form>
+					</li>
+                </ul>
+            </nav>
+        </section>
+        <section class="main" id="violet-main">
+            <div class="category">
+	<h2 class="category-post-title"><div class="category-post-title-item">分类: css</div></h2>
+
+	<div class="node">
+		<ul>
+			
+			<li class="category-post"><span style="text-decoration: none;">2013-11-14</span>&nbsp;&nbsp;&nbsp;<a href="/css/2013/11/14/sl-alpha.html" class="category-post">css 背景透明解决方案</a></li>
+			
+		</ul>
+	</div>
+</div>
+
+
+        </section>
+        <footer class="foot" id="violet-foot">
+            <div class="footer fn-clear">
+                <h1 class="logo">Blademainer</h1>
+            </div>
+            <div class="copyright">
+                <div class="copyright-cnt fn-clear">
+                    
+                    <a class="follow" href="http://blademainer.github.io/" target="_blank"><i class="fa fa-google-plus"></i></a>
+                    
+                    <a class="follow" href="http://blademainer.github.io/" target="_blank"><i class="fa fa-facebook"></i></a>
+                    
+                    <a class="follow" href="http://github.com/blademainer" target="_blank"><i class="fa fa-github"></i></a>
+                    
+                    <a class="follow" href="http://weibo.com/u/3717669090" target="_blank"><i class="fa fa-weibo"></i></a>
+                    
+                    <a class="follow" href="http://blademainer.github.io/" target="_blank"><i class="fa fa-renren"></i></a>
+                    
+                    <a class="follow" href="http://blademainer.github.io/" target="_blank"><i class="fa fa-pinterest"></i></a>
+                    
+                    <a class="follow" href="http://blademainer.github.io/" target="_blank"><i class="fa fa-twitter"></i></a>
+                    
+                    <a class="follow" href="http://blademainer.github.io/atom.xml" target="_blank"><i class="fa fa-rss"></i></a>
+                    
+                    <p class="text">© 2013 Violet Jekyll Theme.Design by <a href="http://www.xiongyingqi.com">blademainer</a></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="/js/jquery-scrollTo.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui-1.8.18.custom.js"></script>
+	<script type="text/javascript" src="/js/jquery-tapir.min.js"></script>
+	<script type="text/javascript">
+	  $('#search_results').tapir({
+		'token': '528461a2a41a4a0100000000'
+	  });
+	</script>
+	<script type="text/javascript">
+		$(function() {
+		  $.ajax({
+			  url: "/search.xml",
+			  dataType: "xml",
+			  success: function( xmlResponse ) {
+				 var data = $( "article", xmlResponse ).map(function() {
+					  return {
+						  value: $( "title", this ).text() + ", " +
+							  ( $.trim( $( "date", this ).text() ) ),
+						  desc: $("description", this).text(),
+						  url: $("url", this).text()
+					  };
+				  }).get();
+
+				  $( "#j_search" ).autocomplete({
+					  source: data,
+					  minLength: 0,
+					  select: function( event, ui ) {
+						window.location.href = ui.item.url;
+					  }
+				  });
+			  }
+		  });
+	  });
+	</script>
+    <script type="text/javascript">
+        var headImgArr = [];
+        
+            headImgArr.push("/themes/violet/images/hdbg01.jpg");
+        
+            headImgArr.push("/themes/violet/images/hdbg02.jpg");
+        
+            headImgArr.push("/themes/violet/images/hdbg03.jpg");
+        
+            headImgArr.push("/themes/violet/images/hdbg04.jpg");
+        
+        if(headImgArr.length <= 0) {
+            headImgArr = ["/themes/violet/images/hdbg03.jpg"];
+            var item = 0;
+        } else {
+            var item = Math.floor(Math.random() * (headImgArr.length));
+        }
+        $("#violet-head").css({
+            "background-image": "url(" + headImgArr[item] + ")"
+        });
+    </script>
+	
+	<!-- 评论相关 -->
+	
+		
+		<script type="text/javascript">
+			var duoshuoQuery = {short_name:"blademainer"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = 'http://static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0]
+				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+		</script>
+		
+	
+	
+	<!-- 访问统计 -->
+	<script type="text/javascript">
+		var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+		document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F68322b90865dcc4ec4cd797ce0c7a616' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-45734780-1', 'blademainer.github.io');
+		ga('send', 'pageview');
+
+	</script>
+</body>
+</html>

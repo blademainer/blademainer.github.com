@@ -1,0 +1,16 @@
+---
+layout: default
+title: Blademainer博客的标签
+description: 这是 Blademainer的博客，它是基于 Jekyll 搭建起来的。这里用来记录我一生中的点点滴滴。
+keywords: tag,标签
+---
+<!-- tags -->
+<div class="tags" id="tags">
+	<div class="tag-list">
+		<ul class="tag-ul">
+			{% for tag in site.tags %}
+			<li class="tag-item"><a href="/tags/{{ tag | first | replace:' ','-' | downcase }}/" name="{{ tag | first | replace:' ','-' | downcase }}"><i class="fa fa-tag"></i>&nbsp;&nbsp;{{ tag | first }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
