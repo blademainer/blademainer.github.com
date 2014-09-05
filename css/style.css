@@ -674,7 +674,7 @@ a:hover {
 	margin-right: 0px;
 	float: left;
 	height: 100%;
-	margin-top: 60%;
+	//margin-top: 60%;
 	margin-bottom: auto;
 	display: block;
 	/* margin: 0 auto; */
@@ -688,11 +688,17 @@ div#catalog.isStuck{
 	//margin-top: 20px;
 	/* margin: 0 auto; */
 	left: 0px;
+	//display: none;
 	//font-size: 24px;
+}
+
+div#catalog.isStuck div.toc{
+	//display: none;
 }
 
 #menu{
 	display: none;
+	cursor: pointer;
 }
 
 

@@ -52,6 +52,7 @@ layout: default
               jQuery(function($) {
                 $(document).ready( function() {
 					var parts = new Array();
+					var isShow = false;
 					$('#catalog').ready(function(){
 						for(var i = 0; i<100;i++){
 							var tip = 'tip' + i;
@@ -72,6 +73,15 @@ layout: default
 						});
 						$("#menu").insertAfter(".toc");
 						
+						$("#menu").click(function() {
+							if(isShow){
+								$(".toc").animate({ width:"hide",opacity:"hide"},200);
+								isShow = false;
+							} else {
+								$(".toc").animate({ width:"show",opacity:"show"},200);
+								isShow = true;
+							}
+						});
 						
 					});
 					
