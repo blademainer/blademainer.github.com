@@ -693,7 +693,7 @@ div#catalog.isStuck{
 }
 
 div#catalog.isStuck div.toc{
-	//display: none;
+	display: none;
 }
 
 #menu{
