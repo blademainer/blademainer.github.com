@@ -90,7 +90,7 @@ follow:
     url: http://blademainer.github.io/
   - class: fa-rss
     url: http://blademainer.github.io/atom.xml
-  - class: fa-thumbs-up
+  - class: fa-clock-o
     url: /cron-online
   - class: fa-pencil
     url: /markdown
