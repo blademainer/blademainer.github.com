@@ -39,12 +39,9 @@ jackson默认可以使用JsonIgnoreProperties接口来定义要过滤的属性,�
 * 最后使用ObjectMapper输出
 
 用法:
-1、定义aop, 用来捕获springmvc的controller方法,
-
+`1、定义aop, 用来捕获springmvc的controller方法`
 
 ```java
-
-
 package com.xiongyingqi.json.filter.aop;
 
 import com.xiongyingqi.jackson.FilterPropertyHandler;
@@ -94,18 +91,14 @@ public class IgnorePropertyAspect {
 }
 ```
 
-spring配置:
-
-
+`spring配置`
 ```xml
 <!-- 启动mvc对aop的支持,使用aspectj代理 -->
 <aop:aspectj-autoproxyproxy-target-class="true" />
 <beanid="ignorePropertyAspect" class="com.xiongyingqi.json.filter.aop.IgnorePropertyAspect"></bean>
 ```
 
-2、配置spring-mvc的messageconverter
-
-
+`2、配置spring-mvc的messageconverter`
 ```xml
     <bean
     	class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
@@ -157,8 +150,7 @@ spring配置:
 	</bean>
 ```
 
-3、重写spring的MappingJackson2HttpMessageConverter类,这样输出的json内容就能自定义
-
+`3、重写spring的MappingJackson2HttpMessageConverter类,这样输出的json内容就能自定义`
 ```java
 package com.xiongyingqi.spring.http.convert.json;
 
@@ -258,8 +250,8 @@ public class Jackson2HttpMessageConverter extends MappingJackson2HttpMessageConv
 }
 ```
 
-4、在方法上注解
-以下是Controller方法的示例，yxResourceSelfRelationsForSuperiorResourceId是YxResource内要过滤的属性:
+`4、在方法上注解`
+#Controller方法的示例，yxResourceSelfRelationsForSuperiorResourceId是YxResource内要过滤的属性:
 ```java
     @IgnoreProperties(value= {
            @IgnoreProperty(pojo = YxResource.class, name = {
@@ -273,8 +265,8 @@ public class Jackson2HttpMessageConverter extends MappingJackson2HttpMessageConv
 ```    
 
 #主要类说明    
-1、自定义注解类：这些类是用于注解实体类输出json时要注解过滤的属性
-IgnoreProperties.java 用于同时注解`IgnoreProperty`和`AllowProperty`
+##1、自定义注解类：这些类是用于注解实体类输出json时要注解过滤的属性
+###IgnoreProperties.java 用于同时注解`IgnoreProperty`和`AllowProperty`
 ```java
 package com.xiongyingqi.jackson.annotation;
 
@@ -356,7 +348,7 @@ public @interface IgnoreProperties {
 }
 ```
 
-`IgnoreProperty.java`：过滤指定对象内的指定字段名
+###`IgnoreProperty.java`：过滤指定对象内的指定字段名
 
 ```java
 package com.xiongyingqi.jackson.annotation;
@@ -411,8 +403,7 @@ public @interface IgnoreProperty {
 }
 ```
 
-`AllowProperty.java`：注解实体类允许的字段
-
+###`AllowProperty.java`：注解实体类允许的字段
 ```java
 package com.xiongyingqi.jackson.annotation;
 
@@ -445,7 +436,7 @@ public @interface AllowProperty {
     String[] name();
 }
 ```
-2、核心处理类，用于处理自定义注解并将生成的类存入当前线程
+##2、核心处理类，用于处理自定义注解并将生成的类存入当前线程
 ```java
 package com.xiongyingqi.jackson.impl;
 
@@ -923,7 +914,7 @@ public class JavassistFilterPropertyHandler implements FilterPropertyHandler {
 }
 ```
 
-3、线程持有类，用于在当前线程内保存核心类处理过的自定义注解生成的MixIn注解，并且能提供ObjectMapper的生成
+##3、线程持有类，用于在当前线程内保存核心类处理过的自定义注解生成的MixIn注解，并且能提供ObjectMapper的生成
 
 ```java
 package com.xiongyingqi.jackson.helper;
