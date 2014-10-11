@@ -1155,7 +1155,7 @@ public class JsonFilterPropertyTest {
 
 ##http://xiongyingqi.com/common_utils/
 
-##Maven Example:
+##Maven Usage:
 <pre class="brush: xml;">
 <dependency>
 	<groupId>com.xiongyingqi</groupId>
