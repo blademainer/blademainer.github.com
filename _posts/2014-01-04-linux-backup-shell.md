@@ -109,5 +109,4 @@ for FOLDER in `ls $DES_FOLDER`; do
 		echo `rm -fr $DES_FOLDER/$FOLDER`
 	fi
 done
-
 ```
