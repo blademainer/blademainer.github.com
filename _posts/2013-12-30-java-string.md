@@ -45,9 +45,9 @@ String str = "abc";
 String str1= "abc";  
 ```
 
-*第一句的真正含义是在String池中创建一个对象”abc”，然后引用时str指向池中的对象”abc”。
-*第二句执行时，因为”abc”已经存在于String池了，所以不再创建，则str==str1返回true就明白了。
-*str1==”abc”肯定正确了，在String池中只有一个”abc”，而str和str1都指向池中的”abc”，就是这个道理。 
+* 第一句的真正含义是在String池中创建一个对象”abc”，然后引用时str指向池中的对象”abc”。
+* 第二句执行时，因为”abc”已经存在于String池了，所以不再创建，则str==str1返回true就明白了。
+* str1==”abc”肯定正确了，在String池中只有一个”abc”，而str和str1都指向池中的”abc”，就是这个道理。 
 
 ```java
 String str2 = new String("abc");  
