@@ -40,7 +40,10 @@ jackson默认可以使用JsonIgnoreProperties接口来定义要过滤的属性,�
 
 用法:
 1、定义aop, 用来捕获springmvc的controller方法,
+
+
 ```java
+
 
 package com.xiongyingqi.json.filter.aop;
 
@@ -92,6 +95,8 @@ public class IgnorePropertyAspect {
 ```
 
 spring配置:
+
+
 ```xml
 <!-- 启动mvc对aop的支持,使用aspectj代理 -->
 <aop:aspectj-autoproxyproxy-target-class="true" />
@@ -99,6 +104,8 @@ spring配置:
 ```
 
 2、配置spring-mvc的messageconverter
+
+
 ```xml
     <bean
     	class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
