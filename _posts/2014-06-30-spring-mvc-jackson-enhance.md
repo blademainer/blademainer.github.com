@@ -1157,11 +1157,11 @@ public class JsonFilterPropertyTest {
 
 ##Maven Example:
 <pre class="brush: xml;">
-<repository>
-    <id>common_utils</id>
-    <name>Blademainer Repository</name>
-    <url>http://xiongyingqi.com/common_utils</url>
-</repository>
+<dependency>
+	<groupId>com.xiongyingqi</groupId>
+	<artifactId>common_helper</artifactId>
+	<version>${common_utils.version}</version>
+</dependency>
 </pre>
 ---
 代码可以随意copy，但希望多多关注本人博客：[xiongyingqi.com](xiongyingqi.com)
