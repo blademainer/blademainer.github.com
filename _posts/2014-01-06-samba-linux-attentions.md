@@ -14,15 +14,15 @@ tags:
 Samba相对于Windows服务器来说具有更灵活的配置、高效等特点。个人认为是共享服务器的最佳选择。
 </p>
 首先安装samba：
-<pre class="brush: shell;">
+```shell
 yum install samba
-</pre>
+```
 ubuntu下yum对应命令为：
-<pre class="brush: shell;">
+```shell
 apt-get install samba
-</pre>
+```
 samba主要配置文件在/etc/samba/smb.conf中
-<pre class="brush: shell;">
+```shell
 [global]
         realm = 192.168.0.2
         netbios name = SAMBA-SERVER
@@ -44,7 +44,7 @@ samba主要配置文件在/etc/samba/smb.conf中
         read only = No
         create mask = 0777
         directory mask = 0777
-</pre>
+```
 <p>
 其中比较要注意的是global中的security和hosts allow两个选项：</br>
 &nbsp;&nbsp;security代表验证权限的机制，我一般使用share和user级别，这两种方式其实没多大区别~无非是先登录再查看还是先查看再登录的区别而已（注意：Linux的目录）

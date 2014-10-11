@@ -8,7 +8,6 @@ tags:
  - shell
  - Linux
 ---
-<script type="text/javascript" src="/syntaxhighlighter_3_0_83/scripts/shBrushBash.js"></script>
 备份的原理是使用Linux的Cron程序定时执行该脚本从而达到备份和删除备份历史的目的。</br>
 脚本主要需要设置参数有三个：
 <ol>
@@ -18,7 +17,7 @@ tags:
 </ol>
 
 ####BackUpTask.shell
-<pre class="brush: shell;">
+```shell
 #!/bin/sh
 #---------------------------------------------------------------------
 #	shell自动备份文件夹同时检查一定日期前的文件夹并删除
@@ -111,4 +110,4 @@ for FOLDER in `ls $DES_FOLDER`; do
 	fi
 done
 
-</pre> 
+```

@@ -19,7 +19,7 @@ tags:
 </ol>
 
 ####BackUpTask.bat
-<pre class="brush: bash;">
+```bash
 ::  ------------------------------------------------------------------------ 
 ::                       自动备份及清除文件夹脚本说明
 ::  本脚本能备份指定文件夹下的所有文件夹并以日期的形式来存放每次备份的文件夹，
@@ -194,4 +194,4 @@ set /a dd=-dd+e+1,mm=-m/10,mm*=12,mm+=m+3,yy=b*100+d-4800+m/10
 (if %mm% LSS 10 set mm=0%mm%)&(if %dd% LSS 10 set dd=0%dd%)
 endlocal&set %2=%yy%&set %3=%mm%&set %4=%dd%&goto :EOF
 :: 结束goto使用： goto :eof
-</pre> 
+```

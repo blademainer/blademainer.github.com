@@ -10,8 +10,7 @@ tags:
  - spring-mvc
  - jackson
 ---
-<script type="text/javascript" src="/syntaxhighlighter_3_0_83/scripts/shBrushJava.js"></script>
-<script type="text/javascript" src="/syntaxhighlighter_3_0_83/scripts/shBrushXml.js"></script>
+
 
 最终解决方法：[【完美解决json循环问题（使用javassist增强）：Spring MVC中使用jackson的MixInAnnotations方法动态过滤JSON字段】](/java/2013/12/06/spring-mvc-jackson.html)
 ===
@@ -42,7 +41,7 @@ jackson默认可以使用JsonIgnoreProperties接口来定义要过滤的属性,�
 
 用法:
 1、定义aop, 用来捕获springmvc的controller方法,
-<pre class="brush: java;">
+```java
 package com.xiongyingqi.json.filter.aop;
 
 import com.xiongyingqi.jackson.FilterPropertyHandler;
@@ -90,14 +89,14 @@ public class IgnorePropertyAspect {
         System.out.println(" -------- AfterThrowing -------- ");
     }
 }
-</pre>
+```
 
 spring配置:
 <pre class="brush: xml;">
 <!-- 启动mvc对aop的支持,使用aspectj代理 -->
 <aop:aspectj-autoproxyproxy-target-class="true" />
 <beanid="ignorePropertyAspect" class="com.xiongyingqi.json.filter.aop.IgnorePropertyAspect"></bean>
-</pre>
+```
 
 2、配置spring-mvc的messageconverter
 <pre class="brush: xml;">
@@ -149,11 +148,11 @@ spring配置:
 		</property>
 		
 	</bean>
-</pre>
+```
 
 3、重写spring的MappingJackson2HttpMessageConverter类,这样输出的json内容就能自定义
 
-<pre class="brush: java;">
+```java
 package com.xiongyingqi.spring.http.convert.json;
 
 import java.io.IOException;
@@ -250,11 +249,11 @@ public class Jackson2HttpMessageConverter extends MappingJackson2HttpMessageConv
     }
 
 }
-</pre>
+```
 
 4、在方法上注解
 以下是Controller方法的示例，yxResourceSelfRelationsForSuperiorResourceId是YxResource内要过滤的属性:
-<pre class="brush: java;">
+```java
     @IgnoreProperties(value= {
            @IgnoreProperty(pojo = YxResource.class, name = {
                   "yxResourceSelfRelationsForSuperiorResourceId"})})
@@ -264,12 +263,12 @@ public class Jackson2HttpMessageConverter extends MappingJackson2HttpMessageConv
        YxResource resource = resourceService.getResource(resourceId);
        return resource;
     }
-</pre>    
+```    
 
 #主要类说明    
 1、自定义注解类：这些类是用于注解实体类输出json时要注解过滤的属性
 IgnoreProperties.java 用于同时注解`IgnoreProperty`和`AllowProperty`
-<pre class="brush: java;">
+```java
 package com.xiongyingqi.jackson.annotation;
 
 import java.lang.annotation.*;
@@ -348,11 +347,11 @@ public @interface IgnoreProperties {
      */
     AllowProperty[] allow() default @AllowProperty(pojo = Object.class, name = "");
 }
-</pre>
+```
 
 `IgnoreProperty.java`：过滤指定对象内的指定字段名
 
-<pre class="brush: java;">
+```java
 package com.xiongyingqi.jackson.annotation;
 
 import java.lang.annotation.*;
@@ -403,11 +402,11 @@ public @interface IgnoreProperty {
      */
     //	int maxIterationLevel() default 0;
 }
-</pre>
+```
 
 `AllowProperty.java`：注解实体类允许的字段
 
-<pre class="brush: java;">
+```java
 package com.xiongyingqi.jackson.annotation;
 
 import java.lang.annotation.*;
@@ -438,9 +437,9 @@ public @interface AllowProperty {
      */
     String[] name();
 }
-</pre>
+```
 2、核心处理类，用于处理自定义注解并将生成的类存入当前线程
-<pre class="brush: java;">
+```java
 package com.xiongyingqi.jackson.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -915,11 +914,11 @@ public class JavassistFilterPropertyHandler implements FilterPropertyHandler {
     }
 
 }
-</pre>
+```
 
 3、线程持有类，用于在当前线程内保存核心类处理过的自定义注解生成的MixIn注解，并且能提供ObjectMapper的生成
 
-<pre class="brush: java;">
+```java
 package com.xiongyingqi.jackson.helper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -1045,10 +1044,10 @@ public class ThreadJacksonMixInHolder {
     }
 
 }
-</pre>
+```
 
 ##测试代码
-<pre class="brush: java;">
+```java
 package com.xiongyingqi.jackson;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -1132,7 +1131,7 @@ public class JsonFilterPropertyTest {
         Assert.hasText(json);
     }
 }
-</pre>
+```
 ###测试结果
  ------------------------------------------------------------ 
     at com.xiongyingqi.jackson.JsonFilterPropertyTest.jsonTest(JsonFilterPropertyTest.java:80)
@@ -1155,13 +1154,13 @@ public class JsonFilterPropertyTest {
 http://mvnrepository.com/artifact/com.xiongyingqi/common_helper
 
 ##Maven Usage:
-<pre class="brush: xml;">
+```xml
 <dependency>
 	<groupId>com.xiongyingqi</groupId>
 	<artifactId>common_helper</artifactId>
 	<version>${common_utils.version}</version>
 </dependency>
-</pre>
+```
 ---
 代码可以随意copy，但希望多多关注本人博客：[xiongyingqi.com](xiongyingqi.com)
 
