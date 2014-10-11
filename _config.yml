@@ -8,7 +8,7 @@ safe: false
 #站点基础配置
 title: Blademainer
 subTitle: World's blademainer.
-description: 这是 blademainer 的博客，我将在这里记录下我生活工作中的点点滴滴~
+description: 猿类精神，病入膏肓，无法医治~
 url: http://blademainer.github.io
 feed: /atom.xml
 
