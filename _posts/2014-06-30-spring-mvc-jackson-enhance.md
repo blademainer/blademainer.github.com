@@ -91,14 +91,14 @@ public class IgnorePropertyAspect {
 ```
 
 spring配置:
-<pre class="brush: xml;">
+```xml
 <!-- 启动mvc对aop的支持,使用aspectj代理 -->
 <aop:aspectj-autoproxyproxy-target-class="true" />
 <beanid="ignorePropertyAspect" class="com.xiongyingqi.json.filter.aop.IgnorePropertyAspect"></bean>
 ```
 
 2、配置spring-mvc的messageconverter
-<pre class="brush: xml;">
+```xml
     <bean
     	class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="cacheSeconds" value="0" />
