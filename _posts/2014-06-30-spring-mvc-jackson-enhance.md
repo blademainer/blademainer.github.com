@@ -38,8 +38,8 @@ jackson默认可以使用JsonIgnoreProperties接口来定义要过滤的属性,�
 * 在springmvc输出json的类内自定义ObjectMapper, 从当前线程内取出JsonIgnoreProperties临时类, 调用ObjectMapper# addMixInAnnotations使之起效
 * 最后使用ObjectMapper输出
 
-用法:
-`1、定义aop, 用来捕获springmvc的controller方法`
+#用法:
+##`1、定义aop, 用来捕获springmvc的controller方法`
 
 ```java
 package com.xiongyingqi.json.filter.aop;
@@ -91,14 +91,16 @@ public class IgnorePropertyAspect {
 }
 ```
 
-`spring配置`
+##2、spring配置
+
 ```xml
 <!-- 启动mvc对aop的支持,使用aspectj代理 -->
 <aop:aspectj-autoproxyproxy-target-class="true" />
 <beanid="ignorePropertyAspect" class="com.xiongyingqi.json.filter.aop.IgnorePropertyAspect"></bean>
 ```
 
-`2、配置spring-mvc的messageconverter`
+##3、配置spring-mvc的messageconverter
+
 ```xml
     <bean
     	class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
@@ -150,7 +152,8 @@ public class IgnorePropertyAspect {
 	</bean>
 ```
 
-`3、重写spring的MappingJackson2HttpMessageConverter类,这样输出的json内容就能自定义`
+##4、重写spring的MappingJackson2HttpMessageConverter类,这样输出的json内容就能自定义
+
 ```java
 package com.xiongyingqi.spring.http.convert.json;
 
@@ -250,7 +253,7 @@ public class Jackson2HttpMessageConverter extends MappingJackson2HttpMessageConv
 }
 ```
 
-`4、在方法上注解`
+##5、在方法上注解
 #Controller方法的示例，yxResourceSelfRelationsForSuperiorResourceId是YxResource内要过滤的属性:
 ```java
     @IgnoreProperties(value= {
@@ -267,6 +270,7 @@ public class Jackson2HttpMessageConverter extends MappingJackson2HttpMessageConv
 #主要类说明    
 ##1、自定义注解类：这些类是用于注解实体类输出json时要注解过滤的属性
 ###IgnoreProperties.java 用于同时注解`IgnoreProperty`和`AllowProperty`
+
 ```java
 package com.xiongyingqi.jackson.annotation;
 
@@ -404,6 +408,7 @@ public @interface IgnoreProperty {
 ```
 
 ###`AllowProperty.java`：注解实体类允许的字段
+
 ```java
 package com.xiongyingqi.jackson.annotation;
 
@@ -437,6 +442,7 @@ public @interface AllowProperty {
 }
 ```
 ##2、核心处理类，用于处理自定义注解并将生成的类存入当前线程
+
 ```java
 package com.xiongyingqi.jackson.impl;
 
@@ -1043,8 +1049,9 @@ public class ThreadJacksonMixInHolder {
 
 }
 ```
-
+#测试
 ##测试代码
+
 ```java
 package com.xiongyingqi.jackson;
 
@@ -1130,7 +1137,7 @@ public class JsonFilterPropertyTest {
     }
 }
 ```
-###测试结果
+##测试结果
  ------------------------------------------------------------ 
     at com.xiongyingqi.jackson.JsonFilterPropertyTest.jsonTest(JsonFilterPropertyTest.java:80)
     String =============== [{"name":"用户1","group":{"id":1,"name":"分组1"}},{"name":"用户1","group":{"id":1,"name":"分组1"}},{"name":"用户1","group":{"id":1,"name":"分组1"}},{"name":"用户4","group":{"id":2,"name":"分组2"}},{"name":"用户5","group":{"id":2,"name":"分组2"}},{"name":"用户6","group":{"id":2,"name":"分组2"}}]
@@ -1145,10 +1152,10 @@ public class JsonFilterPropertyTest {
 其他框架内使用
 如果不是spring-mvc框架也能使用这些代码来解决，只是必须要修改aop的捕获方法、使用new JavassistFilterPropertyHandler(false)禁用ResponseBody，以及在ObjectMapper输出使用自己定义的输出
 
-#源代码地址
+##源代码地址
 <div class="github-widget" data-repo="blademainer/common_utils"></div>
 
-#已上传到maven库：
+##代码已上传到maven中央库：
 http://mvnrepository.com/artifact/com.xiongyingqi/common_helper
 
 ##Maven Usage:
@@ -1161,5 +1168,3 @@ http://mvnrepository.com/artifact/com.xiongyingqi/common_helper
 ```
 ---
 代码可以随意copy，但希望多多关注本人博客：[xiongyingqi.com](xiongyingqi.com)
-
-<script type="text/javascript" src="/js/jquery.githubRepoWidget.min.js"></script>
