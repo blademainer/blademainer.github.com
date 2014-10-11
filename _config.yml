@@ -1,5 +1,9 @@
-markdown: rdiscount
-pygments: true
+#markdown: rdiscount
+#pygments: true
+#md代码高亮
+markdown: redcarpet
+redcarpet:
+    extensions: ["fenced_code_blocks", "autolink", "tables", "strikethrough"]
 plugins: ./_plugins
 paginate: 5
 
