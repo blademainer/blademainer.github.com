@@ -8,7 +8,6 @@ tags:
  - Samba
  - linux
 ---
-<script type="text/javascript" src="/syntaxhighlighter_3_0_83/scripts/shBrushBash.js"></script>
 ####Linux安装Samba文件共享服务器
 <p>
 Samba相对于Windows服务器来说具有更灵活的配置、高效等特点。个人认为是共享服务器的最佳选择。

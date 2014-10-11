@@ -10,7 +10,6 @@ tags:
  - spring-mvc
  - jackson
 ---
-<script type="text/javascript" src="/syntaxhighlighter_3_0_83/scripts/shBrushJava.js"></script>
 
 <p>使用Spring MVC框架开发web时，Spring MVC默认用jackson库处理JSON和POJO的转换。
 在POJO转化成JSON时，希望动态的过滤掉对象的某些属性。
@@ -32,7 +31,7 @@ tags:
 
 方法注解<br>
 IgnoreProperties.java
-<pre class="brush: java;">
+```java
 /**
  * YIXUN_1.5_EE
  */
@@ -118,11 +117,11 @@ public @interface IgnoreProperties {
 	 */
 	AllowProperty[] allow() default @AllowProperty(pojo = Object.class, name = "");
 }
-</pre>
+```
 
 过滤属性的注解<br>
 IgnoreProperty.java
-<pre class="brush: java;">
+```java
 /**
  * YIXUN_1.5_EE
  */
@@ -180,11 +179,11 @@ public @interface IgnoreProperty {
 	 */
 	//	int maxIterationLevel() default 0;
 }
-</pre>
+```
 
 允许通过的属性注解<br>
 AllowProperty.java
-<pre class="brush: java;">
+```java
 /**
  * YIXUN_1.5_EE
  */
@@ -225,11 +224,11 @@ public @interface AllowProperty {
 	 */
 	String[] name();
 }
-</pre>
+```
 
 切面类：<br>
 IgnorePropertyAspect.java
-<pre class="brush: java;">
+```java
 /**
  * YIXUN_1.5_EE
  */
@@ -293,11 +292,11 @@ public class IgnorePropertyAspect {
 		System.out.println(" -------- AfterThrowing -------- ");
 	}
 }
-</pre>
+```
 
 核心处理类，包括读取Controller方法的注解、创建javassist代理接口、判断处理逻辑、转换为jackson对象等。<br>
 JavassistFilterPropertyHandler.java
-<pre class="brush: java;">
+```java
 package com.kingray.json.filter.impl;
 
 import java.io.ByteArrayOutputStream;
@@ -895,4 +894,4 @@ public class JavassistFilterPropertyHandler implements FilterPropertyHandler {
 		}
 	}
 }
-</pre>
+```

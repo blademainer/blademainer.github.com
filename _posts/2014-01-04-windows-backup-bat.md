@@ -8,7 +8,6 @@ tags:
  - bat
  - windows
 ---
-<script type="text/javascript" src="/syntaxhighlighter_3_0_83/scripts/shBrushBash.js"></script>
 备份的原理是使用windows的任务计划程序定时执行该脚本从而达到备份和删除备份历史的目的。</br>
 脚本主要需要设置参数有四个：
 <ol>
