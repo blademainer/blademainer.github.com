@@ -1151,9 +1151,8 @@ public class JsonFilterPropertyTest {
 #源代码地址
 <div class="github-widget" data-repo="blademainer/common_utils"></div>
 
-#建议使用以下地址作为maven依赖，否则请copy需要的代码~
-
-##http://xiongyingqi.com/common_utils/
+#已maven库上传：
+http://mvnrepository.com/artifact/com.xiongyingqi/common_helper
 
 ##Maven Usage:
 <pre class="brush: xml;">
