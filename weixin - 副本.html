@@ -2,6 +2,35 @@
 <html>
 <head><title>微信WeixinJSBridge API</title>
 <meta charset=utf-8>
+<script type="text/javascript">
+(function(){
+var a=document.getElementsByTagName("html")[0];
+window.Session={appDomain:a.getAttribute("data-app-domain")||"",staticDomain:a.getAttribute("data-static-domain")||""}
+})();
+ 
+window.registNS=function(fullNS,isIgnorSelf){
+var reg=/^[_$a-z]+[_$a-z0-9]*/i;var nsArray=fullNS.split(".");
+var sEval="";
+var sNS="";
+var n=isIgnorSelf?nsArray.length-1:nsArray.length;
+for(var i=0;i<n;i++){
+    if(!reg.test(nsArray[i])){throw new Error("Invalid namespace:"+nsArray[i]+"");
+    return
+    }
+    if(i!=0){sNS+="."}
+    sNS+=nsArray[i];
+    sEval+="if(typeof("+sNS+")=='undefined') "+sNS+"=new Object();
+    else "+sNS+";"
+}
+if(sEval!=""){
+return eval(sEval)
+}
+return{}
+ 
+};
+
+ 
+</script>
  
 </head>
 <body><section class=mod-page-body>
