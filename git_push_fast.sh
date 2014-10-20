@@ -1,11 +1,11 @@
 #!/bin/bash
-echo "status ---------------------- "
+echo "status......"
 git status
-echo "add ---------------------- "
+echo "add......"
 git add -Av
-echo "commit ---------------------- "
+echo "commit......"
 git commit -m common_commit
-echo "push ---------------------- "
+echo "push......"
 git push
-echo "complete ---------------------- "
+echo "complete......"
 sleep 2
