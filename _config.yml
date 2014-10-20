@@ -100,6 +100,8 @@ follow:
     url: /markdown
   - class: fa-link
     url: http://jia58960.me
+  - class: fa-coffee
+    url: http://docs.oracle.com/javase/specs/jls/se8/html/index.html
 
 #作者信息
 author:
