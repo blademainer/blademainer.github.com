@@ -55,12 +55,12 @@ nav:
     url: /archives.html
   - text: 作品
     url: /works.html
-  - text: 相册
-    url: /gallery/photos/
+#  - text: 相册
+#    url: /gallery/photos/
   - text: 联系我
     url: /contact.html
-  - text: 博客源代码
-    url: https://github.com/blademainer/blademainer.github.com
+#  - text: 博客源代码
+#    url: https://github.com/blademainer/blademainer.github.com
 
 #theme config
 themes: /themes/violet
@@ -102,8 +102,8 @@ follow:
     url: http://jia58960.me
   - class: fa-coffee
     url: http://docs.oracle.com/javase/specs/jls/se8/html/index.html
-  - class: fa-wechat
-    url: /weixin.html
+#  - class: fa-wechat
+#    url: /weixin.html
 
 #作者信息
 author:
