@@ -1,3 +1,6 @@
 [submodule "jackman"]
 	path = theme/jackman
 	url = git@github.com:wuchong/jacman.git
+[submodule "themes/jacman"]
+	path = themes/jacman
+	url = git@github.com:wuchong/jacman.git
