@@ -14,22 +14,22 @@ tags:
 最终解决方法：[【完美解决json循环问题（使用javassist增强）：Spring MVC中使用jackson的MixInAnnotations方法动态过滤JSON字段】](/java/2013/12/06/spring-mvc-jackson.html)
 ===
 
-#问题描述
+# 问题描述
 
-###项目使用SpringMVC框架，并用jackson库处理JSON和POJO的转换。在POJO转化成JSON时，有些属性我们不需要输出或者有些属性循环引用会造成无法输出。
+### 项目使用SpringMVC框架，并用jackson库处理JSON和POJO的转换。在POJO转化成JSON时，有些属性我们不需要输出或者有些属性循环引用会造成无法输出。
 
 * 例如：实体User其中包括用户名、密码、邮箱等，但是我们在输出用户信息不希望输出密码、邮箱信息;
 * 例如：实体user和department是多对一的关系，user内保存着department的信息，那么json输出时会导致这两个实体数据的循环输出;
 
 jackson默认可以使用JsonIgnoreProperties接口来定义要过滤的属性,然后使用`ObjectMapper#addMixInAnnotations`来设置对应实体对应的JsonIgnoreProperties接口,这样就能达到过滤的目的。可是这样很不爽,因为如果你对n个实体对应有m种过滤需求就至少要建n*m个JsonIgnoreProperties接口。
 
-#解决方案
+# 解决方案
 
-##主要逻辑如下图
+## 主要逻辑如下图
 
 <img src="/images/post/jackson-logic.jpg">
 
-##大致处理流程:
+## 大致处理流程:
 
 * 使用自定义注解controller方法
 * 然后定义aop捕获所有controller方法
@@ -38,8 +38,8 @@ jackson默认可以使用JsonIgnoreProperties接口来定义要过滤的属性,�
 * 在springmvc输出json的类内自定义ObjectMapper, 从当前线程内取出JsonIgnoreProperties临时类, 调用ObjectMapper# addMixInAnnotations使之起效
 * 最后使用ObjectMapper输出
 
-#用法:
-##`1、定义aop, 用来捕获springmvc的controller方法`
+# 用法:
+## `1、定义aop, 用来捕获springmvc的controller方法`
 
 ```java
 package com.xiongyingqi.json.filter.aop;
@@ -99,7 +99,7 @@ public class IgnorePropertyAspect {
 <beanid="ignorePropertyAspect" class="com.xiongyingqi.json.filter.aop.IgnorePropertyAspect"></bean>
 ```
 
-##3、配置spring-mvc的messageconverter
+## 3、配置spring-mvc的messageconverter
 
 ```xml
     <bean
@@ -152,7 +152,7 @@ public class IgnorePropertyAspect {
 	</bean>
 ```
 
-##4、重写spring的MappingJackson2HttpMessageConverter类,这样输出的json内容就能自定义
+## 4、重写spring的MappingJackson2HttpMessageConverter类,这样输出的json内容就能自定义
 
 ```java
 package com.xiongyingqi.spring.http.convert.json;
@@ -253,8 +253,8 @@ public class Jackson2HttpMessageConverter extends MappingJackson2HttpMessageConv
 }
 ```
 
-##5、在方法上注解
-#Controller方法的示例，yxResourceSelfRelationsForSuperiorResourceId是YxResource内要过滤的属性:
+## 5、在方法上注解
+### Controller方法的示例，yxResourceSelfRelationsForSuperiorResourceId是YxResource内要过滤的属性:
 ```java
     @IgnoreProperties(value= {
            @IgnoreProperty(pojo = YxResource.class, name = {
@@ -267,9 +267,9 @@ public class Jackson2HttpMessageConverter extends MappingJackson2HttpMessageConv
     }
 ```    
 
-#主要类说明    
-##1、自定义注解类：这些类是用于注解实体类输出json时要注解过滤的属性
-###IgnoreProperties.java 用于同时注解`IgnoreProperty`和`AllowProperty`
+# 主要类说明    
+## 1、自定义注解类：这些类是用于注解实体类输出json时要注解过滤的属性
+### `IgnoreProperties.java` 用于同时注解`IgnoreProperty`和`AllowProperty`
 
 ```java
 package com.xiongyingqi.jackson.annotation;
@@ -352,7 +352,7 @@ public @interface IgnoreProperties {
 }
 ```
 
-###`IgnoreProperty.java`：过滤指定对象内的指定字段名
+### `IgnoreProperty.java`：过滤指定对象内的指定字段名
 
 ```java
 package com.xiongyingqi.jackson.annotation;
@@ -407,7 +407,7 @@ public @interface IgnoreProperty {
 }
 ```
 
-###`AllowProperty.java`：注解实体类允许的字段
+### `AllowProperty.java`：注解实体类允许的字段
 
 ```java
 package com.xiongyingqi.jackson.annotation;
@@ -441,7 +441,8 @@ public @interface AllowProperty {
     String[] name();
 }
 ```
-##2、核心处理类，用于处理自定义注解并将生成的类存入当前线程
+
+## 2、核心处理类，用于处理自定义注解并将生成的类存入当前线程
 
 ```java
 package com.xiongyingqi.jackson.impl;
@@ -920,7 +921,7 @@ public class JavassistFilterPropertyHandler implements FilterPropertyHandler {
 }
 ```
 
-##3、线程持有类，用于在当前线程内保存核心类处理过的自定义注解生成的MixIn注解，并且能提供ObjectMapper的生成
+## 3、线程持有类，用于在当前线程内保存核心类处理过的自定义注解生成的MixIn注解，并且能提供ObjectMapper的生成
 
 ```java
 package com.xiongyingqi.jackson.helper;
@@ -1049,8 +1050,9 @@ public class ThreadJacksonMixInHolder {
 
 }
 ```
-#测试
-##测试代码
+
+# 测试
+## 测试代码
 
 ```java
 package com.xiongyingqi.jackson;
@@ -1137,28 +1139,30 @@ public class JsonFilterPropertyTest {
     }
 }
 ```
-##测试结果
+
+## 测试结果
+
  ------------------------------------------------------------ 
     at com.xiongyingqi.jackson.JsonFilterPropertyTest.jsonTest(JsonFilterPropertyTest.java:80)
     String =============== [{"name":"用户1","group":{"id":1,"name":"分组1"}},{"name":"用户1","group":{"id":1,"name":"分组1"}},{"name":"用户1","group":{"id":1,"name":"分组1"}},{"name":"用户4","group":{"id":2,"name":"分组2"}},{"name":"用户5","group":{"id":2,"name":"分组2"}},{"name":"用户6","group":{"id":2,"name":"分组2"}}]
  ------------------------------------------------------------ 
 
-#性能与缺陷
+# 性能与缺陷
 * 1、主要是在map内存储了Javassist的临时类，每个注解(IgnoreProperties等)的方法的调用，对应在FilterPropertyHandler会处理一次注解并在内存内产生一个Javassist临时类，但是访问过一次之后该类就会读取map缓存
 * 2、ThreadJacksonMixInHolder：这个类的原理就是使用ThreadLocal在当前线程内存储处理过的annotation注解，java的容器或框架都是使用了该类，导致的效率问题应该不大
 * 3、未知的bug
 
-#其他说明
+# 其他说明
 其他框架内使用
 如果不是spring-mvc框架也能使用这些代码来解决，只是必须要修改aop的捕获方法、使用new JavassistFilterPropertyHandler(false)禁用ResponseBody，以及在ObjectMapper输出使用自己定义的输出
 
-##源代码地址
+## 源代码地址
 <div class="github-widget" data-repo="blademainer/common_utils"></div>
 
-##代码已上传到maven中央库：
+## 代码已上传到maven中央库：
 http://mvnrepository.com/artifact/com.xiongyingqi/common_helper
 
-##Maven Usage:
+## Maven Usage:
 ```xml
 <dependency>
 	<groupId>com.xiongyingqi</groupId>
