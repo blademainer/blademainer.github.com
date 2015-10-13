@@ -11,8 +11,8 @@ tags:
  - jackson
 ---
 
-最终解决方法：[【完美解决json循环问题（使用javassist增强）：Spring MVC中使用jackson的MixInAnnotations方法动态过滤JSON字段】](/java/2013/12/06/spring-mvc-jackson.html)
-===
+# 最终解决方法：[【完美解决json循环问题（使用javassist增强）：Spring MVC中使用jackson的MixInAnnotations方法动态过滤JSON字段】](/java/2013/12/06/spring-mvc-jackson.html)
+---
 
 # 问题描述
 
