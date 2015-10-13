@@ -2,8 +2,8 @@
 layout: code
 title: Java String对象的经典问题
 description: Java String的经典问题，面试笔试题的经典~
-keywords: Java,String,堆栈,String池
-category: Java
+keywords: java,string,堆栈,string池
+category: java
 tags:
  - java
  - string
