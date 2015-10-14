@@ -4,7 +4,7 @@
 
 # Site
 title: blademainer
-subtitle:
+subtitle: IT dogs...
 description:
 author: blademainer
 language:
@@ -63,7 +63,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: http://hexo.io/plugins/
 ## Themes: http://hexo.io/themes/
-theme: jacman
+theme: next
 
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
