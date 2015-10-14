@@ -40,7 +40,7 @@ jackson默认可以使用JsonIgnoreProperties接口来定义要过滤的属性,�
 
 # 用法:
 
-## `1、定义aop, 用来捕获springmvc的controller方法`
+## 定义aop, 用来捕获springmvc的controller方法
 
 ```java
 package com.xiongyingqi.json.filter.aop;
@@ -92,7 +92,7 @@ public class IgnorePropertyAspect {
 }
 ```
 
-## 2、spring配置
+## spring配置
 
 ```xml
 <!-- 启动mvc对aop的支持,使用aspectj代理 -->
@@ -100,7 +100,7 @@ public class IgnorePropertyAspect {
 <beanid="ignorePropertyAspect" class="com.xiongyingqi.json.filter.aop.IgnorePropertyAspect"></bean>
 ```
 
-## 3、配置spring-mvc的messageconverter
+## 配置spring-mvc的messageconverter
 
 ```xml
     <bean
@@ -153,7 +153,7 @@ public class IgnorePropertyAspect {
 	</bean>
 ```
 
-## 4、重写spring的MappingJackson2HttpMessageConverter类,这样输出的json内容就能自定义
+## 重写spring的MappingJackson2HttpMessageConverter类,这样输出的json内容就能自定义
 
 ```java
 
@@ -253,9 +253,10 @@ public class Jackson2HttpMessageConverter extends MappingJackson2HttpMessageConv
     }
 
 }
+
 ```
 
-## 5、在方法上注解
+## 在方法上注解
 
 ### Controller方法的示例，yxResourceSelfRelationsForSuperiorResourceId是YxResource内要过滤的属性:
 
@@ -271,11 +272,11 @@ public class Jackson2HttpMessageConverter extends MappingJackson2HttpMessageConv
        return resource;
     }
 
-```    
+```
 
 # 主要类说明   
  
-## 1、自定义注解类：这些类是用于注解实体类输出json时要注解过滤的属性
+## 自定义注解类：这些类是用于注解实体类输出json时要注解过滤的属性
 
 ### `IgnoreProperties.java` 用于同时注解`IgnoreProperty`和`AllowProperty`
 
@@ -455,7 +456,7 @@ public @interface AllowProperty {
 
 ```
 
-## 2、核心处理类，用于处理自定义注解并将生成的类存入当前线程
+## 核心处理类，用于处理自定义注解并将生成的类存入当前线程
 
 ```java
 package com.xiongyingqi.jackson.impl;
@@ -934,7 +935,7 @@ public class JavassistFilterPropertyHandler implements FilterPropertyHandler {
 }
 ```
 
-## 3、线程持有类，用于在当前线程内保存核心类处理过的自定义注解生成的MixIn注解，并且能提供ObjectMapper的生成
+## 线程持有类，用于在当前线程内保存核心类处理过的自定义注解生成的MixIn注解，并且能提供ObjectMapper的生成
 
 ```java
 package com.xiongyingqi.jackson.helper;
@@ -1161,9 +1162,9 @@ public class JsonFilterPropertyTest {
  ------------------------------------------------------------ 
 
 # 性能与缺陷
-* 1、主要是在map内存储了Javassist的临时类，每个注解(IgnoreProperties等)的方法的调用，对应在FilterPropertyHandler会处理一次注解并在内存内产生一个Javassist临时类，但是访问过一次之后该类就会读取map缓存
-* 2、ThreadJacksonMixInHolder：这个类的原理就是使用ThreadLocal在当前线程内存储处理过的annotation注解，java的容器或框架都是使用了该类，导致的效率问题应该不大
-* 3、未知的bug
+* 主要是在map内存储了Javassist的临时类，每个注解(IgnoreProperties等)的方法的调用，对应在FilterPropertyHandler会处理一次注解并在内存内产生一个Javassist临时类，但是访问过一次之后该类就会读取map缓存
+* ThreadJacksonMixInHolder：这个类的原理就是使用ThreadLocal在当前线程内存储处理过的annotation注解，java的容器或框架都是使用了该类，导致的效率问题应该不大
+* 未知的bug
 
 # 其他说明
 其他框架内使用
