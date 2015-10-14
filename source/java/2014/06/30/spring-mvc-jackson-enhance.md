@@ -16,7 +16,7 @@ tags:
 
 # 问题描述
 
-### 项目使用SpringMVC框架，并用jackson库处理JSON和POJO的转换。在POJO转化成JSON时，有些属性我们不需要输出或者有些属性循环引用会造成无法输出。
+项目使用SpringMVC框架，并用jackson库处理JSON和POJO的转换。在POJO转化成JSON时，有些属性我们不需要输出或者有些属性循环引用会造成无法输出。
 
 * 例如：实体User其中包括用户名、密码、邮箱等，但是我们在输出用户信息不希望输出密码、邮箱信息;
 * 例如：实体user和department是多对一的关系，user内保存着department的信息，那么json输出时会导致这两个实体数据的循环输出;
@@ -91,7 +91,7 @@ public class IgnorePropertyAspect {
 }
 ```
 
-##2、spring配置
+## 2、spring配置
 
 ```xml
 <!-- 启动mvc对aop的支持,使用aspectj代理 -->

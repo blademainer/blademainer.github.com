@@ -16,7 +16,7 @@ tags:
 
 # 问题描述
 
-### 项目使用SpringMVC框架，并用jackson库处理JSON和POJO的转换。在POJO转化成JSON时，有些属性我们不需要输出或者有些属性循环引用会造成无法输出。
+项目使用SpringMVC框架，并用jackson库处理JSON和POJO的转换。在POJO转化成JSON时，有些属性我们不需要输出或者有些属性循环引用会造成无法输出。
 
 * 例如：实体User其中包括用户名、密码、邮箱等，但是我们在输出用户信息不希望输出密码、邮箱信息;
 * 例如：实体user和department是多对一的关系，user内保存着department的信息，那么json输出时会导致这两个实体数据的循环输出;
@@ -39,6 +39,7 @@ jackson默认可以使用JsonIgnoreProperties接口来定义要过滤的属性,�
 * 最后使用ObjectMapper输出
 
 # 用法:
+
 ## `1、定义aop, 用来捕获springmvc的controller方法`
 
 ```java
@@ -91,7 +92,7 @@ public class IgnorePropertyAspect {
 }
 ```
 
-##2、spring配置
+## 2、spring配置
 
 ```xml
 <!-- 启动mvc对aop的支持,使用aspectj代理 -->
@@ -155,6 +156,7 @@ public class IgnorePropertyAspect {
 ## 4、重写spring的MappingJackson2HttpMessageConverter类,这样输出的json内容就能自定义
 
 ```java
+
 package com.xiongyingqi.spring.http.convert.json;
 
 import java.io.IOException;
@@ -254,9 +256,11 @@ public class Jackson2HttpMessageConverter extends MappingJackson2HttpMessageConv
 ```
 
 ## 5、在方法上注解
+
 ### Controller方法的示例，yxResourceSelfRelationsForSuperiorResourceId是YxResource内要过滤的属性:
 
 ```java
+
     @IgnoreProperties(value= {
            @IgnoreProperty(pojo = YxResource.class, name = {
                   "yxResourceSelfRelationsForSuperiorResourceId"})})
@@ -266,13 +270,17 @@ public class Jackson2HttpMessageConverter extends MappingJackson2HttpMessageConv
        YxResource resource = resourceService.getResource(resourceId);
        return resource;
     }
+
 ```    
 
-# 主要类说明    
+# 主要类说明   
+ 
 ## 1、自定义注解类：这些类是用于注解实体类输出json时要注解过滤的属性
+
 ### `IgnoreProperties.java` 用于同时注解`IgnoreProperty`和`AllowProperty`
 
 ```java
+
 package com.xiongyingqi.jackson.annotation;
 
 import java.lang.annotation.*;
@@ -356,6 +364,7 @@ public @interface IgnoreProperties {
 ### `IgnoreProperty.java`：过滤指定对象内的指定字段名
 
 ```java
+
 package com.xiongyingqi.jackson.annotation;
 
 import java.lang.annotation.*;
@@ -406,11 +415,13 @@ public @interface IgnoreProperty {
      */
     //	int maxIterationLevel() default 0;
 }
+
 ```
 
 ### `AllowProperty.java`：注解实体类允许的字段
 
 ```java
+
 package com.xiongyingqi.jackson.annotation;
 
 import java.lang.annotation.*;
@@ -441,6 +452,7 @@ public @interface AllowProperty {
      */
     String[] name();
 }
+
 ```
 
 ## 2、核心处理类，用于处理自定义注解并将生成的类存入当前线程
