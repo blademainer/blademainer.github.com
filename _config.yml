@@ -9,6 +9,7 @@ description:
 author: blademainer
 language: zh-Hans
 timezone:
+avatar: /images/avatar.jpg
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -65,10 +66,14 @@ pagination_dir: page
 ## Themes: http://hexo.io/themes/
 theme: hexo-theme-next
 
+duoshuo_shortname: blademainer
+
 duoshuo_info:
   ua_enable: true
   admin_enable: false
   user_id: 0
+
+baidu_analytics: 68322b90865dcc4ec4cd797ce0c7a616
 
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
