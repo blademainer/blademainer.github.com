@@ -1,0 +1,741 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Jark&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="WuChong">
+    
+    <meta name="description" content="伍翀的个人技术博客">
+    
+    
+    <meta name="description" content="伍翀的个人技术博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Jark's Blog">
+<meta property="og:url" content="http://wuchong.me/page/4/">
+<meta property="og:site_name" content="Jark's Blog">
+<meta property="og:description" content="伍翀的个人技术博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jark's Blog">
+<meta name="twitter:description" content="伍翀的个人技术博客">
+<meta name="twitter:creator" content="@jarkwu">
+<link rel="publisher" href="111190881341800841449">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Jark&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Jark&#39;s Blog" title="Jark&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Jark&#39;s Blog">Jark&#39;s Blog</a></h1>
+				<h2 class="blog-motto">当你的才华还撑不起你的野心时，你就应该静下心来学习。</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+						<form class="search" action="http://zhannei.baidu.com/cse/search" target="_blank">
+							<label>Search</label>
+						<input name="s" type="hidden" value= 783281470518440642 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main">
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2014/07/16/use-python-login-borrow-account/" title="用Python模拟登录“借”上网帐号" itemprop="url">用Python模拟登录“借”上网帐号</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="https://plus.google.com/111190881341800841449?rel=author" title="WuChong" target="_blank" itemprop="author">WuChong</a>
+		
+  <p class="article-time">
+    <time datetime="2014-07-16T08:22:57.000Z" itemprop="datePublished"> 发表于 2014-07-16</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>昨天同学让我帮忙下篇论文，发现自己的校内上网帐号有一段时间没充值了。登录校园网才能下论文，无奈问了周围的人却发现都没充值！（实验室可以免费上网大家都不充值了么）</p>
+<p>懒得去充值，就想会不会有的上网帐号还是用的默认密码？如果有的话，岂不是可以“借来”用一下！虽然有些不道德，但是为了验证心里的想法还是忍不住下手了。</p>
+<h2 id="分析请求">分析请求</h2>
+<p>首先当然是分析登录请求啦。我们学校的校园网登录网址为<code>10.0.0.55</code>。所以用 Chrome 打开登录网页，并打开<code>开发者工具 -&gt; Network</code>，再输入用户名密码，点击登录。可以捕获到 POST 消息。</p>
+<p><img src="http://ww1.sinaimg.cn/mw690/81b78497jw1eiepcju7vuj20yw0gogoo.jpg" alt=""></p>
+<p>其中最重要的是两个信息，一个是 Request URL，另一个是 Form Data。前者是提交请求的网址，后者是提交的表单。表单里最重要的是 username 和 password 两个字段。后面的三个字段可以忽略。我们发现，表单中的密码是加密后提交的。会用的什么加密呢？我们去 JS 脚本里找找有什么。</p>
+<p><img src="http://ww2.sinaimg.cn/mw690/81b78497jw1eiepcjd6suj20yq0gswhi.jpg" alt=""></p>
+<p>在源代码的 head 标签内发现了大段的 JS 脚本，其中就有关于登录的。其实就是用了简单的 MD5 加密，并将加密结果截取了第 8 到 24 的字符。连 salt 都没有用到。</p>
+<p>有了上面这些信息后，我们就可以构造请求了。这当然要拿出 Python 大法了。<br>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/blog/2014/07/16/use-python-login-borrow-account/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Python/">Python</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Python/">Python</a><a href="/tags/模拟登录/">模拟登录</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://wuchong.me/blog/2014/07/16/use-python-login-borrow-account/#comments" class="ds-thread-count comments-count-link" data-thread-key="blog/2014/07/16/use-python-login-borrow-account/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2014/07/15/linux-permission-and-file/" title="Linux基础：权限与文件" itemprop="url">Linux基础：权限与文件</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="https://plus.google.com/111190881341800841449?rel=author" title="WuChong" target="_blank" itemprop="author">WuChong</a>
+		
+  <p class="article-time">
+    <time datetime="2014-07-15T05:15:25.000Z" itemprop="datePublished"> 发表于 2014-07-15</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="用户与用户组">用户与用户组</h2>
+<p>Linux 是一个多用户、多任务的系统，常常有多人同时使用一台机工作，为了保护每个人的隐私权，“文件所有者”的角色就显得相当重要了。</p>
+<p>当Linux用户登录系统之后，就会携带一个用户身份（User ID，UID）和一个用户组身份（Group ID，GID），相当于自己的名片。当需要访问文件或程序时，刷一下名片就能知道是否能读、写、执行了。</p>
+<p>一般来说，Linux的用户信息保存在<code>/etc/passwd</code>中，组信息保存在<code>/etc/group</code>中，文件的每一行代表一个用户/组。早期的Linux将密码以明文的形式保存在<code>/etc/passwd</code>中，而现在则多以暗码(也就是加密之后的形式)的形式保存在<code>/etc/shadow</code>中。将密码存储在<code>/etc/shadow</code>中提高了密码的安全性，因为<code>/etc/passwd</code>允许所有人查看，而<code>/etc/shadow</code>只允许root用户查看。</p>
+<p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/blog/2014/07/15/linux-permission-and-file/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LinuxUnix/">Linux/Unix</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Linux基础/">Linux基础</a><a href="/tags/权限/">权限</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://wuchong.me/blog/2014/07/15/linux-permission-and-file/#comments" class="ds-thread-count comments-count-link" data-thread-key="blog/2014/07/15/linux-permission-and-file/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2014/07/14/linux-boot-process/" title="Linux基础：启动流程" itemprop="url">Linux基础：启动流程</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="https://plus.google.com/111190881341800841449?rel=author" title="WuChong" target="_blank" itemprop="author">WuChong</a>
+		
+  <p class="article-time">
+    <time datetime="2014-07-14T02:15:05.000Z" itemprop="datePublished"> 发表于 2014-07-14</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>计算机的启动是一个非常复杂的过程，从打开电源到桌面的显示，需要经过一系列不可或缺的过程，了解这些过程有助于我们更好地理解操作系统，也有助于我们修复系统可能出现的问题。</p>
+<h2 id="0-_启动流程一览">0. 启动流程一览</h2>
+<p>我们先给出 Linux 启动流程的总览图，然后再每一个模块展开说明。</p>
+<p><img src="http://ww4.sinaimg.cn/large/81b78497jw1eic3rqn72tj20hf06774l.jpg" alt=""></p>
+<p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/blog/2014/07/14/linux-boot-process/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LinuxUnix/">Linux/Unix</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Linux基础/">Linux基础</a><a href="/tags/启动流程/">启动流程</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://wuchong.me/blog/2014/07/14/linux-boot-process/#comments" class="ds-thread-count comments-count-link" data-thread-key="blog/2014/07/14/linux-boot-process/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2014/07/02/learn-regular-expressions/" title="正则表达式学习" itemprop="url">正则表达式学习</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="https://plus.google.com/111190881341800841449?rel=author" title="WuChong" target="_blank" itemprop="author">WuChong</a>
+		
+  <p class="article-time">
+    <time datetime="2014-07-02T09:43:45.000Z" itemprop="datePublished"> 发表于 2014-07-02</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>最近在看鸟哥 Linux，看到正则表达式这块，以前看到这些恐怖的字符总是觉得恶心，今天就咬牙系统的学习了下正则表达式。然后有了这篇笔记。主要总结正则表达式的一些关键知识点。</p>
+<ul>
+<li>字面值：<code>a b c d 1 2 3 4</code> 等等。</li>
+<li>字符类：<code>. [abc] [a-z] \d \w \s</code><ul>
+<li><code>.</code> 表示“任何字符”</li>
+<li><code>[abc]</code>  括号表示“找到集合里任意一个字符”。</li>
+<li><code>\d</code> 表示“一个数字”，等同于<code>[0-9]</code></li>
+<li><code>\w</code> 表示“一个单词字符”，等同于<code>[0-9A-Za-z_]</code></li>
+<li><code>\s</code> 表示“一个空格，tab，回车或一个换行符”</li>
+<li>否定字符类：<code>[^abc] \D \W \S</code></li>
+</ul>
+</li>
+<li>乘法器：<code>{4} {3,16} {1,} ? * +</code><ul>
+<li><code>{3,16}</code> 表示找到重复 3 到 16 个前一个正则字符</li>
+<li><code>?</code> 表示“没有或一个”</li>
+<li><code>*</code> 表示“没有或多个”</li>
+<li><code>+</code> 表示“一个或多个”</li>
+<li>乘法器是贪婪的除非你在之后使用 <code>?</code> , 即优先找到最长的</li>
+</ul>
+</li>
+<li>分支和组合：  <code>(Septem|Octo|Novem|Decem)ber</code><ul>
+<li>管道符号 <code>|</code> 表示“或”</li>
+<li>圆括号表示组合 ，比如 在一周中找到一天，使用 <code>(Mon|Tues|Wednes|Thurs|Fri|Satur|Sun)day</code>。</li>
+</ul>
+</li>
+<li>词、行和文本边界： <ul>
+<li><code>\b</code> 表示词边界  </li>
+<li><code>^</code> 表示行开始 </li>
+<li><code>$</code> 表示行结束</li>
+<li><code>^$</code> 表示的就是空白行了</li>
+</ul>
+</li>
+<li><p>反向捕获组：<code>\1 \2 \3</code> 等等。捕获组从左到右进行编号，只要计算左圆括号。（在替换表达式和匹配表达式中同时生效） </p>
+<ul>
+<li><p>比如有一段字符，我们需要前面的横杠去掉，尾巴的数字去掉， 英文句号换成中文顿号</p>
+<p><figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>-<span class="ruby"><span class="number">1</span>.文章标题<span class="number">1</span>
+</span>-<span class="ruby"><span class="number">2</span>.文章标题<span class="number">2</span>
+</span>-<span class="ruby"><span class="number">3</span>.文章标题<span class="number">3</span>
+</span>-<span class="ruby"><span class="number">4</span>.文章标题<span class="number">4</span>
+</span>-<span class="ruby"><span class="number">51</span>.文章标题<span class="number">5</span></span>
+</pre></td></tr></table></figure><br>则可以使用正则表达式 <code>-(\d{1,})\.(.*)\d</code> 来匹配。然后使用 <code>\1、\2</code> 来替换。</p>
+</li>
+</ul>
+</li>
+<li><p>向后引用： 在同样的表达式中引用同一个捕获组。</p>
+<ul>
+<li>表达式 <code>(xi)\1(ha)\2</code>  能匹配 <code>xixihaha</code></li>
+</ul>
+</li>
+<li>元字符列表：<code>. \ [ ] { } ? * + | ( ) ^ $</code></li>
+<li>字符类中使用到元字符列表：<code>[ ] \ - ^</code></li>
+<li>你总是可以使用反斜杆对元字符进行转义：<code>\</code>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/blog/2014/07/02/learn-regular-expressions/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/正则表达式/">正则表达式</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://wuchong.me/blog/2014/07/02/learn-regular-expressions/#comments" class="ds-thread-count comments-count-link" data-thread-key="blog/2014/07/02/learn-regular-expressions/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2014/06/29/the-first-experience-of-mac/" title="Mac 初体验" itemprop="url">Mac 初体验</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="https://plus.google.com/111190881341800841449?rel=author" title="WuChong" target="_blank" itemprop="author">WuChong</a>
+		
+  <p class="article-time">
+    <time datetime="2014-06-29T09:03:08.000Z" itemprop="datePublished"> 发表于 2014-06-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p><img src="http://ww4.sinaimg.cn/large/81b78497jw1ehv23tcyopj21kw0zkduo.jpg" alt=""></p>
+<p>曾无比期盼在 2014 WWDC 上能见到搭载 Retina 的 air，结果竹篮打水一场空。之后 pro 的价格就扶摇直上。终于在本月17号的时候，忍不住入手了 rMBP 13 中配，用到现在也已经快两个星期了。这段时间也算是熟练了 Mac 上的基本操作，感叹苹果在追求用户体验的道路上已经领先国人不知道多少条街了。我入手的时候是买的港版总价9100元，现如今两个星期过去已经疯涨到9300了。也难怪，毕竟又一大批的高中生们马上买入校园，macbook 估计就成了首选，而且就 pro 的这款型号涨势最凶，看来大家都是奔着 Retina 去的，真是佩服我当时的明智！</p>
+<p>用了这么久，谈谈我对本本的感受把。第一感觉就是超清！我当时因为纠结买 pro 还是 air 时，特地跑到体验店体验了一下午的 Retina，最后还是毅然选择了 pro。作为一个码农，与代码和文档一起度过的时间是仅次于女朋友的，看完如此养眼的 pro 后，几乎无法接受 air 了（当然两者的定位是不一样的）。第二个感觉是外观。虽然相比 air 的性感稍逊一筹，但是 pro 整体的外观还是很惊艳的，而且方方正正更凸现男人的大气。pro 的厚度是一致的，且比 air 最厚的地方仅多1毫米，重量比 air 重 0.22 kg。因此还是很便携的。相比于我的联想本本小Y，真是不想再碰了…第三个感觉就是用户体验很好。让我印象最深刻的是触控板的设置页面居然还有高清动画的效果演示，真是把体验做到了极致。另外，多快捷键、多点触控的操作使得在 mac 上的操作变得行云流水。</p>
+<p>下面就说说我使用的这段时间觉得比较不错的一写快捷键把。<br>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/blog/2014/06/29/the-first-experience-of-mac/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LinuxUnix/">Linux/Unix</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Mac/">Mac</a><a href="/tags/生活/">生活</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://wuchong.me/blog/2014/06/29/the-first-experience-of-mac/#comments" class="ds-thread-count comments-count-link" data-thread-key="blog/2014/06/29/the-first-experience-of-mac/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+
+  <nav id="page-nav" class="clearfix">
+    <a class="extend prev" rel="prev" href="/page/3/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/">Next<span></span></a>
+  </nav>
+
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Hexo/" title="Hexo">Hexo<sup>7</sup></a></li>
+		
+			<li><a href="/categories/LinuxUnix/" title="Linux/Unix">Linux/Unix<sup>6</sup></a></li>
+		
+			<li><a href="/categories/Python/" title="Python">Python<sup>3</sup></a></li>
+		
+			<li><a href="/categories/推荐系统/" title="推荐系统">推荐系统<sup>3</sup></a></li>
+		
+			<li><a href="/categories/杂项资源/" title="杂项资源">杂项资源<sup>2</sup></a></li>
+		
+			<li><a href="/categories/程序设计/" title="程序设计">程序设计<sup>5</sup></a></li>
+		
+			<li><a href="/categories/系统架构/" title="系统架构">系统架构<sup>1</sup></a></li>
+		
+			<li><a href="/categories/编程语言/" title="编程语言">编程语言<sup>2</sup></a></li>
+		
+			<li><a href="/categories/职场生涯/" title="职场生涯">职场生涯<sup>2</sup></a></li>
+		
+			<li><a href="/categories/随笔生活/" title="随笔生活">随笔生活<sup>5</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>8</sup></a></li>
+		
+			<li><a href="/tags/面试/" title="面试">面试<sup>5</sup></a></li>
+		
+			<li><a href="/tags/Linux基础/" title="Linux基础">Linux基础<sup>5</sup></a></li>
+		
+			<li><a href="/tags/生活/" title="生活">生活<sup>4</sup></a></li>
+		
+			<li><a href="/tags/博客/" title="博客">博客<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
+		
+			<li><a href="/tags/阿里推荐大赛/" title="阿里推荐大赛">阿里推荐大赛<sup>4</sup></a></li>
+		
+			<li><a href="/tags/算法/" title="算法">算法<sup>2</sup></a></li>
+		
+			<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+		
+			<li><a href="/tags/ODPS/" title="ODPS">ODPS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/教程/" title="教程">教程<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Jacman/" title="Jacman">Jacman<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>2</sup></a></li>
+		
+			<li><a href="/tags/文件系统/" title="文件系统">文件系统<sup>2</sup></a></li>
+		
+			<li><a href="/tags/启动流程/" title="启动流程">启动流程<sup>1</sup></a></li>
+		
+			<li><a href="/tags/权限/" title="权限">权限<sup>1</sup></a></li>
+		
+			<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/jQuery/" title="jQuery">jQuery<sup>1</sup></a></li>
+		
+			<li><a href="/tags/双检锁/" title="双检锁">双检锁<sup>1</sup></a></li>
+		
+			<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            <a href="https://coderq.com" target="_blank" title="码农圈">码农圈</a>
+          </li>
+        
+          <li>
+            <a href="http://zipperary.com/" target="_blank" title="Zippera&#39;s Blog">Zippera&#39;s Blog</a>
+          </li>
+        
+          <li>
+            <a href="http://hijiangtao.github.io/" target="_blank" title="Data.Blog">Data.Blog</a>
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=2176287895&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello,I&#39;m WuChong. For now I&#39;m a graduate student in Beijing. <br/>
+			I&#39;ll share my learning experience with you at this blog.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/wuchong1014" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/wuchong" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		<a href="https://twitter.com/jarkwu" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		
+		
+		
+		
+		<a href="https://plus.google.com/111190881341800841449?rel=author" target="_blank" class="icon-google_plus" title="Google+"></a>
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2014 
+		
+		<a href="http://wuchong.me/about" target="_blank" title="WuChong">WuChong</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"wuchong"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+
+
+<!-- Analytics Begin -->
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-46321946-2', 'wuchong.me');  
+ga('send', 'pageview');
+</script>
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+  </body>
+ </html>

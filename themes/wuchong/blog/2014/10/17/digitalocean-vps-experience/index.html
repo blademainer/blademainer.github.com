@@ -1,0 +1,623 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>DigitalOcean VPS 翻墙体验 | Jark&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="WuChong">
+    
+    <meta name="description" itemprop="description" content="今天 glgoo 暂停服务了，赖以生存的 Google 曲线救国方案没了，GoAgent 又太慢，遂想折腾个 VPS 搭个代理解决科学上网的燃眉之急。DigitalOcean 作为一个 VPS 提供商新秀，以其高性价比的优势一直与高富帅的老大哥 Linode 争夺市场。最近更是在 GitHub 针对高校学生的优惠活动「GitHub Student Developer Pack」中推出免费 $100 的优惠服务，如果以最便宜的 $5/月 计算，可以用小两年了。对于长这么大还没玩过VPS的孩子来说，这诱惑太大了。用VPS来翻墙当然有点大材小用了，更多的是想在VPS架一些自己的网站（非博客）、跑些脚本、学点东西。">
+    
+    
+    <meta name="description" content="今天 glgoo 暂停服务了，赖以生存的 Google 曲线救国方案没了，GoAgent 又太慢，遂想折腾个 VPS 搭个代理解决科学上网的燃眉之急。DigitalOcean 作为一个 VPS 提供商新秀，以其高性价比的优势一直与高富帅的老大哥 Linode 争夺市场。最近更是在 GitHub 针对高校学生的优惠活动「GitHub Student Developer Pack」中推出免费 $100">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DigitalOcean VPS 翻墙体验">
+<meta property="og:url" content="http://wuchong.me/blog/2014/10/17/digitalocean-vps-experience/">
+<meta property="og:site_name" content="Jark's Blog">
+<meta property="og:description" content="今天 glgoo 暂停服务了，赖以生存的 Google 曲线救国方案没了，GoAgent 又太慢，遂想折腾个 VPS 搭个代理解决科学上网的燃眉之急。DigitalOcean 作为一个 VPS 提供商新秀，以其高性价比的优势一直与高富帅的老大哥 Linode 争夺市场。最近更是在 GitHub 针对高校学生的优惠活动「GitHub Student Developer Pack」中推出免费 $100">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/81b78497jw1eldy44qjgcj20hu06b0u4.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/81b78497jw1eleh03z0fij20n006g3za.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/mw690/81b78497jw1elejn2ajctj21040rs0vb.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/mw690/81b78497tw1elejwjkbxij216g0x6qdd.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DigitalOcean VPS 翻墙体验">
+<meta name="twitter:description" content="今天 glgoo 暂停服务了，赖以生存的 Google 曲线救国方案没了，GoAgent 又太慢，遂想折腾个 VPS 搭个代理解决科学上网的燃眉之急。DigitalOcean 作为一个 VPS 提供商新秀，以其高性价比的优势一直与高富帅的老大哥 Linode 争夺市场。最近更是在 GitHub 针对高校学生的优惠活动「GitHub Student Developer Pack」中推出免费 $100">
+<meta name="twitter:creator" content="@jarkwu">
+<link rel="publisher" href="111190881341800841449">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Jark&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Jark&#39;s Blog" title="Jark&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Jark&#39;s Blog">Jark&#39;s Blog</a></h1>
+				<h2 class="blog-motto">当你的才华还撑不起你的野心时，你就应该静下心来学习。</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+						<form class="search" action="http://zhannei.baidu.com/cse/search" target="_blank">
+							<label>Search</label>
+						<input name="s" type="hidden" value= 783281470518440642 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2014/10/17/digitalocean-vps-experience/" title="DigitalOcean VPS 翻墙体验" itemprop="url">DigitalOcean VPS 翻墙体验</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="https://plus.google.com/111190881341800841449?rel=author" title="WuChong" target="_blank" itemprop="author">WuChong</a>
+		
+  <p class="article-time">
+    <time datetime="2014-10-17T04:31:18.000Z" itemprop="datePublished"> 发表于 2014-10-17</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一个VPS"><span class="toc-number">1.</span> <span class="toc-text">第一个VPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ShadowSocks_翻墙"><span class="toc-number">2.</span> <span class="toc-text">ShadowSocks 翻墙</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后台运行"><span class="toc-number">3.</span> <span class="toc-text">后台运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后记"><span class="toc-number">4.</span> <span class="toc-text">后记</span></a></li></ol>
+		
+		</div>
+		
+		<p>今天 <a href="https://www.glgoo.com/" target="_blank" rel="external">glgoo</a> 暂停服务了，赖以生存的 Google 曲线救国方案没了，GoAgent 又太慢，遂想折腾个 VPS 搭个代理解决科学上网的燃眉之急。</p>
+<p><img src="http://ww2.sinaimg.cn/large/81b78497jw1eldy44qjgcj20hu06b0u4.jpg" alt=""></p>
+<p><a href="https://www.digitalocean.com/?refcode=54668030e22a" target="_blank" rel="external">DigitalOcean</a> 作为一个 VPS 提供商新秀，以其高性价比的优势一直与高富帅的老大哥 Linode 争夺市场。最近更是在 GitHub 针对高校学生的优惠活动「<a href="https://education.github.com/pack/" target="_blank" rel="external">GitHub Student Developer Pack</a>」中推出免费 $100 的优惠服务，如果以最便宜的 $5/月 计算，可以用小两年了。对于长这么大还没玩过VPS的孩子来说，这诱惑太大了。用VPS来翻墙当然有点大材小用了，更多的是想在VPS架一些自己的网站（非博客）、跑些脚本、学点东西。<br><a id="more"></a></p>
+<p>但是对于普通学生来说要拿到这100刀还是比较麻烦的。首先，你得有个 GtiHub 账号，并且验证了你的 edu 邮箱（之前笔者在 GitHub 推出学生免费私人仓库时已经验证过了，再次感谢GitHub）。然后点击<a href="https://education.github.com/pack/" target="_blank" rel="external">GitHub Student Developer Pack</a> 活动页面中「Get your pack」按钮，就可以看到合作产品的优惠活动了，这里包括了来自 NameCheap 的免费 .ME 域名，再次推荐。</p>
+<p><img src="http://ww1.sinaimg.cn/large/81b78497jw1eleh03z0fij20n006g3za.jpg" alt=""></p>
+<p>通过上图的链接和邀请码注册后，就可看到100刀了，但是还需要绑定个人信用卡或者使用 Paypal 支付5刀才能激活。前者可以用财付通的<a href="https://www.tenpay.com/v2/account/interna/index.shtml" target="_blank" rel="external">运通虚拟国际卡</a>，但是目前已经不开放申请了。所以就用Paypal支付5刀吧。Paypal的激活就此略过。这之后就顺利的拿到 $105 了。</p>
+<h2 id="第一个VPS">第一个VPS</h2>
+<p>接着就能快速创建VPS了，选择 $5/月的足矣，机房最好选在旧金山，DigitalOcean 美国西海岸机房速度还是非常优秀的，比纽约的要好，千万不能选新加坡，因为貌似还没有国内专线所以速度不敢恭维。如果已经创建了你的 Droplet 又想换机房，可以参考<a href="http://www.laozuo.org/3907.html" target="_blank" rel="external">这篇博客</a>。完成后便会收到含有主机 IP、登陆账户、密码的邮件。</p>
+<p>在 Mac/Linux 上可以直接在终端 ssh 到 VPS。Windows 的话我使用的 <a href="http://www.putty.org/" target="_blank" rel="external">PuTTY</a>。接着你就可以操控你的 VPS 了。 </p>
+<h2 id="ShadowSocks_翻墙">ShadowSocks 翻墙</h2>
+<p>ShadowSocks 说自己是一个「可穿透防火墙的轻量代理」。OK！这正是我想要的，能满足我科学上网的需求就够了。ShadowSocks 的 GitHub Wiki 主页上已经有详细的<a href="https://github.com/clowwindy/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E" target="_blank" rel="external">中文使用说明</a>了。但作为搬运工，还是简要说明下吧。</p>
+<p>1.在服务端安装 shadowsocks 库</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>apt-get <span class="keyword">install</span> python-pip
+pip <span class="keyword">install</span> shadowsocks
+</pre></td></tr></table></figure>
+
+<p>2.创建配置文件<code>/etc/shadowsocks.json</code>。示例：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="code"><pre>{
+    "<span class="attribute">server</span>":<span class="value"><span class="string">"服务器 IP 地址"</span></span>,
+    "<span class="attribute">server_port</span>":<span class="value"><span class="number">8388</span></span>,
+    "<span class="attribute">local_address</span>": <span class="value"><span class="string">"127.0.0.1"</span></span>,
+    "<span class="attribute">local_port</span>":<span class="value"><span class="number">1080</span></span>,
+    "<span class="attribute">password</span>":<span class="value"><span class="string">"mypassword"</span></span>,
+    "<span class="attribute">timeout</span>":<span class="value"><span class="number">300</span></span>,
+    "<span class="attribute">method</span>":<span class="value"><span class="string">"aes-256-cfb"</span></span>,
+    "<span class="attribute">fast_open</span>": <span class="value"><span class="literal">false</span></span>,
+    "<span class="attribute">workers</span>": <span class="value"><span class="number">1</span>
+</span>}
+</pre></td></tr></table></figure><br>上述配置，只需要修改<code>server</code>和<code>password</code>，其他默认即可。<br><br>在服务器上运行 <code>ssserver -c /etc/shadowsocks.json</code> 即可。如果要在后台运行， 请使用 <a href="#后台运行">SuperVisor</a>.<br><br>3.在 Mac/Windows 推荐使用客户端 <a href="https://github.com/shadowsocks/shadowsocks-gui" target="_blank" rel="external">Shadowsocks GUI</a> 连接代理。配置也非常简单，注意server ip 和 password 改成自己的。<br><br><img src="http://ww2.sinaimg.cn/mw690/81b78497jw1elejn2ajctj21040rs0vb.jpg" alt=""><br><br>Mac 端的启动后可以自动实现全局翻墙，并根据 GFWList 区分墙内外流量。Windows 端的需要配合浏览器代理一起使用，Chrome 的话推荐 <a href="https://chrome.google.com/webstore/detail/proxy-switchysharp/dpplabbmogkhghncfbfdeeokoefdjegm" target="_blank" rel="external">SwitchySharp</a>切换代理设置。把浏览器代理设为下列参数即可：<br><br><figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>协议: socks5
+地址: 127.0.0.1
+端口: 你填的 local_port
+</pre></td></tr></table></figure>
+
+<p>如果无法安装 SwitchySharp，可以先用下列参数启动 Chrome，强制它使用代理：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>Chrome<span class="built_in">.</span>exe <span class="subst">--</span>proxy<span class="attribute">-server</span><span class="subst">=</span><span class="string">"socks5://127.0.0.1:1080"</span> <span class="subst">--</span>host<span class="attribute">-resolver</span><span class="attribute">-rules</span><span class="subst">=</span><span class="string">"MAP * 0.0.0.0 , EXCLUDE localhost"</span>
+</pre></td></tr></table></figure>
+
+<p>移动端也可以参考<a href="https://github.com/clowwindy/shadowsocks/wiki/Ports-and-Clients" target="_blank" rel="external">Ports and Clients</a>下载对应软件。但是只能在其内置浏览器中翻墙，所以移动端上 ShadowSocks 就不如 VPN 方便。</p>
+<p>4.完成</p>
+<h2 id="后台运行">后台运行</h2>
+<p>如果要在后台运行，请使用 <a href="https://github.com/clowwindy/shadowsocks/wiki/%E7%94%A8-Supervisor-%E8%BF%90%E8%A1%8C-Shadowsocks" target="_blank" rel="external">supervisor</a>。</p>
+<p>执行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>apt<span class="attribute">-get</span> update
+apt<span class="attribute">-get</span> install python<span class="attribute">-pip</span> python<span class="attribute">-m2crypto</span> supervisor
+pip install shadowsocks
+</pre></td></tr></table></figure>
+
+<p>编辑 <code>/etc/supervisor/conf.d/shadowsocks.conf</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="title">[program:shadowsocks]</span>
+<span class="setting">command=<span class="value">ssserver -c /etc/shadowsocks.json</span></span>
+<span class="setting">autorestart=<span class="value"><span class="keyword">true</span></span></span>
+<span class="setting">user=<span class="value">nobody</span></span>
+</pre></td></tr></table></figure>
+
+<p>在 <code>/etc/default/supervisor</code> 最后加一行：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>ulimit <span class="attribute">-n</span> <span class="number">51200</span>
+</pre></td></tr></table></figure>
+
+<p>执行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>service supervisor <span class="operator"><span class="keyword">start</span>
+supervisorctl reload</span>
+</pre></td></tr></table></figure>
+
+<p>如果遇到问题，可以检查日志：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>supervisorctl tail <span class="operator">-f</span> shadowsocks stderr
+</pre></td></tr></table></figure>
+
+<p>如果修改了 shadowsocks 配置 <code>/etc/shadowsocks.json</code>， 可以重启 shadowsocks：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>supervisorctl restart shadowsocks
+</pre></td></tr></table></figure>
+
+<p>如果修改了 Supervisor 的配置文件 /etc/supervisor/*， 可以更新 supervisor 配置：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>supervisorctl <span class="operator"><span class="keyword">update</span></span>
+</pre></td></tr></table></figure>
+
+<p>最后看看效果，访问 Google 和 Youtube 的速度如下：</p>
+<p><img src="http://ww1.sinaimg.cn/mw690/81b78497tw1elejwjkbxij216g0x6qdd.jpg" alt=""></p>
+<p>总体很满意，打开 Google 秒开，校园网看 Youtube 1080视频无压力。用来科学上网绝对是没问题了。甩 GoAgent 好几条街了。</p>
+<h2 id="后记">后记</h2>
+<p>DigitalOcean VPS + ShadowSocks 能基本满足翻墙的需求了。但是我说了用 VPS 来翻墙就大材小用了，如果你只是为了翻墙，或者你不是程序员，看到 VPS 什么的就头大，那最好的办法就是买个 VPN ，方便实惠速度又快。在这里我比较推荐 <a href="http://ugetvpn.com/?r=10ccb0196cc0a49b" target="_blank" rel="external">云梯VPN</a>，算是国内比较出色的一款服务，最低10元/月，基本上国外网站都是秒开，看Youtube视频无压力，配置安装基本都傻瓜一键式，覆盖多平台（我这么做广告，是不是应该给点广告费啊）。唯一要吐槽的就是居然只有包年套餐！</p>
+<p>需要的可以走这里：<a href="http://ugetvpn.com/?r=10ccb0196cc0a49b" target="_blank" rel="external">云梯VPN</a>。线路推荐使用新加坡1号。</p>
+<p>-EOF-</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/杂项资源/">杂项资源</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/翻墙/">翻墙</a><a href="/tags/VPS/">VPS</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://wuchong.me/blog/2014/10/17/digitalocean-vps-experience/" data-title="DigitalOcean VPS 翻墙体验 | Jark&#39;s Blog" data-tsina="2176287895" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/blog/2014/10/31/10-interesting-java-projects-you-can-contribute-and-learn/" title="【译】10个你能参与并学习的Java开源项目">
+  <strong>上一篇：</strong><br/>
+  <span>
+  【译】10个你能参与并学习的Java开源项目</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/blog/2014/09/30/looking-for-a-job-summary/"  title="找工作小记——善待挫折">
+ <strong>下一篇：</strong><br/> 
+ <span>找工作小记——善待挫折
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="blog/2014/10/17/digitalocean-vps-experience/" data-title="DigitalOcean VPS 翻墙体验" data-url="http://wuchong.me/blog/2014/10/17/digitalocean-vps-experience/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Hexo/" title="Hexo">Hexo<sup>7</sup></a></li>
+		
+			<li><a href="/categories/LinuxUnix/" title="Linux/Unix">Linux/Unix<sup>6</sup></a></li>
+		
+			<li><a href="/categories/Python/" title="Python">Python<sup>3</sup></a></li>
+		
+			<li><a href="/categories/推荐系统/" title="推荐系统">推荐系统<sup>3</sup></a></li>
+		
+			<li><a href="/categories/杂项资源/" title="杂项资源">杂项资源<sup>2</sup></a></li>
+		
+			<li><a href="/categories/程序设计/" title="程序设计">程序设计<sup>5</sup></a></li>
+		
+			<li><a href="/categories/系统架构/" title="系统架构">系统架构<sup>1</sup></a></li>
+		
+			<li><a href="/categories/编程语言/" title="编程语言">编程语言<sup>2</sup></a></li>
+		
+			<li><a href="/categories/职场生涯/" title="职场生涯">职场生涯<sup>2</sup></a></li>
+		
+			<li><a href="/categories/随笔生活/" title="随笔生活">随笔生活<sup>5</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>8</sup></a></li>
+		
+			<li><a href="/tags/面试/" title="面试">面试<sup>5</sup></a></li>
+		
+			<li><a href="/tags/Linux基础/" title="Linux基础">Linux基础<sup>5</sup></a></li>
+		
+			<li><a href="/tags/生活/" title="生活">生活<sup>4</sup></a></li>
+		
+			<li><a href="/tags/博客/" title="博客">博客<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
+		
+			<li><a href="/tags/阿里推荐大赛/" title="阿里推荐大赛">阿里推荐大赛<sup>4</sup></a></li>
+		
+			<li><a href="/tags/算法/" title="算法">算法<sup>2</sup></a></li>
+		
+			<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+		
+			<li><a href="/tags/ODPS/" title="ODPS">ODPS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/教程/" title="教程">教程<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Jacman/" title="Jacman">Jacman<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>2</sup></a></li>
+		
+			<li><a href="/tags/文件系统/" title="文件系统">文件系统<sup>2</sup></a></li>
+		
+			<li><a href="/tags/启动流程/" title="启动流程">启动流程<sup>1</sup></a></li>
+		
+			<li><a href="/tags/权限/" title="权限">权限<sup>1</sup></a></li>
+		
+			<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/jQuery/" title="jQuery">jQuery<sup>1</sup></a></li>
+		
+			<li><a href="/tags/双检锁/" title="双检锁">双检锁<sup>1</sup></a></li>
+		
+			<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            <a href="https://coderq.com" target="_blank" title="码农圈">码农圈</a>
+          </li>
+        
+          <li>
+            <a href="http://zipperary.com/" target="_blank" title="Zippera&#39;s Blog">Zippera&#39;s Blog</a>
+          </li>
+        
+          <li>
+            <a href="http://hijiangtao.github.io/" target="_blank" title="Data.Blog">Data.Blog</a>
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=2176287895&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello,I&#39;m WuChong. For now I&#39;m a graduate student in Beijing. <br/>
+			I&#39;ll share my learning experience with you at this blog.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/wuchong1014" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/wuchong" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		<a href="https://twitter.com/jarkwu" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		
+		
+		
+		
+		<a href="https://plus.google.com/111190881341800841449?rel=author" target="_blank" class="icon-google_plus" title="Google+"></a>
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2014 
+		
+		<a href="http://wuchong.me/about" target="_blank" title="WuChong">WuChong</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"wuchong"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-46321946-2', 'wuchong.me');  
+ga('send', 'pageview');
+</script>
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+  </body>
+</html>

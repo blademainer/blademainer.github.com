@@ -1,0 +1,562 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>正则表达式学习 | Jark&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="WuChong">
+    
+    <meta name="description" itemprop="description" content="最近在看鸟哥 Linux，看到正则表达式这块，以前看到这些恐怖的字符总是觉得恶心，今天就咬牙系统的学习了下正则表达式。然后有了这篇笔记。主要总结正则表达式的一些关键知识点。">
+    
+    
+    <meta name="description" content="最近在看鸟哥 Linux，看到正则表达式这块，以前看到这些恐怖的字符总是觉得恶心，今天就咬牙系统的学习了下正则表达式。然后有了这篇笔记。主要总结正则表达式的一些关键知识点。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式学习">
+<meta property="og:url" content="http://wuchong.me/blog/2014/07/02/learn-regular-expressions/">
+<meta property="og:site_name" content="Jark's Blog">
+<meta property="og:description" content="最近在看鸟哥 Linux，看到正则表达式这块，以前看到这些恐怖的字符总是觉得恶心，今天就咬牙系统的学习了下正则表达式。然后有了这篇笔记。主要总结正则表达式的一些关键知识点。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="正则表达式学习">
+<meta name="twitter:description" content="最近在看鸟哥 Linux，看到正则表达式这块，以前看到这些恐怖的字符总是觉得恶心，今天就咬牙系统的学习了下正则表达式。然后有了这篇笔记。主要总结正则表达式的一些关键知识点。">
+<meta name="twitter:creator" content="@jarkwu">
+<link rel="publisher" href="111190881341800841449">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Jark&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Jark&#39;s Blog" title="Jark&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Jark&#39;s Blog">Jark&#39;s Blog</a></h1>
+				<h2 class="blog-motto">当你的才华还撑不起你的野心时，你就应该静下心来学习。</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+						<form class="search" action="http://zhannei.baidu.com/cse/search" target="_blank">
+							<label>Search</label>
+						<input name="s" type="hidden" value= 783281470518440642 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2014/07/02/learn-regular-expressions/" title="正则表达式学习" itemprop="url">正则表达式学习</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="https://plus.google.com/111190881341800841449?rel=author" title="WuChong" target="_blank" itemprop="author">WuChong</a>
+		
+  <p class="article-time">
+    <time datetime="2014-07-02T09:43:45.000Z" itemprop="datePublished"> 发表于 2014-07-02</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<p>最近在看鸟哥 Linux，看到正则表达式这块，以前看到这些恐怖的字符总是觉得恶心，今天就咬牙系统的学习了下正则表达式。然后有了这篇笔记。主要总结正则表达式的一些关键知识点。</p>
+<ul>
+<li>字面值：<code>a b c d 1 2 3 4</code> 等等。</li>
+<li>字符类：<code>. [abc] [a-z] \d \w \s</code><ul>
+<li><code>.</code> 表示“任何字符”</li>
+<li><code>[abc]</code>  括号表示“找到集合里任意一个字符”。</li>
+<li><code>\d</code> 表示“一个数字”，等同于<code>[0-9]</code></li>
+<li><code>\w</code> 表示“一个单词字符”，等同于<code>[0-9A-Za-z_]</code></li>
+<li><code>\s</code> 表示“一个空格，tab，回车或一个换行符”</li>
+<li>否定字符类：<code>[^abc] \D \W \S</code></li>
+</ul>
+</li>
+<li>乘法器：<code>{4} {3,16} {1,} ? * +</code><ul>
+<li><code>{3,16}</code> 表示找到重复 3 到 16 个前一个正则字符</li>
+<li><code>?</code> 表示“没有或一个”</li>
+<li><code>*</code> 表示“没有或多个”</li>
+<li><code>+</code> 表示“一个或多个”</li>
+<li>乘法器是贪婪的除非你在之后使用 <code>?</code> , 即优先找到最长的</li>
+</ul>
+</li>
+<li>分支和组合：  <code>(Septem|Octo|Novem|Decem)ber</code><ul>
+<li>管道符号 <code>|</code> 表示“或”</li>
+<li>圆括号表示组合 ，比如 在一周中找到一天，使用 <code>(Mon|Tues|Wednes|Thurs|Fri|Satur|Sun)day</code>。</li>
+</ul>
+</li>
+<li>词、行和文本边界： <ul>
+<li><code>\b</code> 表示词边界  </li>
+<li><code>^</code> 表示行开始 </li>
+<li><code>$</code> 表示行结束</li>
+<li><code>^$</code> 表示的就是空白行了</li>
+</ul>
+</li>
+<li><p>反向捕获组：<code>\1 \2 \3</code> 等等。捕获组从左到右进行编号，只要计算左圆括号。（在替换表达式和匹配表达式中同时生效） </p>
+<ul>
+<li><p>比如有一段字符，我们需要前面的横杠去掉，尾巴的数字去掉， 英文句号换成中文顿号</p>
+<p><figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>-<span class="ruby"><span class="number">1</span>.文章标题<span class="number">1</span>
+</span>-<span class="ruby"><span class="number">2</span>.文章标题<span class="number">2</span>
+</span>-<span class="ruby"><span class="number">3</span>.文章标题<span class="number">3</span>
+</span>-<span class="ruby"><span class="number">4</span>.文章标题<span class="number">4</span>
+</span>-<span class="ruby"><span class="number">51</span>.文章标题<span class="number">5</span></span>
+</pre></td></tr></table></figure><br>则可以使用正则表达式 <code>-(\d{1,})\.(.*)\d</code> 来匹配。然后使用 <code>\1、\2</code> 来替换。</p>
+</li>
+</ul>
+</li>
+<li><p>向后引用： 在同样的表达式中引用同一个捕获组。</p>
+<ul>
+<li>表达式 <code>(xi)\1(ha)\2</code>  能匹配 <code>xixihaha</code></li>
+</ul>
+</li>
+<li>元字符列表：<code>. \ [ ] { } ? * + | ( ) ^ $</code></li>
+<li>字符类中使用到元字符列表：<code>[ ] \ - ^</code></li>
+<li>你总是可以使用反斜杆对元字符进行转义：<code>\</code><a id="more"></a>
+
+</li>
+</ul>
+<h2 id="参考资料：">参考资料：</h2>
+<p><a href="http://www.regexr.com/" target="_blank" rel="external">RegExr</a>：一款在线学习、构建和测试正则表达式的工具<br><a href="http://tryregex.com/" target="_blank" rel="external">TRY REGEX</a>：交互式正则表达式的教学网站<br><a href="http://doslin.com/learn-regular-expressions-in-about-55-minutes/" target="_blank" rel="external">55分钟学会正则表达式</a>：很好的入门文章</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/正则表达式/">正则表达式</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://wuchong.me/blog/2014/07/02/learn-regular-expressions/" data-title="正则表达式学习 | Jark&#39;s Blog" data-tsina="2176287895" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/blog/2014/07/14/linux-boot-process/" title="Linux基础：启动流程">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Linux基础：启动流程</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/blog/2014/06/29/the-first-experience-of-mac/"  title="Mac 初体验">
+ <strong>下一篇：</strong><br/> 
+ <span>Mac 初体验
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="blog/2014/07/02/learn-regular-expressions/" data-title="正则表达式学习" data-url="http://wuchong.me/blog/2014/07/02/learn-regular-expressions/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Hexo/" title="Hexo">Hexo<sup>7</sup></a></li>
+		
+			<li><a href="/categories/LinuxUnix/" title="Linux/Unix">Linux/Unix<sup>6</sup></a></li>
+		
+			<li><a href="/categories/Python/" title="Python">Python<sup>3</sup></a></li>
+		
+			<li><a href="/categories/推荐系统/" title="推荐系统">推荐系统<sup>3</sup></a></li>
+		
+			<li><a href="/categories/杂项资源/" title="杂项资源">杂项资源<sup>2</sup></a></li>
+		
+			<li><a href="/categories/程序设计/" title="程序设计">程序设计<sup>5</sup></a></li>
+		
+			<li><a href="/categories/系统架构/" title="系统架构">系统架构<sup>1</sup></a></li>
+		
+			<li><a href="/categories/编程语言/" title="编程语言">编程语言<sup>2</sup></a></li>
+		
+			<li><a href="/categories/职场生涯/" title="职场生涯">职场生涯<sup>2</sup></a></li>
+		
+			<li><a href="/categories/随笔生活/" title="随笔生活">随笔生活<sup>5</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>8</sup></a></li>
+		
+			<li><a href="/tags/面试/" title="面试">面试<sup>5</sup></a></li>
+		
+			<li><a href="/tags/Linux基础/" title="Linux基础">Linux基础<sup>5</sup></a></li>
+		
+			<li><a href="/tags/生活/" title="生活">生活<sup>4</sup></a></li>
+		
+			<li><a href="/tags/博客/" title="博客">博客<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
+		
+			<li><a href="/tags/阿里推荐大赛/" title="阿里推荐大赛">阿里推荐大赛<sup>4</sup></a></li>
+		
+			<li><a href="/tags/算法/" title="算法">算法<sup>2</sup></a></li>
+		
+			<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+		
+			<li><a href="/tags/ODPS/" title="ODPS">ODPS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/教程/" title="教程">教程<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Jacman/" title="Jacman">Jacman<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>2</sup></a></li>
+		
+			<li><a href="/tags/文件系统/" title="文件系统">文件系统<sup>2</sup></a></li>
+		
+			<li><a href="/tags/启动流程/" title="启动流程">启动流程<sup>1</sup></a></li>
+		
+			<li><a href="/tags/权限/" title="权限">权限<sup>1</sup></a></li>
+		
+			<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/jQuery/" title="jQuery">jQuery<sup>1</sup></a></li>
+		
+			<li><a href="/tags/双检锁/" title="双检锁">双检锁<sup>1</sup></a></li>
+		
+			<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            <a href="https://coderq.com" target="_blank" title="码农圈">码农圈</a>
+          </li>
+        
+          <li>
+            <a href="http://zipperary.com/" target="_blank" title="Zippera&#39;s Blog">Zippera&#39;s Blog</a>
+          </li>
+        
+          <li>
+            <a href="http://hijiangtao.github.io/" target="_blank" title="Data.Blog">Data.Blog</a>
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=2176287895&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello,I&#39;m WuChong. For now I&#39;m a graduate student in Beijing. <br/>
+			I&#39;ll share my learning experience with you at this blog.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/wuchong1014" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/wuchong" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		<a href="https://twitter.com/jarkwu" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		
+		
+		
+		
+		<a href="https://plus.google.com/111190881341800841449?rel=author" target="_blank" class="icon-google_plus" title="Google+"></a>
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2014 
+		
+		<a href="http://wuchong.me/about" target="_blank" title="WuChong">WuChong</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"wuchong"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-46321946-2', 'wuchong.me');  
+ga('send', 'pageview');
+</script>
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+  </body>
+</html>

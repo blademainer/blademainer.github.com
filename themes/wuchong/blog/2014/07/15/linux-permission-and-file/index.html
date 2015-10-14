@@ -1,0 +1,577 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Linux基础：权限与文件 | Jark&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="WuChong">
+    
+    <meta name="description" itemprop="description" content="Linux 是一个多用户、多任务的系统，多用户之间的权限是通过 user、group、other 三种身份管理的。而权限又与文件密不可分，所以将这两块结合起来阐述了。">
+    
+    
+    <meta name="description" content="Linux 是一个多用户、多任务的系统，多用户之间的权限是通过 user、group、other 三种身份管理的。而权限又与文件密不可分，所以将这两块结合起来阐述了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux基础：权限与文件">
+<meta property="og:url" content="http://wuchong.me/blog/2014/07/15/linux-permission-and-file/">
+<meta property="og:site_name" content="Jark's Blog">
+<meta property="og:description" content="Linux 是一个多用户、多任务的系统，多用户之间的权限是通过 user、group、other 三种身份管理的。而权限又与文件密不可分，所以将这两块结合起来阐述了。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux基础：权限与文件">
+<meta name="twitter:description" content="Linux 是一个多用户、多任务的系统，多用户之间的权限是通过 user、group、other 三种身份管理的。而权限又与文件密不可分，所以将这两块结合起来阐述了。">
+<meta name="twitter:creator" content="@jarkwu">
+<link rel="publisher" href="111190881341800841449">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Jark&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Jark&#39;s Blog" title="Jark&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Jark&#39;s Blog">Jark&#39;s Blog</a></h1>
+				<h2 class="blog-motto">当你的才华还撑不起你的野心时，你就应该静下心来学习。</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+						<form class="search" action="http://zhannei.baidu.com/cse/search" target="_blank">
+							<label>Search</label>
+						<input name="s" type="hidden" value= 783281470518440642 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2014/07/15/linux-permission-and-file/" title="Linux基础：权限与文件" itemprop="url">Linux基础：权限与文件</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="https://plus.google.com/111190881341800841449?rel=author" title="WuChong" target="_blank" itemprop="author">WuChong</a>
+		
+  <p class="article-time">
+    <time datetime="2014-07-15T05:15:25.000Z" itemprop="datePublished"> 发表于 2014-07-15</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#用户与用户组"><span class="toc-number">1.</span> <span class="toc-text">用户与用户组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件属性"><span class="toc-number">2.</span> <span class="toc-text">文件属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#改变文件属性和权限"><span class="toc-number">3.</span> <span class="toc-text">改变文件属性和权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#默认权限umask"><span class="toc-number">4.</span> <span class="toc-text">默认权限umask</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="用户与用户组">用户与用户组</h2>
+<p>Linux 是一个多用户、多任务的系统，常常有多人同时使用一台机工作，为了保护每个人的隐私权，“文件所有者”的角色就显得相当重要了。</p>
+<p>当Linux用户登录系统之后，就会携带一个用户身份（User ID，UID）和一个用户组身份（Group ID，GID），相当于自己的名片。当需要访问文件或程序时，刷一下名片就能知道是否能读、写、执行了。</p>
+<p>一般来说，Linux的用户信息保存在<code>/etc/passwd</code>中，组信息保存在<code>/etc/group</code>中，文件的每一行代表一个用户/组。早期的Linux将密码以明文的形式保存在<code>/etc/passwd</code>中，而现在则多以暗码(也就是加密之后的形式)的形式保存在<code>/etc/shadow</code>中。将密码存储在<code>/etc/shadow</code>中提高了密码的安全性，因为<code>/etc/passwd</code>允许所有人查看，而<code>/etc/shadow</code>只允许root用户查看。</p>
+<p><a id="more"></a></p>
+<h2 id="文件属性">文件属性</h2>
+<p>要了解Linux的权限控制就必须学习Linux的文件权限和属性。可以用ls命令查询文件信息（<code>$ls -l</code>），得到如下结果：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre>$ ls -l  ~/input
+总用量 36
+drwxrwxr-x   2   wuchong wuchong  4096 7月 10 21:45 ./
+drwxr-xr-x   30  wuchong wuchong  4096 7月 12 08:58 ../
+-rw-rw-r--   1   wuchong wuchong  46   6月 16 20:31 a.txt
+lrwxrwxrwx   1   wuchong wuchong  4    6月 16 16:03 b.txt -&gt; a.txt
+[<span class="link_label">  权限  </span>][<span class="link_reference">连接数</span>][<span class="link_label">拥有者</span>][<span class="link_reference">用户组</span>][<span class="link_label">文件容量</span>][<span class="link_reference"> 修改日期 </span>] [文件名]
+</pre></td></tr></table></figure>
+
+<p>我们以 a.txt 文件为例介绍各个部分的含义：</p>
+<ol>
+<li>第一列代表文件权限。它由十个字符组成。首先介绍第一个字符的<code>-</code>，它表示文件类型，说明 a.txt 是常规文件(如果是目录文件则应显示 d，如果是 l 则是软链接文件)。随后有九个字符，为<code>rw-rw-r--</code>，它们用于表示文件权限。这九个字符分为三组，<code>rw-</code>,<code>rw-</code>, <code>r--</code>，分别对应拥有者(owner)，所属用户组(owner group)和所有其他人(other)。回顾  <a href="http://wuchong.me/blog/2014/07/14/linux-boot-process/" target="_blank" rel="external">Linux 的启动流程</a>，登录后，我们会有一个用户身份和一个组身份, 相当于我的身份证。第一组表示，如果我的身份证上的用户身份证明我是该文件的拥有者，那么我就可以对该文件有读取(r)，写入(w)该文件的权限，但不拥有执行(x)该文件的权限。如果不拥有某项权限，会在对应的位置上出现减号(-)。第二组表示，如果我的名片上的组身份证明我所在的组是该文件的所属用户组的一员，那么我有从该文件读入和写入的权限。第三组表示，如果我的名片显示我既不是拥有者，也不是拥有组的一员，那么我只有读入的权限。当我想要进行一个读取操作时，Linux会先看我是否是拥有者。</li>
+<li>第二列代表有多少文件名连接到此节点（i-node）。每个文件都将它的权限和属性记录到文件系统的 inode 中，不过文件名却是存放在目录文件中的。因此会有多个文件名连接到一个 inode 的情况，这就是硬链接，而该列就是指的硬链接数。</li>
+<li>第三列表示这个文件（或目录）的拥有者。</li>
+<li>第四列表示这个文件（或目录）的所属用户组。</li>
+<li>第五列表示这个文件的大小，单位为字节（byte）。其中软链接文件（上面的 b.txt 文件）的大小正好是目标文件的字符数。至于目录也是一种文件，有趣的是大部分目录所占的大小都是 1K、2K、4K 的倍数。</li>
+<li>第六列表示文件的最近修改时间。其实文件属性中还包括创建时间和最近读取时间，只是并未显示出来。</li>
+<li>第七列为该文件的文件名。</li>
+</ol>
+<h2 id="改变文件属性和权限">改变文件属性和权限</h2>
+<p>我们已经知道文件权限对于一个系统的重要性了，但如何对文件的属性和权限进行修改呢？这里主要用到三个命令：<code>chgrp</code>、<code>chown</code>、<code>chmod</code>，分别对应修改用户组、拥有者和文件权限。</p>
+<ul>
+<li>改变所属用户组：chgrp<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre><span class="variable">$ </span>chgrp 组名  文件或目录
+<span class="variable">$ </span>chgrp users a.txt
+</pre></td></tr></table></figure></li>
+<li>改变文件所有者：chown<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="variable">$ </span>chown 账号名称 文件或目录
+<span class="variable">$ </span>chown 账号名称<span class="symbol">:</span>组名 文件或目录
+<span class="variable">$ </span>chown <span class="symbol">root:</span>root a.txt
+</pre></td></tr></table></figure></li>
+<li>改变文件权限：chmod<br>Linux中的每种身份（own、group、other）拥有一个权限三元组（rwx）。每一个权限组可以用一个三位的二进制来表示，拥有对应权限的则在相应位上置1。例如<code>-rw-rw-r--</code>即代表 664 的意思。如果我们想将该文件改成<code>-rwxrwx---</code>的权限，就将其权限分数改成 770 即可。<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>$ chmod <span class="number">770</span> <span class="operator">a</span>.txt
+$ ls -l <span class="operator">a</span>.txt
+-rwxrwx<span class="comment">---  1 root root 46  6月 16 20:31 a.txt</span>
+</pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="默认权限umask">默认权限umask</h2>
+<p>当我们创建文件的时候，比如使用<code>touch</code>，它会尝试将新建文件创建为权限666，也就是 rw-rw-rw-。但操作系统要参照权限 mask 来看是否真正将文件创建为666。权限 mask 表示操作系统不允许设置的权限位，比如说037(——wxrwx)的权限  mask 意味着不允许设置设置 group 的 wx 位和 other 的 rwx 位。如果是这个权限 mask 的话，最终的文件权限是 rw-r——- ( group 的 w 位和 other 的 rw 位被 mask )。</p>
+<p>我们可以通过</p>
+<p><figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="variable">$umask</span> <span class="number">022</span>
+</pre></td></tr></table></figure><br>的方式改变权限mask。仅输入<code>umask</code>是查询默认 mask 的意思。</p>
+<h2 id="总结">总结</h2>
+<p>Linux 中的权限管理非常复杂，尤其是涉及进程的时候，有时会有权限的切换。这部分待到以后再说。不过Linux的权限管理都是基于文件的属性和权限的，因此学习了解 Linux 的文件系统非常重要。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="http://book.douban.com/subject/4889838/" target="_blank" rel="external">鸟哥的Linux私房菜.基础学习篇</a></li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LinuxUnix/">Linux/Unix</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Linux基础/">Linux基础</a><a href="/tags/权限/">权限</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://wuchong.me/blog/2014/07/15/linux-permission-and-file/" data-title="Linux基础：权限与文件 | Jark&#39;s Blog" data-tsina="2176287895" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/blog/2014/07/16/use-python-login-borrow-account/" title="用Python模拟登录“借”上网帐号">
+  <strong>上一篇：</strong><br/>
+  <span>
+  用Python模拟登录“借”上网帐号</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/blog/2014/07/14/linux-boot-process/"  title="Linux基础：启动流程">
+ <strong>下一篇：</strong><br/> 
+ <span>Linux基础：启动流程
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="blog/2014/07/15/linux-permission-and-file/" data-title="Linux基础：权限与文件" data-url="http://wuchong.me/blog/2014/07/15/linux-permission-and-file/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Hexo/" title="Hexo">Hexo<sup>7</sup></a></li>
+		
+			<li><a href="/categories/LinuxUnix/" title="Linux/Unix">Linux/Unix<sup>6</sup></a></li>
+		
+			<li><a href="/categories/Python/" title="Python">Python<sup>3</sup></a></li>
+		
+			<li><a href="/categories/推荐系统/" title="推荐系统">推荐系统<sup>3</sup></a></li>
+		
+			<li><a href="/categories/杂项资源/" title="杂项资源">杂项资源<sup>2</sup></a></li>
+		
+			<li><a href="/categories/程序设计/" title="程序设计">程序设计<sup>5</sup></a></li>
+		
+			<li><a href="/categories/系统架构/" title="系统架构">系统架构<sup>1</sup></a></li>
+		
+			<li><a href="/categories/编程语言/" title="编程语言">编程语言<sup>2</sup></a></li>
+		
+			<li><a href="/categories/职场生涯/" title="职场生涯">职场生涯<sup>2</sup></a></li>
+		
+			<li><a href="/categories/随笔生活/" title="随笔生活">随笔生活<sup>5</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>8</sup></a></li>
+		
+			<li><a href="/tags/面试/" title="面试">面试<sup>5</sup></a></li>
+		
+			<li><a href="/tags/Linux基础/" title="Linux基础">Linux基础<sup>5</sup></a></li>
+		
+			<li><a href="/tags/生活/" title="生活">生活<sup>4</sup></a></li>
+		
+			<li><a href="/tags/博客/" title="博客">博客<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
+		
+			<li><a href="/tags/阿里推荐大赛/" title="阿里推荐大赛">阿里推荐大赛<sup>4</sup></a></li>
+		
+			<li><a href="/tags/算法/" title="算法">算法<sup>2</sup></a></li>
+		
+			<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+		
+			<li><a href="/tags/ODPS/" title="ODPS">ODPS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/教程/" title="教程">教程<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Jacman/" title="Jacman">Jacman<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>2</sup></a></li>
+		
+			<li><a href="/tags/文件系统/" title="文件系统">文件系统<sup>2</sup></a></li>
+		
+			<li><a href="/tags/启动流程/" title="启动流程">启动流程<sup>1</sup></a></li>
+		
+			<li><a href="/tags/权限/" title="权限">权限<sup>1</sup></a></li>
+		
+			<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/jQuery/" title="jQuery">jQuery<sup>1</sup></a></li>
+		
+			<li><a href="/tags/双检锁/" title="双检锁">双检锁<sup>1</sup></a></li>
+		
+			<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            <a href="https://coderq.com" target="_blank" title="码农圈">码农圈</a>
+          </li>
+        
+          <li>
+            <a href="http://zipperary.com/" target="_blank" title="Zippera&#39;s Blog">Zippera&#39;s Blog</a>
+          </li>
+        
+          <li>
+            <a href="http://hijiangtao.github.io/" target="_blank" title="Data.Blog">Data.Blog</a>
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=2176287895&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello,I&#39;m WuChong. For now I&#39;m a graduate student in Beijing. <br/>
+			I&#39;ll share my learning experience with you at this blog.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/wuchong1014" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/wuchong" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		<a href="https://twitter.com/jarkwu" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		
+		
+		
+		
+		<a href="https://plus.google.com/111190881341800841449?rel=author" target="_blank" class="icon-google_plus" title="Google+"></a>
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2014 
+		
+		<a href="http://wuchong.me/about" target="_blank" title="WuChong">WuChong</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"wuchong"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-46321946-2', 'wuchong.me');  
+ga('send', 'pageview');
+</script>
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+  </body>
+</html>

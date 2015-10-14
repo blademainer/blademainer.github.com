@@ -1,0 +1,552 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Linux基础：启动流程 | Jark&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="WuChong">
+    
+    <meta name="description" itemprop="description" content="计算机的启动是一个非常复杂的过程，从打开电源到桌面的显示，需要经过一系列不可或缺的过程，了解这些过程有助于我们更好地理解操作系统，也有助于我们修复系统可能出现的问题。">
+    
+    
+    <meta name="description" content="计算机的启动是一个非常复杂的过程，从打开电源到桌面的显示，需要经过一系列不可或缺的过程，了解这些过程有助于我们更好地理解操作系统，也有助于我们修复系统可能出现的问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux基础：启动流程">
+<meta property="og:url" content="http://wuchong.me/blog/2014/07/14/linux-boot-process/">
+<meta property="og:site_name" content="Jark's Blog">
+<meta property="og:description" content="计算机的启动是一个非常复杂的过程，从打开电源到桌面的显示，需要经过一系列不可或缺的过程，了解这些过程有助于我们更好地理解操作系统，也有助于我们修复系统可能出现的问题。">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/81b78497jw1eic3rqn72tj20hf06774l.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux基础：启动流程">
+<meta name="twitter:description" content="计算机的启动是一个非常复杂的过程，从打开电源到桌面的显示，需要经过一系列不可或缺的过程，了解这些过程有助于我们更好地理解操作系统，也有助于我们修复系统可能出现的问题。">
+<meta name="twitter:creator" content="@jarkwu">
+<link rel="publisher" href="111190881341800841449">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Jark&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Jark&#39;s Blog" title="Jark&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Jark&#39;s Blog">Jark&#39;s Blog</a></h1>
+				<h2 class="blog-motto">当你的才华还撑不起你的野心时，你就应该静下心来学习。</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+						<form class="search" action="http://zhannei.baidu.com/cse/search" target="_blank">
+							<label>Search</label>
+						<input name="s" type="hidden" value= 783281470518440642 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2014/07/14/linux-boot-process/" title="Linux基础：启动流程" itemprop="url">Linux基础：启动流程</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="https://plus.google.com/111190881341800841449?rel=author" title="WuChong" target="_blank" itemprop="author">WuChong</a>
+		
+  <p class="article-time">
+    <time datetime="2014-07-14T02:15:05.000Z" itemprop="datePublished"> 发表于 2014-07-14</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-_启动流程一览"><span class="toc-text">0. 启动流程一览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-_BIOS"><span class="toc-text">1. BIOS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-_MBR"><span class="toc-text">2. MBR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-_kernel"><span class="toc-text">3. kernel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-_init_process"><span class="toc-text">4. init process</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-_login"><span class="toc-text">5. login</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
+		
+		</div>
+		
+		<p>计算机的启动是一个非常复杂的过程，从打开电源到桌面的显示，需要经过一系列不可或缺的过程，了解这些过程有助于我们更好地理解操作系统，也有助于我们修复系统可能出现的问题。</p>
+<h2 id="0-_启动流程一览">0. 启动流程一览</h2>
+<p>我们先给出 Linux 启动流程的总览图，然后再每一个模块展开说明。</p>
+<p><img src="http://ww4.sinaimg.cn/large/81b78497jw1eic3rqn72tj20hf06774l.jpg" alt=""></p>
+<p><a id="more"></a></p>
+<h2 id="1-_BIOS">1. BIOS</h2>
+<p>当我们按下电源按键后，计算机硬件会自动读取主板上的BIOS（Basic Input/Output System）来加载硬件信息以及硬件系统的自我测试。BIOS也是一套程序，它知道如何与硬件进行交互。BIOS首先会对硬件进行检查，判断计算机硬件是否能满足运行的基本条件，这叫做“硬件自检”（Power-On Self-Test，简称 POST）。</p>
+<p>硬件自检后，BIOS 会将控制权交给下一段启动程序。这时，BIOS需要知道，”下一阶段的启动程序”具体存放在哪一个设备。也就是说，BIOS需要有一个外部存储设备的排序，排在前面的设备就是优先转交控制权的设备。这种排序叫做”启动顺序”（Boot Sequence）。</p>
+<p>因此，BIOS按照”启动顺序”，把控制权转交给排在第一位的存储设备。</p>
+<h2 id="2-_MBR">2. MBR</h2>
+<p>系统读取位列第一的可启动存储设备。计算机先读取该设备的第一个扇区，也就是读取最前面的512个字节。这最前面的512个字节，就叫做”主引导记录”（Master boot record，缩写为MBR）。MBR 只有512字节，放不了太多东西，它主要告诉计算机从该设备的哪一个分区（partition）来装载引导加载程序（boot loader）。Boot Loader 储存有操作系统（OS）的相关信息，比如操作系统名称，操作系统内核（kernel）所在位置等。它的主要功能就是加载内核到内存中去执行。常用的 boot loader 有 GRUB 和 LILO 。</p>
+<p>那我们经常说到的多操作系统是怎么回事呢？其实每个文件系统（或分区）的最前面会保留一个引导扇区（boot selector），这个引导扇区可以安装 boot loader。这样我们在每个 boot loader 中对应不同的操作系统，在读取 MBR 的时候选择我们需要启动的 boot loader 即可。</p>
+<h2 id="3-_kernel">3. kernel</h2>
+<p>随后，boot loader 会帮助我们加载内核，内核就会开始检测硬件与加载驱动程序。没错，内核会以自己的功能重新检测一遍硬件，而不一定会使用 BIOS 检测到的硬件信息。也就是说，内核此时才开始接管 BIOS 后的工作。</p>
+<p>Kernel 实际上是一个用来操作计算机的程序，它是计算机操作系统的内核，主要的任务是管理计算机的硬件资源，充当软件和硬件的接口。操作系统上的任何操作都要通过 kernel 传达给硬件。</p>
+<h2 id="4-_init_process">4. init process</h2>
+<p>在内核加载完毕以后，此时内核会主动调用第一个进程，那就是 <code>/sbin/init</code>，它的作用就是初始化系统环境。使用<code>pstree</code>命令会发现init的进程编号（PID）是1，也就是说init是第一个运行的程序，其他所有进程都从它衍生，都是它的子进程。</p>
+<p>许多程序需要开机启动。它们在Windows叫做”服务”（service），在 Linux 就叫做”守护进程”（daemon）。</p>
+<p>init 进程的一大任务，就是去运行这些开机启动的程序。但是，不同的场合需要启动不同的程序，比如用作服务器时，需要启动 Apache，用作桌面就不需要。Linux 允许为不同的场合，分配不同的开机启动程序，这就叫做”运行级别”（run level）。也就是说，启动时根据”运行级别”，确定要运行哪些程序。</p>
+<p>基本上，依据有无网络与有无 X Window ，Linux 将 run level 划分为7个等级（0-6）。其中0是关机，1是单用户模式，6是重启。而 2-5，一般来说都是多用户模式。</p>
+<p>Linux 在启动各个服务前会先执行一系列的初始脚本（rc.sysinit）。这些脚本执行如下功能：设置计算机名称，时区，检测文件系统，挂载硬盘，清空临时文件，设置网络……<br>之后会根据运行级别的不同，系统会运行 rc0.d 到 rc6.d 目录中的相应的脚本程序，来完成相应的初始化工作和启动相应的服务。rc*.d目录中存放的是该运行级别中需要执行的服务脚本的软链接文件（即快捷方式）。</p>
+<p>除此之外，Linux 还会运行一些其他的初始脚本。运行完后，操作系统已经完全准备好了，只是，还没有人可以登录！！！init 会给出登录（login）对话框，或者是图形化的登录界面。</p>
+<h2 id="5-_login">5. login</h2>
+<p>输入用户名密码登录成功后，系统会为用户分配一个用户 ID（UID），和一个组 ID（GID）。这两个 ID 就好像身份证一样会一直伴随用户，用于检测用户执行程序时的身份验证。</p>
+<p>当用户登录成功后，一个完整的操作系统就展现在用户的面前了。哈哈！</p>
+<h2 id="总结">总结</h2>
+<p>结合一开始给出的流程图，Linux 的启动流程可以概括为以下几个主要步骤：</p>
+<ol>
+<li>加载 BIOS 的硬件信息与硬件自检，并依据设置取得第一个可启动的设备；</li>
+<li>读取并执行第一个启动设备内的MBR的 boot loader；</li>
+<li>依据 boot loader 的设置加载内核，内核会开始检测硬件与加载驱动程序；</li>
+<li>在内核 Kernel 加载完毕后，Kernel  会主动调用 init 进程，而 init 会取得 run-level 信息；</li>
+<li>init 执行 rc.sysinit 初始化系统的操作环境（网络、时区等）；</li>
+<li>init 启动 run-level 的各个服务；</li>
+<li>用户登录</li>
+</ol>
+<p>要注意在一开始的流程图中 init 虽然只用了一个模块展现出来，但其实在启动过程中 init 占了很大的比重。</p>
+<h2 id="参考文献">参考文献</h2>
+<ul>
+<li><a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html" target="_blank" rel="external">Linux 的启动流程</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2013/02/booting.html" target="_blank" rel="external">计算机是如何启动的？</a></li>
+<li><a href="http://www.cnblogs.com/vamei/archive/2012/09/05/2672039.html" target="_blank" rel="external">Linux开机启动 (bootstrap) </a></li>
+<li><a href="http://vbird.dic.ksu.edu.tw/linux_basic/linux_basic.php" target="_blank" rel="external">鸟哥的Linux私房菜.基础学习篇</a></li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LinuxUnix/">Linux/Unix</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Linux基础/">Linux基础</a><a href="/tags/启动流程/">启动流程</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://wuchong.me/blog/2014/07/14/linux-boot-process/" data-title="Linux基础：启动流程 | Jark&#39;s Blog" data-tsina="2176287895" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/blog/2014/07/15/linux-permission-and-file/" title="Linux基础：权限与文件">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Linux基础：权限与文件</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/blog/2014/07/02/learn-regular-expressions/"  title="正则表达式学习">
+ <strong>下一篇：</strong><br/> 
+ <span>正则表达式学习
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="blog/2014/07/14/linux-boot-process/" data-title="Linux基础：启动流程" data-url="http://wuchong.me/blog/2014/07/14/linux-boot-process/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Hexo/" title="Hexo">Hexo<sup>7</sup></a></li>
+		
+			<li><a href="/categories/LinuxUnix/" title="Linux/Unix">Linux/Unix<sup>6</sup></a></li>
+		
+			<li><a href="/categories/Python/" title="Python">Python<sup>3</sup></a></li>
+		
+			<li><a href="/categories/推荐系统/" title="推荐系统">推荐系统<sup>3</sup></a></li>
+		
+			<li><a href="/categories/杂项资源/" title="杂项资源">杂项资源<sup>2</sup></a></li>
+		
+			<li><a href="/categories/程序设计/" title="程序设计">程序设计<sup>5</sup></a></li>
+		
+			<li><a href="/categories/系统架构/" title="系统架构">系统架构<sup>1</sup></a></li>
+		
+			<li><a href="/categories/编程语言/" title="编程语言">编程语言<sup>2</sup></a></li>
+		
+			<li><a href="/categories/职场生涯/" title="职场生涯">职场生涯<sup>2</sup></a></li>
+		
+			<li><a href="/categories/随笔生活/" title="随笔生活">随笔生活<sup>5</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>8</sup></a></li>
+		
+			<li><a href="/tags/面试/" title="面试">面试<sup>5</sup></a></li>
+		
+			<li><a href="/tags/Linux基础/" title="Linux基础">Linux基础<sup>5</sup></a></li>
+		
+			<li><a href="/tags/生活/" title="生活">生活<sup>4</sup></a></li>
+		
+			<li><a href="/tags/博客/" title="博客">博客<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
+		
+			<li><a href="/tags/阿里推荐大赛/" title="阿里推荐大赛">阿里推荐大赛<sup>4</sup></a></li>
+		
+			<li><a href="/tags/算法/" title="算法">算法<sup>2</sup></a></li>
+		
+			<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+		
+			<li><a href="/tags/ODPS/" title="ODPS">ODPS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/教程/" title="教程">教程<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Jacman/" title="Jacman">Jacman<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>2</sup></a></li>
+		
+			<li><a href="/tags/文件系统/" title="文件系统">文件系统<sup>2</sup></a></li>
+		
+			<li><a href="/tags/启动流程/" title="启动流程">启动流程<sup>1</sup></a></li>
+		
+			<li><a href="/tags/权限/" title="权限">权限<sup>1</sup></a></li>
+		
+			<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/jQuery/" title="jQuery">jQuery<sup>1</sup></a></li>
+		
+			<li><a href="/tags/双检锁/" title="双检锁">双检锁<sup>1</sup></a></li>
+		
+			<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            <a href="https://coderq.com" target="_blank" title="码农圈">码农圈</a>
+          </li>
+        
+          <li>
+            <a href="http://zipperary.com/" target="_blank" title="Zippera&#39;s Blog">Zippera&#39;s Blog</a>
+          </li>
+        
+          <li>
+            <a href="http://hijiangtao.github.io/" target="_blank" title="Data.Blog">Data.Blog</a>
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=2176287895&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello,I&#39;m WuChong. For now I&#39;m a graduate student in Beijing. <br/>
+			I&#39;ll share my learning experience with you at this blog.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/wuchong1014" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/wuchong" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		<a href="https://twitter.com/jarkwu" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		
+		
+		
+		
+		<a href="https://plus.google.com/111190881341800841449?rel=author" target="_blank" class="icon-google_plus" title="Google+"></a>
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2014 
+		
+		<a href="http://wuchong.me/about" target="_blank" title="WuChong">WuChong</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"wuchong"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-46321946-2', 'wuchong.me');  
+ga('send', 'pageview');
+</script>
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+  </body>
+</html>

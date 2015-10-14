@@ -1,0 +1,766 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>字符串转换成整数——从源码学习 | Jark&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="WuChong">
+    
+    <meta name="description" itemprop="description" content="在笔试面试中，atoi 即「字符串转换成整数」是一个经典问题了，此题无关算法，考察的更多是编码能力和细节考虑能力。因此自己就动手写了下，写完之后，打开 JDK 的源码想看看大牛是怎么写的，所谓「站在巨人的肩膀上」，果然还是有很多有意思的东西的。">
+    
+    
+    <meta name="description" content="在笔试面试中，atoi 即「字符串转换成整数」是一个经典问题了，此题无关算法，考察的更多是编码能力和细节考虑能力。因此自己就动手写了下，写完之后，打开 JDK 的源码想看看大牛是怎么写的，所谓「站在巨人的肩膀上」，果然还是有很多有意思的东西的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="字符串转换成整数——从源码学习">
+<meta property="og:url" content="http://wuchong.me/blog/2014/03/17/string-to-int/">
+<meta property="og:site_name" content="Jark's Blog">
+<meta property="og:description" content="在笔试面试中，atoi 即「字符串转换成整数」是一个经典问题了，此题无关算法，考察的更多是编码能力和细节考虑能力。因此自己就动手写了下，写完之后，打开 JDK 的源码想看看大牛是怎么写的，所谓「站在巨人的肩膀上」，果然还是有很多有意思的东西的。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="字符串转换成整数——从源码学习">
+<meta name="twitter:description" content="在笔试面试中，atoi 即「字符串转换成整数」是一个经典问题了，此题无关算法，考察的更多是编码能力和细节考虑能力。因此自己就动手写了下，写完之后，打开 JDK 的源码想看看大牛是怎么写的，所谓「站在巨人的肩膀上」，果然还是有很多有意思的东西的。">
+<meta name="twitter:creator" content="@jarkwu">
+<link rel="publisher" href="111190881341800841449">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Jark&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Jark&#39;s Blog" title="Jark&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Jark&#39;s Blog">Jark&#39;s Blog</a></h1>
+				<h2 class="blog-motto">当你的才华还撑不起你的野心时，你就应该静下心来学习。</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+						<form class="search" action="http://zhannei.baidu.com/cse/search" target="_blank">
+							<label>Search</label>
+						<input name="s" type="hidden" value= 783281470518440642 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2014/03/17/string-to-int/" title="字符串转换成整数——从源码学习" itemprop="url">字符串转换成整数——从源码学习</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="https://plus.google.com/111190881341800841449?rel=author" title="WuChong" target="_blank" itemprop="author">WuChong</a>
+		
+  <p class="article-time">
+    <time datetime="2014-03-17T15:24:28.000Z" itemprop="datePublished"> 发表于 2014-03-17</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<p>字符串转换成整数：输入一个表示整数的字符串，把该字符串转换成整数并输出，例如输入字符串”345”，则输出整数345。</p>
+<p>在笔试面试中，atoi 即「字符串转换成整数」是一个经典问题了，此题无关算法，考察的更多是编码能力和细节考虑能力。因此自己就动手写了下，写完之后，打开 JDK 的源码想看看大牛是怎么写的，所谓「站在巨人的肩膀上」，果然还是有很多有意思的东西的。 </p>
+<p>首先，实现的思路是扫描整个字符串，扫描到当前字符时，将之前的结果乘以10加上当前字符代表的数字。</p>
+<p>思路是很简单，但是有很多细节需要考虑，也是本题考查的重点。</p>
+<ol>
+<li>开头可能会有 ‘+’ 和 ‘-‘，表示整数的正负。</li>
+<li>字符串为 null 或是空（””）呢？ </li>
+<li>字符串中包含非数字的字符</li>
+<li>只有一个 “+” 或 “-“ 字符呢？</li>
+<li>最后就是溢出问题。<br><a id="more"></a><br>先放出我的代码吧！<br><figure class="highlight java"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+</pre></td><td class="code"><pre><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">atoi</span>(String s) <span class="keyword">throws</span> Exception {
+    <span class="keyword">if</span> (s == <span class="keyword">null</span> || s.length() == <span class="number">0</span>) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"illegal number input"</span>);
+    }
+    <span class="keyword">final</span> <span class="keyword">int</span> MAX_DIV = Integer.MAX_VALUE / <span class="number">10</span>;
+    <span class="keyword">final</span> <span class="keyword">int</span> MIN_DIV = -(Integer.MIN_VALUE / <span class="number">10</span>);
+    <span class="keyword">final</span> <span class="keyword">int</span> MAX_M = Integer.MAX_VALUE % <span class="number">10</span>;
+    <span class="keyword">final</span> <span class="keyword">int</span> MIN_M = - (Integer.MIN_VALUE % <span class="number">10</span>);
+    <span class="keyword">int</span> result = <span class="number">0</span>;
+    <span class="keyword">int</span> i = <span class="number">0</span>, len = s.length();
+    <span class="keyword">int</span> sign = <span class="number">1</span>;
+    <span class="keyword">int</span> digit = s.charAt(<span class="number">0</span>);            <span class="comment">//当前字符</span>
+
+    <span class="keyword">if</span> (digit == <span class="string">'-'</span> || digit == <span class="string">'+'</span>) {
+        <span class="keyword">if</span> (digit == <span class="string">'-'</span>) {
+            sign = -<span class="number">1</span>;
+        }
+        <span class="keyword">if</span> (len == <span class="number">1</span>) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"illegal number input"</span>);
+        }
+        i++;
+    }
+
+    <span class="keyword">while</span> (i &lt; len) {
+        digit = s.charAt(i++) - <span class="string">'0'</span>;
+        <span class="keyword">if</span> (digit &gt;= <span class="number">0</span> && digit &lt;= <span class="number">9</span>) {
+            <span class="keyword">if</span> (sign &gt; <span class="number">0</span> && (result &gt; MAX_DIV || (result == MAX_DIV && digit &gt; MAX_M))) { <span class="comment">// 正数溢出</span>
+                <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"number overflow"</span>);
+            } <span class="keyword">else</span> <span class="keyword">if</span> (sign &lt; <span class="number">0</span> && (result &gt; MIN_DIV || (result == MIN_DIV && digit &gt; MIN_M))) { <span class="comment">//负数溢出</span>
+                <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"number overflow"</span>);
+            }
+            result = result * <span class="number">10</span> + digit;
+        } <span class="keyword">else</span> {
+            <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"illegal number input"</span>);
+        }
+    }
+    <span class="keyword">return</span> sign &gt; <span class="number">0</span> ? result : -result;
+}
+</pre></td></tr></table></figure><br>上述代码中对于一些非法输入都做了异常处理，主要需要看的地方是溢出的判断。</li>
+</ol>
+<p>一般判断溢出会这样判断 <code>digit &gt; INT_MAX - result*10</code> （先不考虑正负问题），但是这段代码是有问题的。</p>
+<p>我们知道<code>INT_MAX = 2147483647</code>， 如果输入的字符串是<code>2147483657</code>，那么执行到最后一位时，会有 <code>result*10 = 2147483650 &gt; INT_MAX</code>，此时已经溢出，所以答案必然出错。</p>
+<p>在<a href="http://blog.csdn.net/v_july_v/article/details/9024123" target="_blank" rel="external">July的博客</a>中提到比较好的解决方法是用除法和取模。</p>
+<ul>
+<li>先用 result 与 INT_MAX /10 进行比较： 若 result &gt; INT_MAX/10（当然同时还要考虑 result=INT_MAX/10 的情况）， 说明最终得到的整数一定会溢出， 故此时可以当即进行溢出处理，从而也就免去了计算 result*10 这一步骤。 </li>
+<li>当 result=INT_MAX/10 时，若 digit &gt; INT_MAX%10，说明 result*10+digit 最终还是会溢出，也直接当溢出处理。</li>
+</ul>
+<p>比如，对于正数来说，溢出有两种可能：</p>
+<ol>
+<li>一种是诸如 2147483650，即 result &gt; MAX/10 的； </li>
+<li>一种是诸如 2147483649，即 result  == MAX/10 &amp;&amp; digit &gt; MAX%10 的。</li>
+</ol>
+<p>由于<code>INT_MAX = 2147483647</code> 而 <code>INT_MIN = -2147483648</code>，两者绝对值不相等。因此，正负数溢出的条件不一样，代码中用了两个条件来判断溢出情况。</p>
+<p>再来学习下 JDK 中 parseInt 的实现吧！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+</pre></td><td class="code"><pre><span class="comment">/*
+ * Integer 类中的 parseInt 函数
+ * Copyright (c) 1994, 2010, Oracle and/or its affiliates. All rights reserved.
+ */</span>
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">parseInt</span> (String s) <span class="keyword">throws</span> NumberFormatException {
+    <span class="keyword">return</span> parseInt(s,<span class="number">10</span>);
+}
+
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">parseInt</span>(String s, <span class="keyword">int</span> radix)
+            <span class="keyword">throws</span> NumberFormatException
+{
+    <span class="comment">/*
+     * WARNING: This method may be invoked early during VM initialization
+     * before IntegerCache is initialized. Care must be taken to not use
+     * the valueOf method.
+     */</span>
+
+    <span class="keyword">if</span> (s == <span class="keyword">null</span>) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> NumberFormatException( <span class="string">"null"</span>);        <span class="comment">//判断null的情况</span>
+    }
+
+    <span class="keyword">if</span> (radix &lt; Character. MIN_RADIX) {                  <span class="comment">//转换的进制不能小于2</span>
+        <span class="keyword">throw</span> <span class="keyword">new</span> NumberFormatException( <span class="string">"radix "</span> + radix +
+                                        <span class="string">" less than Character.MIN_RADIX"</span>);
+    }
+
+    <span class="keyword">if</span> (radix &gt; Character. MAX_RADIX) {               <span class="comment">//转换的进制不能大于36</span>
+        <span class="keyword">throw</span> <span class="keyword">new</span> NumberFormatException( <span class="string">"radix "</span> + radix +
+                                        <span class="string">" greater than Character.MAX_RADIX"</span>);
+    }
+
+    <span class="keyword">int</span> result = <span class="number">0</span>;                    <span class="comment">//对应整数结果</span>
+    <span class="keyword">boolean</span> negative = <span class="keyword">false</span>;          <span class="comment">//保存整数的正负状态</span>
+    <span class="keyword">int</span> i = <span class="number">0</span>, len = s.length();
+    <span class="keyword">int</span> limit = -Integer. MAX_VALUE;     <span class="comment">//合法数字的上限（下限）</span>
+    <span class="keyword">int</span> multmin;                         <span class="comment">//在做乘法计算时能走到的合法上限（下限）</span>
+    <span class="keyword">int</span> digit;     <span class="comment">//当前字符对应的数字</span>
+
+    <span class="keyword">if</span> (len &gt; <span class="number">0</span>) {
+        <span class="keyword">char</span> firstChar = s.charAt(<span class="number">0</span>);
+        <span class="keyword">if</span> (firstChar &lt; <span class="string">'0'</span>) { <span class="comment">// Possible leading "+" or "-"</span>
+            <span class="keyword">if</span> (firstChar == <span class="string">'-'</span>) {
+                negative = <span class="keyword">true</span>;
+                limit = Integer. MIN_VALUE;
+            } <span class="keyword">else</span> <span class="keyword">if</span> (firstChar != <span class="string">'+'</span>)
+                <span class="keyword">throw</span> NumberFormatException. forInputString(s);
+
+            <span class="keyword">if</span> (len == <span class="number">1</span>) <span class="comment">//不能只有一个"+"或者"-"</span>
+                <span class="keyword">throw</span> NumberFormatException. forInputString(s);
+            i++;
+        }
+        multmin = limit / radix;
+        <span class="keyword">while</span> (i &lt; len) {
+            <span class="comment">// Accumulating negatively avoids surprises near MAX_VALUE</span>
+            digit = Character. digit(s.charAt(i++),radix);     <span class="comment">//以指定的进制转换整数字符</span>
+            <span class="keyword">if</span> (digit &lt; <span class="number">0</span>) {                                   <span class="comment">//不能是非数字</span>
+                <span class="keyword">throw</span> NumberFormatException. forInputString(s);
+            }
+            <span class="keyword">if</span> (result &lt; multmin) {                         <span class="comment">//判断溢出</span>
+                <span class="keyword">throw</span> NumberFormatException. forInputString(s);
+            }
+            result *= radix;
+            <span class="keyword">if</span> (result &lt; limit + digit) {
+                <span class="keyword">throw</span> NumberFormatException. forInputString(s);
+            }
+            result -= digit;
+        }
+    } <span class="keyword">else</span> {     <span class="comment">//字符串不能为""，即长度要大于0</span>
+        <span class="keyword">throw</span> NumberFormatException. forInputString(s);
+    }
+    <span class="keyword">return</span> negative ? result : -result;
+}
+</pre></td></tr></table></figure><br>可以看到<code>parseInt(String s)</code>函数调用了<code>parseInt(String s, int radix)</code>，源码中参数的检查，异常输入的判断都非常全面。可以说严谨和巧妙是这段程序最大的特点。比较难懂的可能是溢出判断那一段。<br><figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span class="keyword">if</span> (<span class="keyword">result</span> &lt; multmin) <span class="comment">{                         //判断溢出
+    throw NumberFormatException. forInputString(s);
+}</span>
+<span class="keyword">result</span> *= radix;
+<span class="keyword">if</span> (<span class="keyword">result</span> &lt; limit + digit) <span class="comment">{
+    throw NumberFormatException. forInputString(s);
+}</span>
+<span class="keyword">result</span> -= digit;
+</pre></td></tr></table></figure>
+
+<p>其实与上文的溢出判断思想是差不多的， 只不过可以发现 JDK 将所有的整数先当做负数来处理了，这有什么妙处呢？</p>
+<p>我们知道有符号 int 的上下限是<code>-2147483648 ~ 2147483647</code>，可见负数表达的范围比正数多一个，这样就好理解为什么在开头要把 limit 全部表达为负数（下限）。这样的操作减少了后续的判断，可以一步到位，相当于二者选择取其大一样，大的包含了小的，不用像我的代码一样正负数情况都判断一次。同理，那么 multmin 也都是负数了，而且可以认为是只和进制参数 radix 有关系。在这里 multmin 就是<code>-INT_MAX/10</code>，当负数时就是<code>INT_MIN/10</code>。所以与上文类似，第一个条件就是若<code>-result &lt; -INT_MAX/10</code>则是溢出。不满足第一个条件的情况下，<code>result*10</code>肯定不会溢出了。所以第二个条件判断若 <code>- result*10 &lt; -INT_MAX  + digit</code>，则是溢出。</p>
+<p>比如对于最大的负数来说，当扫描到最后一位时，<code>result = -214748364</code>，<code>multmin=-214748364</code><br>第一个条件<code>result &lt; multmin</code>不满足， 执行<code>result *= radix</code>之后，<code>result = -2147483640</code><br>第二个条件<code>result &lt; limit + digit</code>，即 <code>-2147483640&lt;-2147483648+8</code> 也不满足条件。<br>所以正常输出。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/程序设计/">程序设计</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/面试/">面试</a><a href="/tags/源码/">源码</a><a href="/tags/Java/">Java</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://wuchong.me/blog/2014/03/17/string-to-int/" data-title="字符串转换成整数——从源码学习 | Jark&#39;s Blog" data-tsina="2176287895" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/blog/2014/03/25/interview-link-questions/" title="面试精选：链表问题集锦">
+  <strong>上一篇：</strong><br/>
+  <span>
+  面试精选：链表问题集锦</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/blog/2014/03/14/use-latex-in-blog/"  title="在博客上写LaTex数学公式">
+ <strong>下一篇：</strong><br/> 
+ <span>在博客上写LaTex数学公式
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="blog/2014/03/17/string-to-int/" data-title="字符串转换成整数——从源码学习" data-url="http://wuchong.me/blog/2014/03/17/string-to-int/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Hexo/" title="Hexo">Hexo<sup>7</sup></a></li>
+		
+			<li><a href="/categories/LinuxUnix/" title="Linux/Unix">Linux/Unix<sup>6</sup></a></li>
+		
+			<li><a href="/categories/Python/" title="Python">Python<sup>3</sup></a></li>
+		
+			<li><a href="/categories/推荐系统/" title="推荐系统">推荐系统<sup>3</sup></a></li>
+		
+			<li><a href="/categories/杂项资源/" title="杂项资源">杂项资源<sup>2</sup></a></li>
+		
+			<li><a href="/categories/程序设计/" title="程序设计">程序设计<sup>5</sup></a></li>
+		
+			<li><a href="/categories/系统架构/" title="系统架构">系统架构<sup>1</sup></a></li>
+		
+			<li><a href="/categories/编程语言/" title="编程语言">编程语言<sup>2</sup></a></li>
+		
+			<li><a href="/categories/职场生涯/" title="职场生涯">职场生涯<sup>2</sup></a></li>
+		
+			<li><a href="/categories/随笔生活/" title="随笔生活">随笔生活<sup>5</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>8</sup></a></li>
+		
+			<li><a href="/tags/面试/" title="面试">面试<sup>5</sup></a></li>
+		
+			<li><a href="/tags/Linux基础/" title="Linux基础">Linux基础<sup>5</sup></a></li>
+		
+			<li><a href="/tags/生活/" title="生活">生活<sup>4</sup></a></li>
+		
+			<li><a href="/tags/博客/" title="博客">博客<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
+		
+			<li><a href="/tags/阿里推荐大赛/" title="阿里推荐大赛">阿里推荐大赛<sup>4</sup></a></li>
+		
+			<li><a href="/tags/算法/" title="算法">算法<sup>2</sup></a></li>
+		
+			<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+		
+			<li><a href="/tags/ODPS/" title="ODPS">ODPS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/教程/" title="教程">教程<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Jacman/" title="Jacman">Jacman<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>2</sup></a></li>
+		
+			<li><a href="/tags/文件系统/" title="文件系统">文件系统<sup>2</sup></a></li>
+		
+			<li><a href="/tags/启动流程/" title="启动流程">启动流程<sup>1</sup></a></li>
+		
+			<li><a href="/tags/权限/" title="权限">权限<sup>1</sup></a></li>
+		
+			<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/jQuery/" title="jQuery">jQuery<sup>1</sup></a></li>
+		
+			<li><a href="/tags/双检锁/" title="双检锁">双检锁<sup>1</sup></a></li>
+		
+			<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            <a href="https://coderq.com" target="_blank" title="码农圈">码农圈</a>
+          </li>
+        
+          <li>
+            <a href="http://zipperary.com/" target="_blank" title="Zippera&#39;s Blog">Zippera&#39;s Blog</a>
+          </li>
+        
+          <li>
+            <a href="http://hijiangtao.github.io/" target="_blank" title="Data.Blog">Data.Blog</a>
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=2176287895&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello,I&#39;m WuChong. For now I&#39;m a graduate student in Beijing. <br/>
+			I&#39;ll share my learning experience with you at this blog.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/wuchong1014" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/wuchong" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		<a href="https://twitter.com/jarkwu" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		
+		
+		
+		
+		<a href="https://plus.google.com/111190881341800841449?rel=author" target="_blank" class="icon-google_plus" title="Google+"></a>
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2014 
+		
+		<a href="http://wuchong.me/about" target="_blank" title="WuChong">WuChong</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"wuchong"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-46321946-2', 'wuchong.me');  
+ga('send', 'pageview');
+</script>
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+  </body>
+</html>

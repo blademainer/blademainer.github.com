@@ -1,0 +1,619 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>为 Hexo 主题添加多种图片样式 | Jark&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="WuChong">
+    
+    <meta name="description" content="为一篇博客添加相关的图片可以快速吸引读者的目光，也能帮助读者理解文章概要，尤其是在写技术博客或是某些很复杂的东西时。
+然而，Hexo 主题一般只提供一种默认的图片样式，包括 Jacman。所以，我为 Jacman 实现了几种常见的图片样式。这里我会展示这几种图片样式以及其实现方法。">
+    
+    
+    <meta name="description" content="为一篇博客添加相关的图片可以快速吸引读者的目光，也能帮助读者理解文章概要，尤其是在写技术博客或是某些很复杂的东西时。
+然而，Hexo 主题一般只提供一种默认的图片样式，包括 Jacman。所以，我为 Jacman 实现了几种常见的图片样式。这里我会展示这几种图片样式以及其实现方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为 Hexo 主题添加多种图片样式">
+<meta property="og:url" content="http://wuchong.me/blog/2014/12/13/hexo-theme-creating-image-styles/">
+<meta property="og:site_name" content="Jark's Blog">
+<meta property="og:description" content="为一篇博客添加相关的图片可以快速吸引读者的目光，也能帮助读者理解文章概要，尤其是在写技术博客或是某些很复杂的东西时。
+然而，Hexo 主题一般只提供一种默认的图片样式，包括 Jacman。所以，我为 Jacman 实现了几种常见的图片样式。这里我会展示这几种图片样式以及其实现方法。">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/81b78497jw1en8b95t5kmj203j00u743.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/81b78497jw1en8cj4beb9j20s80b8adb.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/81b78497jw1en8cj55warj20se0avgoh.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/81b78497jw1enhkcat9mqj20go06g0sy.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/81b78497jw1en8cj4r4bij20sl0krn4x.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/mw690/81b78497jw1emfgts2pt4j21hc0u0k1c.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="为 Hexo 主题添加多种图片样式">
+<meta name="twitter:description" content="为一篇博客添加相关的图片可以快速吸引读者的目光，也能帮助读者理解文章概要，尤其是在写技术博客或是某些很复杂的东西时。
+然而，Hexo 主题一般只提供一种默认的图片样式，包括 Jacman。所以，我为 Jacman 实现了几种常见的图片样式。这里我会展示这几种图片样式以及其实现方法。">
+<meta name="twitter:creator" content="@jarkwu">
+<link rel="publisher" href="111190881341800841449">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Jark&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Jark&#39;s Blog" title="Jark&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Jark&#39;s Blog">Jark&#39;s Blog</a></h1>
+				<h2 class="blog-motto">当你的才华还撑不起你的野心时，你就应该静下心来学习。</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+						<form class="search" action="http://zhannei.baidu.com/cse/search" target="_blank">
+							<label>Search</label>
+						<input name="s" type="hidden" value= 783281470518440642 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2014/12/13/hexo-theme-creating-image-styles/" title="为 Hexo 主题添加多种图片样式" itemprop="url">为 Hexo 主题添加多种图片样式</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="https://plus.google.com/111190881341800841449?rel=author" title="WuChong" target="_blank" itemprop="author">WuChong</a>
+		
+  <p class="article-time">
+    <time datetime="2014-12-13T12:11:56.000Z" itemprop="datePublished"> 发表于 2014-12-13</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#主题图片"><span class="toc-number">1.</span> <span class="toc-text">主题图片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Logo_图片"><span class="toc-number">2.</span> <span class="toc-text">Logo 图片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#居中图片"><span class="toc-number">3.</span> <span class="toc-text">居中图片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#阴影图片"><span class="toc-number">4.</span> <span class="toc-text">阴影图片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#画廊图片"><span class="toc-number">5.</span> <span class="toc-text">画廊图片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图片备注"><span class="toc-number">6.</span> <span class="toc-text">图片备注</span></a></li></ol>
+		
+		</div>
+		
+		<p><img src="http://ww4.sinaimg.cn/large/81b78497jw1en8b95t5kmj203j00u743.jpg" class="img-logo"></p>
+<p>为一篇博客添加相关的图片可以快速吸引读者的目光，也能帮助读者理解文章概要，尤其是在写技术博客或是某些很复杂的东西时。</p>
+<p>然而，Hexo 主题一般只提供一种默认的图片样式，包括 Jacman。所以，我为 Jacman 实现了几种常见的图片样式。这里我会展示这几种图片样式以及其实现方法。</p>
+<a id="more"></a>
+
+<h2 id="主题图片">主题图片</h2>
+<p>我比较喜欢像<a href="http://www.36kr.com/" target="_blank" rel="external">36氪</a>那样，一篇文章带一张相关图片。图片能传达的信息永远比文字丰富。当浏览文章列表时，除了标题最吸引人的自然就属文章主题图片了。</p>
+<p>所以为了方便使用，我创建了一个图片样式叫<code>img-topic</code>，大概是长这样子的。</p>
+<figure class="highlight css"><figcaption><span>/themes/jacman/source/css/_partial/index.styl</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="class">.img-topic</span>
+  <span class="tag">max-width</span>: 300<span class="tag">px</span>;
+  <span class="tag">max-height</span>: 1800<span class="tag">px</span>;
+  <span class="tag">display</span>: <span class="tag">block</span> ;
+  <span class="tag">margin-left</span>: <span class="class">.7em</span>;
+  <span class="tag">margin-right</span>: <span class="class">.7em</span>;
+  <span class="tag">padding</span>: 0;
+  <span class="tag">float</span>: <span class="tag">right</span>;
+  <span class="tag">clear</span>: <span class="tag">right</span>;
+</pre></td></tr></table></figure>
+
+<p>在博客中，我更希望主题图片居右，并且点进文章正文后该图片不会显示。我们可以使用HTML语法插入图片。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>&lt;img src=<span class="string">"图片路径"</span> <span class="keyword">class</span>=<span class="string">"img-topic"</span> /&gt;
+</pre></td></tr></table></figure>
+
+<p>这儿是一张使用<code>img-topic</code>样式后的效果图。</p>
+<p><img src="http://ww2.sinaimg.cn/large/81b78497jw1en8cj4beb9j20s80b8adb.jpg" alt="img-topic效果图"></p>
+<h2 id="Logo_图片">Logo 图片</h2>
+<p>Logo 图片可以快速定义一篇文章的主题。与主题图片非常类似，只不过 Logo  图片放置的是 Logo ，而且一般比主题图片要小。类似的，Logo 图片也是居右，并且在文章正文中不会显示。</p>
+<p>关于<code>img-logo</code>的样式如下</p>
+<figure class="highlight css"><figcaption><span>/themes/jacman/source/css/_partial/index.styl</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="class">.img-logo</span> 
+  <span class="tag">max-width</span>: 180<span class="tag">px</span>;
+  <span class="tag">max-height</span>: 96<span class="tag">px</span>;
+  <span class="tag">display</span>: <span class="tag">block</span>;
+  <span class="tag">margin-right</span>: <span class="class">.7em</span>;
+  <span class="tag">margin-left</span>: <span class="class">.7em</span>;
+  <span class="tag">padding</span>: 0;
+  <span class="tag">float</span>: <span class="tag">right</span>;
+  <span class="tag">clear</span>: <span class="tag">right</span>;
+</pre></td></tr></table></figure>
+
+<p>使用HTML语法插入图片</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>&lt;img src=<span class="string">"图片路径"</span> <span class="keyword">class</span>=<span class="string">"img-logo"</span> /&gt;
+</pre></td></tr></table></figure>
+
+<p>效果如下图：</p>
+<p><img src="http://ww4.sinaimg.cn/large/81b78497jw1en8cj55warj20se0avgoh.jpg" alt="img-logo效果图"></p>
+<h2 id="居中图片">居中图片</h2>
+<p>有网友抱怨 Jacman 的图片只能居左，他喜欢让图片居中却不知道该怎么做。为此，我也创建了一个图片样式叫<code>img-center</code>，所需的代码很短。</p>
+<figure class="highlight css"><figcaption><span>/themes/jacman/source/css/_partial/article.styl</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="class">.img-center</span>
+  <span class="tag">display</span>: <span class="tag">block</span> ;
+  <span class="tag">margin</span>: <span class="tag">auto</span>;
+</pre></td></tr></table></figure>   
+
+<h2 id="阴影图片">阴影图片</h2>
+<p>有时候添加的图片可能会与文章背景混淆，使得读者看不清到底哪部分是图片哪部分是文章。使用<code>img-shadow</code>为图片添加边角阴影可以更加凸显图片的位置，也能更美观。</p>
+<figure class="highlight css"><figcaption><span>/themes/jacman/source/css/_partial/article.styl</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre><span class="class">.img-shadow</span>
+  <span class="tag">box-shadow</span>: 0 0 2<span class="tag">px</span> 3<span class="tag">px</span> <span class="id">#ddd</span>;
+</pre></td></tr></table></figure>   
+
+<p>使用HTML语法插入图片</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>&lt;img src=<span class="string">"http://ww1.sinaimg.cn/large/81b78497jw1enhkcat9mqj20go06g0sy.jpg"</span> <span class="keyword">class</span>=<span class="string">"img-shadow"</span> /&gt;
+</pre></td></tr></table></figure>
+
+<p><img src="http://ww1.sinaimg.cn/large/81b78497jw1enhkcat9mqj20go06g0sy.jpg" class="img-shadow"></p>
+<h2 id="画廊图片">画廊图片</h2>
+<p>Hexo 中提供了一种文章类别叫<code>photo</code>，Jacman 也为这种文章设计了图片浏览方式。具体效果可以看这篇 <a href="http://wuchong.me/jacman/gallery/" target="_blank" rel="external">Demo</a> 。<code>photo</code>类文章的写法可以看 <a href="https://raw.githubusercontent.com/wuchong/jacman/site/source/_posts/gallery.md" target="_blank" rel="external">Demo Sample</a>。</p>
+<p><img src="http://ww3.sinaimg.cn/large/81b78497jw1en8cj4r4bij20sl0krn4x.jpg" alt="photo文章效果图"></p>
+<h2 id="图片备注">图片备注</h2>
+<p>Jacman 中可以方便地为图片提供备注。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>![<span class="link_label">添加你的备注</span>](<span class="link_url">http://ww1.sinaimg.cn/mw690/81b78497jw1emfgts2pt4j21hc0u0k1c.jpg</span>)
+</pre></td></tr></table></figure>
+
+<p>效果就如下图，在图片左下方会显示关于图片的描述。</p>
+<p><img src="http://ww1.sinaimg.cn/mw690/81b78497jw1emfgts2pt4j21hc0u0k1c.jpg" alt="添加你的备注"></p>
+<p>OK，就这么多了，希望大家喜欢。如果嫌折腾麻烦，欢迎使用最新版的 <a href="https://github.com/wuchong/jacman" target="_blank" rel="external">Jacman</a>，可以直接使用以上定义的样式！</p>
+<p><em>有任何关于Hexo的问题，欢迎来 <a href="https://coderq.com/c/ji-zhu/hexo" target="_blank" rel="external">Hexo 中文社区</a> 咨询。</em></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Hexo/">Hexo</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Hexo/">Hexo</a><a href="/tags/Jacman/">Jacman</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://wuchong.me/blog/2014/12/13/hexo-theme-creating-image-styles/" data-title="为 Hexo 主题添加多种图片样式 | Jark&#39;s Blog" data-tsina="2176287895" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/blog/2014/12/18/hexo-blog-to-coding/" title="托管 Hexo 博客到 Coding">
+  <strong>上一篇：</strong><br/>
+  <span>
+  托管 Hexo 博客到 Coding</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/blog/2014/11/20/how-to-use-jacman/"  title="如何使用 Jacman 主题">
+ <strong>下一篇：</strong><br/> 
+ <span>如何使用 Jacman 主题
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="blog/2014/12/13/hexo-theme-creating-image-styles/" data-title="为 Hexo 主题添加多种图片样式" data-url="http://wuchong.me/blog/2014/12/13/hexo-theme-creating-image-styles/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Hexo/" title="Hexo">Hexo<sup>7</sup></a></li>
+		
+			<li><a href="/categories/LinuxUnix/" title="Linux/Unix">Linux/Unix<sup>6</sup></a></li>
+		
+			<li><a href="/categories/Python/" title="Python">Python<sup>3</sup></a></li>
+		
+			<li><a href="/categories/推荐系统/" title="推荐系统">推荐系统<sup>3</sup></a></li>
+		
+			<li><a href="/categories/杂项资源/" title="杂项资源">杂项资源<sup>2</sup></a></li>
+		
+			<li><a href="/categories/程序设计/" title="程序设计">程序设计<sup>5</sup></a></li>
+		
+			<li><a href="/categories/系统架构/" title="系统架构">系统架构<sup>1</sup></a></li>
+		
+			<li><a href="/categories/编程语言/" title="编程语言">编程语言<sup>2</sup></a></li>
+		
+			<li><a href="/categories/职场生涯/" title="职场生涯">职场生涯<sup>2</sup></a></li>
+		
+			<li><a href="/categories/随笔生活/" title="随笔生活">随笔生活<sup>5</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>8</sup></a></li>
+		
+			<li><a href="/tags/面试/" title="面试">面试<sup>5</sup></a></li>
+		
+			<li><a href="/tags/Linux基础/" title="Linux基础">Linux基础<sup>5</sup></a></li>
+		
+			<li><a href="/tags/生活/" title="生活">生活<sup>4</sup></a></li>
+		
+			<li><a href="/tags/博客/" title="博客">博客<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
+		
+			<li><a href="/tags/阿里推荐大赛/" title="阿里推荐大赛">阿里推荐大赛<sup>4</sup></a></li>
+		
+			<li><a href="/tags/算法/" title="算法">算法<sup>2</sup></a></li>
+		
+			<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+		
+			<li><a href="/tags/ODPS/" title="ODPS">ODPS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/教程/" title="教程">教程<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Jacman/" title="Jacman">Jacman<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>2</sup></a></li>
+		
+			<li><a href="/tags/文件系统/" title="文件系统">文件系统<sup>2</sup></a></li>
+		
+			<li><a href="/tags/启动流程/" title="启动流程">启动流程<sup>1</sup></a></li>
+		
+			<li><a href="/tags/权限/" title="权限">权限<sup>1</sup></a></li>
+		
+			<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/jQuery/" title="jQuery">jQuery<sup>1</sup></a></li>
+		
+			<li><a href="/tags/双检锁/" title="双检锁">双检锁<sup>1</sup></a></li>
+		
+			<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            <a href="https://coderq.com" target="_blank" title="码农圈">码农圈</a>
+          </li>
+        
+          <li>
+            <a href="http://zipperary.com/" target="_blank" title="Zippera&#39;s Blog">Zippera&#39;s Blog</a>
+          </li>
+        
+          <li>
+            <a href="http://hijiangtao.github.io/" target="_blank" title="Data.Blog">Data.Blog</a>
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=2176287895&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello,I&#39;m WuChong. For now I&#39;m a graduate student in Beijing. <br/>
+			I&#39;ll share my learning experience with you at this blog.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/wuchong1014" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/wuchong" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		<a href="https://twitter.com/jarkwu" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		
+		
+		
+		
+		<a href="https://plus.google.com/111190881341800841449?rel=author" target="_blank" class="icon-google_plus" title="Google+"></a>
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2014 
+		
+		<a href="http://wuchong.me/about" target="_blank" title="WuChong">WuChong</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"wuchong"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-46321946-2', 'wuchong.me');  
+ga('send', 'pageview');
+</script>
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+  </body>
+</html>
