@@ -255,6 +255,7 @@ public class Jackson2HttpMessageConverter extends MappingJackson2HttpMessageConv
 
 ## 5、在方法上注解
 ### Controller方法的示例，yxResourceSelfRelationsForSuperiorResourceId是YxResource内要过滤的属性:
+
 ```java
     @IgnoreProperties(value= {
            @IgnoreProperty(pojo = YxResource.class, name = {

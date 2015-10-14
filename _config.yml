@@ -7,7 +7,7 @@ title: blademainer
 subtitle: IT dogs...
 description:
 author: blademainer
-language:
+language: zh-Hans
 timezone:
 
 # URL
@@ -63,7 +63,12 @@ pagination_dir: page
 # Extensions
 ## Plugins: http://hexo.io/plugins/
 ## Themes: http://hexo.io/themes/
-theme: next
+theme: hexo-theme-next
+
+duoshuo_info:
+  ua_enable: true
+  admin_enable: false
+  user_id: 0
 
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
