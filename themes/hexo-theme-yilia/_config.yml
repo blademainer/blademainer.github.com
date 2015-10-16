@@ -1,15 +1,18 @@
 # Header
 menu:
   主页: /
+  #分类: /categories
+  Java: /tags/java
   所有文章: /archives
   # 随笔: /tags/随笔
 
 # SubNav
 subnav:
-  github: "#"
-  weibo: "#"
-  rss: "#"
-  zhihu: "#"
+  github: "https://github.com/blademainer"
+  #weibo: "#"
+  #rss: "#"
+  zhihu: "http://www.zhihu.com/people/xiong-ying-qi"
+  rss: http://iflowercity.cn/
   #douban: "#"
   #mail: "#"
   #facebook: "#"
@@ -23,6 +26,7 @@ rss: /atom.xml
 excerpt_link: more
 fancybox: true
 mathjax: true
+tag: true
 
 # 是否开启动画效果
 animate: true
@@ -35,12 +39,13 @@ google_analytics: ''
 favicon: /favicon.png
 
 #你的头像url
-avatar: 
+avatar: /images/avatar.jpg
 #是否开启分享
 share: true
 #是否开启多说评论，填写你在多说申请的项目名称 duoshuo: duoshuo-key
 #若使用disqus，请在博客config文件中填写disqus_shortname，并关闭多说评论
 duoshuo: true
+duoshuo_shortname: blademainer
 #是否开启云标签
 tagcloud: true
 
@@ -49,15 +54,11 @@ tagcloud: true
 #friends: false
 #开启——
 friends:
-  奥巴马的博客: http://localhost:4000/
-  卡卡的美丽传说: http://localhost:4000/
-  本泽马的博客: http://localhost:4000/
-  吉格斯的博客: http://localhost:4000/
-  习大大大不同: http://localhost:4000/
-  托蒂的博客: http://localhost:4000/
+  jia58960: http://jia58960.com/
+  password-agent: http://iflowercity.cn/
 
 #是否开启“关于我”。
 #不开启——
 #aboutme: false
 #开启——
-aboutme: 我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…
+aboutme: 一杯白开水，虽然无味，但是单纯
