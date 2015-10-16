@@ -1,5 +1,5 @@
 ---
-layout: code
+layout: post
 title: Java String对象的经典问题
 description: Java String的经典问题，面试笔试题的经典~
 keywords: java,string,堆栈,string池

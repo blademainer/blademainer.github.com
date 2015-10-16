@@ -1,5 +1,5 @@
 ---
-layout: code
+layout: post
 title: Linux安装Samba文件共享服务器
 description: Samba相对于Windows服务器来说具有更灵活的配置、高效等特点。个人认为是共享服务器的最佳选择。
 keywords: Samba,Linux,文件共享服务器,无法访问

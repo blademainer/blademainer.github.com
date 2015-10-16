@@ -1,5 +1,5 @@
 ---
-layout: code
+layout: post
 title: Windows使用bat脚本定时备份文件（夹）并删除一定日期之前的备份和日志
 description: 通过windows的bat功能实现对文件夹的拷贝，并根据文件夹的日期计算是否要删除该文件夹
 keywords: 定时备份,Windows,bat,脚本

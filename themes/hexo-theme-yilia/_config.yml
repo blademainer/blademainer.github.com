@@ -1,9 +1,10 @@
 # Header
 menu:
-  主页: /
+  home: /
   #分类: /categories
-  Java: /tags/java
-  所有文章: /archives
+  #Java: /tags/java
+  archives: /archives
+  tags: /tags
   # 随笔: /tags/随笔
 
 # SubNav
@@ -48,6 +49,7 @@ duoshuo: true
 duoshuo_shortname: blademainer
 #是否开启云标签
 tagcloud: true
+tag: true
 
 #是否开启友情链接
 #不开启——
@@ -56,6 +58,13 @@ tagcloud: true
 friends:
   jia58960: http://jia58960.com/
   password-agent: http://iflowercity.cn/
+
+widgets:
+  - category
+  - tag
+  - tagcloud
+  - archives
+  - recent_posts
 
 #是否开启“关于我”。
 #不开启——
