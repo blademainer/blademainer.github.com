@@ -7,6 +7,7 @@ category: Git
 tags:
  - git
  - github
+date: 2013-11-14
 ---
 ##建立项目-Repository
   首先在 GitHub 上建立自己库，例如一个 test 库;

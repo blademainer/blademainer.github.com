@@ -9,6 +9,7 @@ tags:
  - javassist
  - spring-mvc
  - jackson
+date: 2013-12-06
 ---
 
 <p>使用Spring MVC框架开发web时，Spring MVC默认用jackson库处理JSON和POJO的转换。

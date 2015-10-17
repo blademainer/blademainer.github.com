@@ -7,6 +7,7 @@ category: jbpm
 tags:
  - BPMN
  - Gateway
+date: 2013-11-29
 ---
 
 在上篇BPMN 2.0之Event Base Gateway（基于事件的网关）说了Event Base Gateway在流程流转中间的使用，Event Base Gateway的另一个用途是可以启动流程。

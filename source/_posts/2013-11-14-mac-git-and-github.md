@@ -7,6 +7,7 @@ category: Git
 tags:
  - git
  - mac
+date: 2013-11-14
 ---
 记得之前写过一篇 win 下面使用 Git 的文章，今天写下一篇在 mac 下面的。
 

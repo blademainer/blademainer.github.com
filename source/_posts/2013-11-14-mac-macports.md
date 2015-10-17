@@ -7,6 +7,7 @@ category: Mac
 tags:
  - mac
  - macpoorts
+date: 2013-11-14
 ---
 这里只介绍通过 Source 来安装的方法
 <pre class="js" name="colorcode">

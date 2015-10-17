@@ -7,12 +7,12 @@ category: linux
 tags:
  - Samba
  - linux
+date: 2014-01-06
 ---
-####Linux安装Samba文件共享服务器
-<p>
+#Linux安装Samba文件共享服务器
 Samba相对于Windows服务器来说具有更灵活的配置、高效等特点。个人认为是共享服务器的最佳选择。
-</p>
-首先安装samba：
+
+# 安装samba：
 ```bash
 yum install samba
 ```
@@ -20,7 +20,7 @@ ubuntu下yum对应命令为：
 ```bash
 apt-get install samba
 ```
-samba主要配置文件在/etc/samba/smb.conf中
+# samba主要配置文件在/etc/samba/smb.conf中
 ```bash
 [global]
         realm = 192.168.0.2
@@ -44,10 +44,8 @@ samba主要配置文件在/etc/samba/smb.conf中
         create mask = 0777
         directory mask = 0777
 ```
-<p>
-其中比较要注意的是global中的security和hosts allow两个选项：</br>
-&nbsp;&nbsp;security代表验证权限的机制，我一般使用share和user级别，这两种方式其实没多大区别~无非是先登录再查看还是先查看再登录的区别而已（注意：Linux的目录）
-如果服务器共享了哪些文件夹是不怕公布并且多个部门使用同一个服务器以及各部门需要相互查看的话，建议使用share的方式，这样会极大的方便公司同事在windows中切换帐号。</br>
-hosts allow代表了哪些前缀的ip地址能访问服务器。
-</p>
-
+# 注意
+其中比较要注意的是global中的security和hosts allow两个选项：
+- security代表验证权限的机制，我一般使用share和user级别，这两种方式其实没多大区别~无非是先登录再查看还是先查看再登录的区别而已（注意：Linux的目录）
+- 如果服务器共享了哪些文件夹是不怕公布并且多个部门使用同一个服务器以及各部门需要相互查看的话，建议使用share的方式，这样会极大的方便公司同事在windows中切换帐号。
+- hosts allow代表了哪些前缀的ip地址能访问服务器。
