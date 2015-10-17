@@ -14,9 +14,6 @@ tags:
 date: 2015-10-14
 ---
 
-# 最终解决方法：[【完美解决json循环问题（使用javassist增强）：Spring MVC中使用jackson的MixInAnnotations方法动态过滤JSON字段】](/java/2013/12/06/spring-mvc-jackson.html)
----
-
 # 问题描述
 
 项目使用SpringMVC框架，并用jackson库处理JSON和POJO的转换。在POJO转化成JSON时，有些属性我们不需要输出或者有些属性循环引用会造成无法输出。
