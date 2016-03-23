@@ -9,14 +9,14 @@ tags:
  - github
 date: 2013-11-14
 ---
-##建立项目-Repository
+## 建立项目-Repository
   首先在 GitHub 上建立自己库，例如一个 test 库;
   接着在本地建立 test 库的连接：
-####Global Setup:
+####G lobal Setup:
     Set up git 
       git config --global user.name "yourname"
       git config --global user.email "yourmail"
-####Next steps:
+#### Next steps:
     mkdir Test
     cd Test
     git init
@@ -27,7 +27,8 @@ date: 2013-11-14
     git push -u origin master
 通过在本地建立一个和 github 上相应的库，然后 push 上去，你随后可以在 github 上
 自己的 test 库里面看到你建立了一个 README 文件。这时候你的本地就和 github 连接上了。
-##创建页面-pages
+<!--more-->
+## 创建页面-pages
 进入 test 库，点击 Admin 菜单进入设置。这时候你就可以创建一个 page 了。创建的
 page 是一个页面，其路径为  http://yourname.github.com/test
 pages是怎么样的一个概念，你可以参考pages.github.com
@@ -55,12 +56,12 @@ pages是怎么样的一个概念，你可以参考pages.github.com
 更新到本地之后，你就会看到你在 github 上的 index.html 文件
     //尝试着编辑，上传，更新看看
     vi index.html
-###一些其他的内容
-####简单的更新本地代码到 github
+### 一些其他的内容
+#### 简单的更新本地代码到 github
     git add . 
     git commit -m 'test'
     git push origin gh-pages
-####jekyll 基本目录
+#### jekyll 基本目录
     test
      |--- _layouts/
        |--- default.html
@@ -73,7 +74,7 @@ pages是怎么样的一个概念，你可以参考pages.github.com
        |--- sytle.css
      |--- _config.yml
      |--- index.html
-####一些函数数
+#### 一些函数数
     //页面相关
     page.title
     page.content
@@ -88,10 +89,10 @@ pages是怎么样的一个概念，你可以参考pages.github.com
     post.tags
     post.tags
     post.content
-####一些对应的
+#### 一些对应的
     //一般都要
     ---
     layout: post
     title: Hello world
     ---
-###有待补充的
+### 有待补充的

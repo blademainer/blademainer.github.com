@@ -18,6 +18,7 @@ date: 2013-11-14
 连接--Git。
 哈哈，[这儿下载Git](http://code.google.com/p/msysgit/downloads/list),具体的安装
 方法参考[这里](http://help.github.com/win-set-up-git/)
+<!--more-->
 
 ###输入命令，建立连接
 安装好 Git 之后，可别把它丢在一边不理了。这里有一些命令需要你手动输入。

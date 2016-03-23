@@ -10,6 +10,7 @@ tags:
 date: 2013-12-28
 ---
 在网上看到的基本上都是安装完ruby后再安装ImageMagick，然后再配置环境变量就可以了。。。
+<!--more-->
 **按照他们的安装方法经常出现缺失环境必备的文件等问题，我找了一个月左右终于找到了对应的版本：**
 railsinstaller-2.2.1.exe<br>
 ImageMagick-6.5.7-7-Q16-windows-dll.exe

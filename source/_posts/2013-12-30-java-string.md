@@ -9,7 +9,9 @@ tags:
  - string
 date: 2013-12-30
 ---
-#先来看一个例子，代码如下： 
+
+# 先来看一个例子，代码如下： 
+
 ```java
 public class Test {  
     public static void main(String[] args) {  
@@ -26,9 +28,13 @@ public class Test {
         System.out.println(str1.hashCode() == str2.hashCode());  
 	}  
 }
-``` 
+```
+
 如果您能对这8个输出结果直接判断出来，下面的分析就不用看了。但是我想还是有很多人对这个String对象这个问题只是表面的理解，下面就来分析一下Java语言String类和对象及其运行机制的问题。 
-#做个基础的说明，堆(heap)内存和栈(Stack)内存的问题。
+
+<!--more-->
+
+# 做个基础的说明，堆(heap)内存和栈(Stack)内存的问题。
 堆和栈的数据结构这里就不解释了。Java语言使用内存的时候，栈内存主要保存以下内容：基本数据类型和对象的引用，而堆内存存储对象，栈内存的速度要快于堆内存。总结成一句话就是：引用在栈而对象在堆。
 #Java中的比较有两种，是==和equals()方法，equals()是Object类的方法，定义在Object类中的equals()方法是如下实现的：
 ```java
@@ -37,10 +43,10 @@ return (this==obj);
 }
 ```
 
-#String类重写了equals()方法，改变了这些类型对象相等的原则，即判断对象是否相等依据的原则为判断二者的内容是否相等。
+# String类重写了equals()方法，改变了这些类型对象相等的原则，即判断对象是否相等依据的原则为判断二者的内容是否相等。
 了解以上内容后我们来说说String，String类的本质是字符数组char[]，其次String类是final的，是不可被继承的，这点可能被大多数人忽略，再次String是特殊的封装类型，使用String时可以直接赋值，也可以用new来创建对象，但是这二者的实现机制是不同的。<p>
 还有一个String池的概念，Java运行时维护一个String池，池中的String对象不可重复，没有创建，有则作罢。String池不属于堆和栈，而是属于常量池。
-#下面分析上方代码的真正含义 
+# 下面分析上方代码的真正含义 
 ```java
 String str = "abc";  
 String str1= "abc";  

@@ -17,6 +17,7 @@ mac git 的地址: http://code.google.com/p/git-osx-installer/ 由于可能这�
 不了，所以需要使用源码安装。
 
 ###安装好了 Git 之后，就开始设置 GitHub 连接了。
+<!--more-->
 
 #####1, 检查是否存在 ssh keys
 <pre class="js" name="colorcode">

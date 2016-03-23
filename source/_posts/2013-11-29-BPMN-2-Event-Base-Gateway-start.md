@@ -11,6 +11,7 @@ date: 2013-11-29
 ---
 
 在上篇BPMN 2.0之Event Base Gateway（基于事件的网关）说了Event Base Gateway在流程流转中间的使用，Event Base Gateway的另一个用途是可以启动流程。
+<!--more-->
 
 当Event Base Gateway被设置成启动流程时，它的图标会改变同时上游也不允许有流入的Sequence Flow。下面是个例子：
 <img src="/images/post/eventbase_gateway_start_process_1.png"/>

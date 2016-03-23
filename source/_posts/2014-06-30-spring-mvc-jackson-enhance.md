@@ -23,6 +23,8 @@ date: 2015-10-14
 
 jackson默认可以使用JsonIgnoreProperties接口来定义要过滤的属性,然后使用`ObjectMapper#addMixInAnnotations`来设置对应实体对应的JsonIgnoreProperties接口,这样就能达到过滤的目的。可是这样很不爽,因为如果你对n个实体对应有m种过滤需求就至少要建n*m个JsonIgnoreProperties接口。
 
+<!--more-->
+
 # 解决方案
 
 ## 主要逻辑如下图

@@ -8,4 +8,5 @@ tags:
  - motivational
 date: 2013-12-28
 ---
+<!--more-->
 <img src="/images/post/motivational_eggs.jpg">

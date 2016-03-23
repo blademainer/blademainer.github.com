@@ -18,6 +18,7 @@ date: 2013-11-14
 <img src="/resources/category-list.jpg" alt="categroy list" class="img-right">
 
 在某些地方，例如文章页面，你可能希望在侧边栏添加这样的功能。有一个分类目录，还能显示出分类文章的篇数。
+<!--more-->
 
 ### 一、为文章添加分类
 
