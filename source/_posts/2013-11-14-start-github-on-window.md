@@ -10,17 +10,17 @@ tags:
 date: 2013-11-14
 ---
 在 window 下搭建 github 连接。
-###前提
+### 前提
 这个前提还是比较简单的，你需要有一个 email，然后在 GitHub 上注册一个账户。
 
-###工具
+### 工具
 在 window 建立 ssh 连接的工具挺多的。GitHub 也有自己的一个工具来帮助用户建立 Git
 连接--Git。
 哈哈，[这儿下载Git](http://code.google.com/p/msysgit/downloads/list),具体的安装
 方法参考[这里](http://help.github.com/win-set-up-git/)
 <!--more-->
 
-###输入命令，建立连接
+### 输入命令，建立连接
 安装好 Git 之后，可别把它丢在一边不理了。这里有一些命令需要你手动输入。
 1.  检查是否含有 SSH keys。（如果有的话，直接跳到第 4 步）不要太急哈，你刚刚才注
 册，怎么会有呢？
@@ -94,10 +94,10 @@ date: 2013-11-14
     如果显示 fail 的话，请检查一下你刚刚在 GitHub 上的公钥，是否少了空格或者换行之类
 的。
 
-###后续的工作
+### 后续的工作
 现在你已经可以通过使用 Git 设置 SSH keys 来连接到你的 GitHub 上面了。接下来你可
 以设置你的个人信息，token 或者其他等。这里不列举了。
 万事开头难，加油。
 
-###参考文章
+### 参考文章
 [GitHub 上的帮助文档](http://help.github.com/win-set-up-git/)

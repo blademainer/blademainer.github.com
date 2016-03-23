@@ -9,7 +9,7 @@ tags:
  - github
 date: 2013-11-14
 ---
-###基本
+### 基本
 1.所有的 API 链接采用 http 协议而且开始于下面的格式:
 <pre class="html" name="colorcode">
 http://github.com/api/v2/:format
@@ -18,7 +18,7 @@ http://github.com/api/v2/:format
 
 2.使用 GitHub 的 API 是有所限制的，使用 v2 版本，是每分钟 60 次请求。如果你在一分钟内访问了 60 次，它会提示您“拒绝访问”的错误。
 <!--more-->
-###分支相关
+### 分支相关
 
 1.一个分支提交的信息列表
 <pre class="js" name="colorcode">
@@ -33,7 +33,7 @@ commits/list/:user_id/:repository/:branch/*path
 commits/list/:user_id/:repository/:sha
 </pre>
 
-###Repositories 相关
+### Repositories 相关
 1.搜索
 <pre class="js" name="colorcode">
 repos/search/:q

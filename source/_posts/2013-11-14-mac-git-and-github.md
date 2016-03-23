@@ -11,21 +11,21 @@ date: 2013-11-14
 ---
 记得之前写过一篇 win 下面使用 Git 的文章，今天写下一篇在 mac 下面的。
 
-###首先，需要在 mac 下安装 git.
+### 首先，需要在 mac 下安装 git.
 
 mac git 的地址: http://code.google.com/p/git-osx-installer/ 由于可能这个网址访问
 不了，所以需要使用源码安装。
 
-###安装好了 Git 之后，就开始设置 GitHub 连接了。
+### 安装好了 Git 之后，就开始设置 GitHub 连接了。
 <!--more-->
 
-#####1, 检查是否存在 ssh keys
+##### 1, 检查是否存在 ssh keys
 <pre class="js" name="colorcode">
 $ cd ~/.ssh
 </pre>
 如果没有 .ssh 目录，请跳到第 3 步。
 
-#####2, 如果有 .ssh 目录，请备份好你的 ssh key
+##### 2, 如果有 .ssh 目录，请备份好你的 ssh key
 <pre class="js" name="colorcode">
 $ ls
 $ mkdir key_backup //创建备份文件夹
@@ -33,7 +33,7 @@ $ cp id_rsa* key_backup //移动你的 key 文件到备份文件夹
 $ mr id_rsa*
 </pre>
 
-#####3, 创建一个新的 ssh key
+##### 3, 创建一个新的 ssh key
 <pre class="js" name="colorcode">
 $ ssh-keygen -t rsa -C "your_email@youremail.com" //记得输入你的github账号的
 邮箱
@@ -53,13 +53,13 @@ Enter same passphrase again: <enter passphrase again>
 
 随后，你会收到一大串的提示，大概的意思是告诉你创建好了 id_rsa 和 id_rsa.pub 文件。
 
-#####4, 在 GitHub 上添加你的 ssh key
+##### 4, 在 GitHub 上添加你的 ssh key
 
 到刚刚的 .ssh 目录下，找到 id_rsa.pub 文件，拷贝里面的内容，输入到你的
 GitHub 账户中的 Add key 区域。
 创建成功会有相应的提示。
 
-#####5, 验证你的 GitHub 连接
+##### 5, 验证你的 GitHub 连接
 <pre class="js" name="colorcode">
 $ ssh -T git@github.com
 </pre>
