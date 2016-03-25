@@ -21,6 +21,7 @@ object  Test {
 Test.class
 
 也就是说， 这个孤立对象也被编译成一个同名类Test 。 除此之外， 还有一个叫做Test$的类， 这个以$结尾的类就是所谓的虚构类（synthetic class， 《Scala编程》中将之翻译为虚构类） 。
+<!--more-->
 ## 单例对象原理
 下面使用javap反编译Test.class , 得到如下结果（去掉了常量池等信息）：
 ```java
