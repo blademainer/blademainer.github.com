@@ -6,11 +6,16 @@ keywords: jackson,json,endless loop,死循环,java,spring-mvc,spring mvc,spring,
 category: java
 top: true
 index: 1
-tags:
+tag:
  - java
  - javassist
  - spring-mvc
  - jackson
+ - 循环
+ - springmvc
+ - spring
+ - json
+ - javassist
 date: 2015-10-14
 ---
 

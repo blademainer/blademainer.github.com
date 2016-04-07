@@ -1,11 +1,20 @@
 title: Jackson解析json为指定泛型的集合
 date: 2016-03-29 11:22:49
-tags: java, jackson, fasterxml, collection
+tags: 
+- java
+- jackson
+- fasterxml
+- collection
+- deserialize
+keywords: java,jackson,fasterxml,collection,deserialize
 ---
 # 问题
 在日常开发中，当使用ObjectMapper进行解析json时，我们时常需要将json解析成我们指定泛型的集合类型`Collection<type>`。  
 但是如果直接使用`objectMapper.readValue(json, Collection.class)`的话，那么就会解析为`Collection<Map>`的类型，这个明显不是我们想要的。  
-在jackson内，如果要反序列化为Collection或者Map，我们可以使用
+# 方案
+在jackson内，如果要反序列化为Collection或者Map，我们可以使用  
+- `CollectionType construct = CollectionType.construct(LinkedList.class, SimpleType.construct(clazz));` 
+- `MapType construct = MapType.construct(HashMap.class, SimpleType.construct(keyType), SimpleType.construct(valueType))`
 
 <!--more-->
 ```java
