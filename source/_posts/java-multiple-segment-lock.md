@@ -24,6 +24,8 @@ date: 2016-04-18
 # What
 java实现： [github](https://github.com/blademainer/java-demo/blob/master/src/main/java/com/xiongyingqi/concurrent/MultipleSegmentLock.java)
 
+<!--more-->
+
 ```java
 package com.xiongyingqi.concurrent;
 
