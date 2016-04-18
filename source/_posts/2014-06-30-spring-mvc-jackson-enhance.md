@@ -15,7 +15,6 @@ tag:
  - springmvc
  - spring
  - json
- - javassist
 date: 2015-10-14
 ---
 
