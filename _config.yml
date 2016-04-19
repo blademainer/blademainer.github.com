@@ -76,7 +76,8 @@ duoshuo_info:
   admin_enable: false
   user_id: 0
 
-baidu_analytics: 68322b90865dcc4ec4cd797ce0c7a616
+#baidu_analytics: 68322b90865dcc4ec4cd797ce0c7a616
+baidu_analytics: 401b87cd7ccfbae7934d36a06c2bb321
 
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
