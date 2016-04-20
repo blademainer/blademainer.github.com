@@ -13,7 +13,7 @@ subnav:
   #weibo: "#"
   #rss: "#"
   zhihu: "http://www.zhihu.com/people/xiong-ying-qi"
-  rss: http://iflowercity.cn/
+  rss: "/atom.xml"
   mousycoder: http://mousycoder.com/
   #douban: "#"
   #mail: "#"

@@ -66,6 +66,22 @@ pagination_dir: page
 
 # Extensions
 ## Plugins: http://hexo.io/plugins/
+#RSS订阅
+plugin:
+- hexo-generator-feed
+- hexo-generator-sitemap
+#- hexo-generator-seo-friendly-sitemap
+
+#Feed Atom
+feed:
+type: atom
+path: atom.xml
+#limit: 20
+
+# site map
+sitemap:
+    path: sitemap.xml
+
 ## Themes: http://hexo.io/themes/
 theme: hexo-theme-yilia
 
