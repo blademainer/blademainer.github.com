@@ -99,9 +99,9 @@ baidu_analytics: 401b87cd7ccfbae7934d36a06c2bb321
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: git@github.com:blademainer/blademainer.github.com.git
-  branch: master
-deploy:
-  type: git
-  repository: git@git.coding.net:blademainer/blademainer.git
-  branch: master
+  name: blademainer
+  email: blademainer@gmail.com
+  repo: 
+    github: git@github.com:blademainer/blademainer.github.com.git,master
+    coding: git@git.coding.net:blademainer/blademainer.git,master
+
