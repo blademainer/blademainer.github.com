@@ -72,6 +72,34 @@ plugin:
 - hexo-generator-sitemap
 #- hexo-generator-seo-friendly-sitemap
 
+# html、css、js优化
+html_minifier:
+  enable: true
+  exclude: 
+    - ‘.DS_Store’
+
+css_minifier:
+  enable: true
+  exclude: 
+    - '*.min.css'
+    - ‘.DS_Store’
+
+js_minifier:
+  enable: true
+  mangle: true
+  output:
+  compress:
+  exclude: 
+    - '*.min.js'
+    - ’.DS_Store’
+image_minifier:
+  enable: false
+  interlaced: false
+  multipass: false
+  optimizationLevel: 2
+  pngquant: false
+  progressive: false
+
 #Feed Atom
 feed:
 type: atom

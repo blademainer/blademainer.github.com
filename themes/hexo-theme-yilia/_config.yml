@@ -14,7 +14,7 @@ subnav:
   #rss: "#"
   zhihu: "http://www.zhihu.com/people/xiong-ying-qi"
   rss: "/atom.xml"
-  mousycoder: http://mousycoder.com/
+  #mousycoder: http://mousycoder.com/
   #douban: "#"
   #mail: "#"
   #facebook: "#"
@@ -58,6 +58,7 @@ tagcloud: true
 friends:
   jia58960: http://jia58960.com/
   password-agent: http://iflowercity.cn/
+  mousycoder: http://mousycoder.com/
 
 widgets:
   - category
