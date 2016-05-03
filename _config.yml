@@ -74,28 +74,28 @@ plugin:
 
 # html、css、js优化
 html_minifier:
-  enable: false
+  enable: true
   exclude: 
-    - ‘.DS_Store’
+    - '.DS_Store'
 
 css_minifier:
-  enable: false
+  enable: true
   exclude: 
     - '*.min.css'
-    - ‘.DS_Store’
+    - '.DS_Store'
 
 js_minifier:
-  enable: false
+  enable: true
   mangle: true
   output:
   compress:
   exclude: 
     - '*.min.js'
-    - ’.DS_Store’
-    - ‘*.ejs’
+    - '.DS_Store'
+    - '*.ejs'
 
 image_minifier:
-  enable: false
+  enable: true
   interlaced: false
   multipass: false
   optimizationLevel: 2
