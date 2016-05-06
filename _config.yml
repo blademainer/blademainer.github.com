@@ -69,8 +69,8 @@ pagination_dir: page
 #RSS订阅
 plugin:
 - hexo-generator-feed
-- hexo-generator-sitemap
-#- hexo-generator-seo-friendly-sitemap
+#- hexo-generator-sitemap
+- hexo-generator-seo-friendly-sitemap
 
 # html、css、js优化
 html_minifier:
