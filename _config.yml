@@ -113,7 +113,13 @@ sitemap:
     path: sitemap.xml
 
 ## Themes: http://hexo.io/themes/
-theme: hexo-theme-yilia
+theme: beautiful-hexo
+#theme: hexo-theme-next
+archive_generator:
+    per_page: 0
+    yearly: false
+    monthly: false
+    daily: false
 
 duoshuo_shortname: blademainer
 
