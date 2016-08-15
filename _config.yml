@@ -40,11 +40,18 @@ post_asset_folder: false
 relative_link: false
 future: true
 index: true
+
+#highlight:
+#  enable: true
+#  line_number: true
+#  auto_detect: true
+#  tab_replace:
+
+# highlight
 highlight:
-  enable: true
-  line_number: true
-  auto_detect: true
-  tab_replace:
+  enable: false
+  line_number: false
+  tab_replace: true
 
 
 # Category & Tag
@@ -104,8 +111,8 @@ image_minifier:
 
 #Feed Atom
 feed:
-type: atom
-path: atom.xml
+  type: atom
+  path: atom.xml
 #limit: 20
 
 # site map
@@ -114,12 +121,13 @@ sitemap:
 
 ## Themes: http://hexo.io/themes/
 theme: beautiful-hexo
-#theme: hexo-theme-next
+#theme: hexo-theme-yilia
+
 archive_generator:
-    per_page: 0
-    yearly: false
-    monthly: false
-    daily: false
+  per_page: 0
+  yearly: false
+  monthly: false
+  daily: false
 
 duoshuo_shortname: blademainer
 
