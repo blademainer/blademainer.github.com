@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="sitemap.xsl"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <url>
+        <loc>http://xiongyingqi.com</loc>
+        <changefreq>daily</changefreq>
+        <priority>1</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/Git/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/Mac/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/Css/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/jbpm/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/philosophy/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/jekyll/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/java/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/Linux/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/windows/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/linux/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/physical/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/go/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/kubernetes/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/kuberbetes/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/hexo/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/share/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/kubernetes/%E8%BF%90%E7%BB%B4%E7%AC%94%E8%AE%B0/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/algorithm/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/algorithm/distributed/</loc>
+        <lastmod>2020-03-26T07:25:52.816Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/shell/</loc>
+        <lastmod>2020-03-26T07:25:52.820Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/docker/</loc>
+        <lastmod>2020-03-26T07:25:52.820Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/cloud/</loc>
+        <lastmod>2020-03-26T07:25:52.820Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/tools/</loc>
+        <lastmod>2020-03-26T07:25:52.820Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/pay/</loc>
+        <lastmod>2020-03-26T07:25:52.820Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/scala/</loc>
+        <lastmod>2020-03-26T07:25:52.820Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/git/</loc>
+        <lastmod>2020-03-26T07:25:52.820Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xiongyingqi.com/categories/cloud/app/</loc>
+        <lastmod>2020-03-26T07:25:52.820Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+</urlset>
+<!-- XML Sitemap generated by Hexo SEO Friendly Sitemap Generator -->
