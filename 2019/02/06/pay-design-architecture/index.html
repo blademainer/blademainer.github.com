@@ -1,0 +1,317 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="zh-Hans"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#222"><link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css"><script src="/lib/pace/pace.min.js?v=1.0.2"></script><link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2"><link rel="stylesheet" href="/css/main.css?v=7.0.0"><link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.0.0"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.0"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.0"><link rel="mask-icon" href="/images/favicon.ico?v=7.0.0" color="#222"><script id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"7.0.0",sidebar:{position:"left",display:"post",offset:12,b2t:!0,scrollpercent:!0,onmobile:!1},fancybox:!1,fastclick:!1,lazyload:!0,tabs:!0,motion:{enable:!0,async:!0,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><meta name="description" content="本文介绍核心支付系统的主要功能和组件。"><meta name="keywords" content="pay,design,payment,architecture"><meta property="og:type" content="article"><meta property="og:title" content="支付系统-架构设计"><meta property="og:url" content="http://xiongyingqi.com/2019/02/06/pay-design-architecture/index.html"><meta property="og:site_name" content="Blademainer"><meta property="og:description" content="本文介绍核心支付系统的主要功能和组件。"><meta property="og:locale" content="zh-Hans"><meta property="og:image" content="http://xiongyingqi.com/images/pasted-8.png"><meta property="og:image" content="https://www.plantuml.com/plantuml/svg/TLBDRjD04BxlKmovD9LeVEcf1wGqYG2fIX5DXJXPQtiQhxJUDRkpk0Pnvm5u2Dw0DuBNODPnVfoaldWz-_tDZCKhPN8T2WnEGqbK-viaSRAPh1ML8GiUNMuDeQ59RgiaqxB0IYg3BgcrD1GgVUMfrNYLNoULzCGN-NNAsDgQoAeP8OIuk9j-ldzSfP_UhzwbTuktY-LS25Aa4HvQPbKmYpRF18MIQoShUB8EFiYslnRJdAmRvy6JhT2zXj6iFuxu_E_Nxxy__umkXLYmYAkTyfZUsc0AwThnAAQHfet8MN-y_2w0durukdYcSQQ-fRxxPDXjyDoZzpqWCgTQsyR3De47il1LOGFASDHAah86P6O30PMeN5S7QGgmhc3y9CRRUuvhsQOvnhXxszZlfWP-PxmgiV_gPi8vezIHqbeIDlmUIFN5WoQEjE9wOn-im2b11hAfGuDDTFWXnC5uyb8QWtflCDiK3dQqDN0eTIVPEx41OmjUTVJp5xtTRYWVMNP-iDh19XvAsq3jR15owk0HlKIrBhF1__3IE1r-2UYf9yxFZVti_EvZlYFsuzbHdqpccFfIv1CYvsNui0oJDsS2ti3IadfgXJYzsp86NUu89pSHlf_u5lSV"><meta property="og:image" content="https://www.plantuml.com/plantuml/svg/TLDDRzD04BtdLmova4g9VUcf1oIQG8L4eIKdLA5gl9xOAtRNpduqk8Z_pepjD6uGaYMFTzvx--R3RxHJ9fMKl84wnZPSvRd7GrRfMASY1VAgSP5Sp5HZyy9WIHQr8v-t1brCrgn2x0ojr6LkCKHEgCj7uVIeh6N4RBRjE6CVF_oAYrOjONw77IWM9J_dhu-DXq8_po-cE5MFk7MDpf49WZoGgZ7cQ7IBNPwSRXm7MPOnzqY-Rf8hqNUBK8mADnZfWDtyulSCO7sqji2Ay-zR_PBdpotv9wq8IXrKyqI-My8Q7Qk19qCOQ0btwD4IMm_0PJ8cyltmoRQ6B9SKeEX0kyfJ2FbpIeQj0RowkAr6O-DjSl4DSOPzGEDBxih5Aq8GmbPNRigGhjqof3PTVf_GioEElXFo2uA0qPLisz7XJ4w9t1gDAL3zd4f-8qNwYK0TSplVM53Z0B8p6RTZofScwjshIiQJsCXCppbDOCHNAH6sgHLIu1aAxJvnjuVg8KICQRpll7bA5CQTE5xRxyQ637ltm0l1LUyJ1Pa5nGEHWseOSUXxyh-2If7UN4-BsHJGj38OTdaoTABO_M0zzUXRdZbM17ivE5FV58jI5dA34GjU9C7RBkpDqkgoDEoED-RC44LLCanU0kV4JbSG-Zr_COCLh5RleArESPZ4gXfWxV1PXbEi90wJyp0vLvDpzU-vtL_1NGersA5cpZHXO1HNC1ccSDwEAI5jYVyQ-J_bxzbfR_lUCiZkUupRYR0n4s5-ogEsn0Mi7cfk6haVVWNIdTcVsQnLiFhC6AncQa2h-Yy0"><meta property="og:image" content="https://www.plantuml.com/plantuml/svg/fLDDSzem4BthLsovj3q0xKnEFdG63DXCqYQ4IQuTOM-29xBaweEK_lgkP85jwArScDrzx-tkM_b39GlXIdHQmDxQnYJJgURlazVAxjtE6TI5aXQbdHIgdku4Bx7cbKGzRGINrjLYREnHuBYucTRSM2eKDpy9soZfMGqX6FjetYhPSCrhg9LKnLwh6i5gXupnmYeDJzI94S9MHTMGC8pIFPSInGYuWUMmzC2FAOcZ_ZIl_dmEY1dRgTymMlkiv0Asg0zLWQChOiOjllDZ8CqlEd8XThnuwqDMrvtRkKmePyFo3sMhbq6B_8g_u9RlkC5GJbaPGnXzFsutTo6xODvqhGICDWuTGMTRM3EK9T2MZ7cpOFmDPWayy5Vq5bO7Qaeki9alp1D8DVhClIx9s3DWpkQn_eoQHZs76T9DEqARJnFOyiELICfINrrGTNFNfHTi4Kdtjwp4NZwDJORvD7R9ahO1FE8lXyPsYXdBF61v2SYYtYCQUcRadVUqBvr5wLc7wPVdqIRl8osnL--mqQag4UWbQYmhZOK5-YJw9F9sCfbqvY-z-KUsX345gmJQstV3hzWgRdTPYMjbvoE4S7NfJzOAa9zF3RqI_Dy3hAuF41haj8XM1Hf3knidUWV8MUuHwmGQP_PjS2MJUvbufbllH_GzslX4DbwwJSOzXbRj-sLCADKme5zFrOTTUo5EYLO_cXeuf2D32COLVf6G1fW5S1xcQZFvmD4potBhJgGK1Xpwqi-u5ru9B2FEZmnVlu2jQZnn_pqVYSYMTVeVk4V9lm00"><meta property="og:image" content="https://www.plantuml.com/plantuml/svg/VLJ9Rjim4BtpArYVRAIIBpdvKA1nWY8eq3Gsacj0aHE9i4IoNBpqwpka95loqei4pRmto-EZlaZ5wo0Ws9fMtXktcCyjs-Mbz5KeWWFBjVAWVCvrCozg9g1XKe6Tcvef7vewS_vGGyRlvmrp7XFy_YDo4YetY224SQyjdRnXkGbbZWPYcFMIIuCrw6HPCQMWJYbUZNFlqlh0wk_EWNVh0tPe4cxBt1ZucnsME2VOwOFyEqiOmqcXztJo7CEArNGDTYivJ2wOVIAnod5wBKirpBjpm9BLTS7uPWZYLufSmpbLNjMYmxXkZyjT7vbd1NDj5L4GK8BYigXry5g5fW1BIA3PDsGlQ6nFBVm9u3mnF8Pn3NftrwQcp9WFARxI41_6QX6uJm7MwA3yZ4GqaaIHEC_kQI-TTzE4xyb37c_Nc15aP5stB5lGbvzzALpgs7ymckjo2_e3q43C0tM8w3EykiOOD5Y1CrevQDkaMgCu5IXSaW1p8QNMbTxHrnL5YmffWNlgDSKBGKYUvvs8iUzIgqzf6q9ubGHKhO2_j9UV1n8_Jmgz1h27D3bEohKLHo7KIGWr4k8TRAnpNEW2s9L-CoAfufaFxbRPD78VIGF7THVqCIr825wVM19Vk5S5V4DXRp3N9r2WsEif1IbiyMPrftqwvTcParPuOBiM51TFYB5lRgjoPeyuGLiKhKv6DOwsG3fwl2jmue_TzH91_xTN0ywn4eOEkyAww75ZQjv71E1VJsvZ1_mFzKV0HvxXtMAzCkrAl3mEsNcYZmovhVRf00UHjaKSGMyIxMG4lVa7"><meta property="og:image" content="https://www.plantuml.com/plantuml/svg/hPDHQwD04CVVyodcyd86JgMc3qSeXQGvxgdSqN3qeHnbPrsgL5Tnrslaw7U_sMpMg0rUGWkIEF_vpyuu-lkKIfxLiQYh31AjIxK8mugz14-fJcgibQXu8RMGEk157cB6Of6pL8egB3CcTPrdlj9D9dn-6UPCQKhmoqTJitC59JacarLHovXLZSU-m3IDEIp1kzsvPzFPtmb0QtWsZkUl2cWgaxTfW4r3KUwL9lsJDV2TQV726fS6k74joMDCox9KK_hV6zLqjZUshNYYA7-JC2b51XjH_KcvK8SJksVovABZlHSyONhQKPIjRflqQwEESvcb9SrzSkssumo2OApmTNBujVjw_BRLNcxMSTjmcjWuJTvcr-Z5Q9BhbNlgjhFDcOUESRV6ggXBg4IPfNHGMiXzrq51T6x1_3y5PjfsOA_GPjmVsdmOTBDf98UOQRQpskiplIhm7v8qZeNylVQ1rc_bQ21lIQPl1Np_6dBcWbyKqH7zCEg7Mzig9s5DWbdK0kx3kxuM7T7cJgFBbC5LwxqxFBbDHYuv7oPTiPcSLh80J6LMFBco83WYpz_8hnqkSS_bQeWZZkE8f-289-A8v_28xm4ItqCaVW2IE8OaZY29voA9voA9voA9eqZIwxU4eGiiGtWnYAD1x2131myU83jeqH6j3nawoF08PEWWm-EGeOCCUpIXWsmWpz_811an1rTELhIVVm00"><meta property="og:image" content="https://www.plantuml.com/plantuml/svg/TPHDRzim38Rl-XNQAIVRMDVJW0Geqg67hKstPIXs2cYBRep9agSF54RH_px9-PAfDQU4ZrwIuYlcGwSQwGLw8_dUkS5-hYe3B-Lpv_Q-zXPDevL3vSf6zrKjGM0FdK9J3HAKyxqih1ib5irrrODr0JJNkt1sq2ggXd22iGN_TlDxyskxssuUTxURfuSO4jY6HAoHsWl-rTTe53gqhm7n0Pe_y8nyhGtoLyR3Hsc1_176Et3u0kCbzjsZoQC_iFLAPE6j0MLRD1bOWvHrg9g11-swDiyVEha51pLOZ0s_CPPqlGUbK5eEbZTf-qTGbkM4ZiSo_eG1kIny8xjXQc4gTkhY7bIeQNwEOVZzARun0iszLftJ9Zcx3fQWOIma4CVcUJ_Qlz6YWmzVN2FMyTjaWmtoU24CqOyqS4K3dzZYBHgxN2wvGGckqyh6NsnnhitBSdKfCe7ZQ2b9RQLiPYw5nEB_L3mPHz5i_E_0Wmdlm6ZidB3BpGk9hIjMwHjcoVMB0pe_gdGoVWX9py-5pKP3TVEvfRBvrAYEp3GLajt8f9Iduaox8Xl563MCfiyCJNkZ6y3pCMPyze_1qbsXQihcIfQ-fTZrj4l_0000"><meta property="og:updated_time" content="2020-09-08T15:31:04.000Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="支付系统-架构设计"><meta name="twitter:description" content="本文介绍核心支付系统的主要功能和组件。"><meta name="twitter:image" content="http://xiongyingqi.com/images/pasted-8.png"><link rel="canonical" href="http://xiongyingqi.com/2019/02/06/pay-design-architecture/"><script id="page.configurations">CONFIG.page={sidebar:""}</script><title>支付系统-架构设计 | Blademainer</title><script>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?401b87cd7ccfbae7934d36a06c2bb321";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><noscript><style>.sidebar-inner,.use-motion .brand,.use-motion .collection-title,.use-motion .comments,.use-motion .menu-item,.use-motion .motion-element,.use-motion .pagination,.use-motion .post-block,.use-motion .post-body,.use-motion .post-header{opacity:initial}.use-motion .logo,.use-motion .site-subtitle,.use-motion .site-title{opacity:initial;top:initial}.use-motion .logo-line-before i{left:initial}.use-motion .logo-line-after i{right:initial}</style></noscript></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans"><div class="container sidebar-position-left page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">Blademainer</span> <span class="logo-line-after"><i></i></span></a></div><h1 class="site-subtitle" itemprop="description">Thinking cap.</h1></div><div class="site-nav-toggle"><button aria-label="切换导航栏"><span class="btn-bar"></span> <span class="btn-bar"></span> <span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i><br>分类<span class="badge">25</span></a></li><li class="menu-item menu-item-tags"><a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签<span class="badge">112</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i><br>归档<span class="badge">47</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br>关于</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br>搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i> </span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://xiongyingqi.com/2019/02/06/pay-design-architecture/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="blademainer"><meta itemprop="description" content="Blademainer's blog."><meta itemprop="image" content="/images/avatar.gif"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Blademainer"></span><header class="post-header"><h2 class="post-title" itemprop="name headline">支付系统-架构设计<a href="https://github.com/blademainer/blog/tree/master/source/_posts/pay-design-architecture.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil"></i></a></h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i> </span><span class="post-meta-item-text">发表于</span> <time title="创建时间：2019-02-06 14:54:04" itemprop="dateCreated datePublished" datetime="2019-02-06T14:54:04+08:00">2019-02-06</time> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-calendar-check-o"></i> </span><span class="post-meta-item-text">更新于</span> <time title="修改时间：2020-09-08 23:31:04" itemprop="dateModified" datetime="2020-09-08T23:31:04+08:00">2020-09-08</time> </span><span class="post-category"><span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-folder-o"></i> </span><span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/pay/" itemprop="url" rel="index"><span itemprop="name">pay</span></a></span> </span><span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-file-o"></i> 阅读次数： <span class="busuanzi-value" id="busuanzi_value_page_pv"></span></span><div class="post-symbolscount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i> </span><span class="post-meta-item-text">本文字数：</span> <span title="本文字数">1k</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i> </span><span class="post-meta-item-text">阅读时长 &asymp;</span> <span title="阅读时长">1 分钟</span></div></div></header><div class="post-body" itemprop="articleBody"><p><img src="/images/pasted-8.png" alt=""></p><blockquote><p>本文介绍核心支付系统的主要功能和组件。</p></blockquote><a id="more"></a><style>span.green{color:#54cc76}span.purple{color:#7949b3}span.yellow{color:#ffca80}</style><h2 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a><span class="purple">目标</span></h3><ul><li><span class="green">简化逻辑</span>：边界清晰、无冗余逻辑、方便测试</li><li><span class="green">分布式</span>：容器化部署、无状态、可扩展、低耦合</li><li><span class="green">高用性</span>：机房多主、自动扩容、数据库最终一致</li></ul><h3 id="拆分"><a href="#拆分" class="headerlink" title="拆分"></a><span class="purple">拆分</span></h3><ul><li><span class="yellow">业务</span>：代金券、活动</li><li><span class="yellow">支付中心</span>：商品管理、价格管理、发货路由</li><li><span class="green">支付网关</span>：下单、支付、代扣、通知、后督（<em>订单二次确认</em>）、对账、渠道服务</li></ul><h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="网关体系"><a href="#网关体系" class="headerlink" title="网关体系"></a><span class="purple">网关</span>体系</h3><ul><li>支付网关：接受下单请求、校验签名、生成订单、操作DB、调用渠道服务</li><li>代扣网关：处理签约请求、代扣请求、互斥逻辑</li><li>通知网关：处理渠道通知</li></ul><h3 id="渠道服务集合"><a href="#渠道服务集合" class="headerlink" title="渠道服务集合"></a>渠道服务集合</h3><h4 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h4><ul><li>无db操作</li><li>无订单操作</li><li>只接受请求并响应对应数据</li><li>不关心上层逻辑</li></ul><h4 id="微服务化"><a href="#微服务化" class="headerlink" title="微服务化"></a>微服务化</h4><ul><li>service:<ul><li>wechat</li><li>alipay</li><li>unionpay</li></ul></li><li>rpc:<ul><li>grpc://wechat:8080</li><li>grpc://alipay:8080</li><li><a href="http://unionpay:8080" target="_blank" rel="noopener">http://unionpay:8080</a></li></ul></li></ul><blockquote><p>渠道微服务化，可以在国际化业务中带来更便捷的差异化部署</p></blockquote><h4 id="面向协议编程"><a href="#面向协议编程" class="headerlink" title="面向协议编程"></a>面向<span class="purple">协议</span>编程</h4><ul><li>pay(用户触发扣款或签约)<ul><li>method：alipay/wechat/unionpay</li><li>from: WEB/MWEB/APP/SDK/BANK/SERVER</li><li>type: pay/sign_pay</li></ul></li><li>confirm_pay(确认支付，用户二次验证)<ul><li>from</li><li>type</li><li>method</li></ul></li><li>refund(退款)</li><li>transfer(转账)</li></ul><h4 id="扩展-amp-配置"><a href="#扩展-amp-配置" class="headerlink" title="扩展&amp;配置"></a><span class="purple">扩展</span>&amp;配置</h4><ul><li>etcd配置管理<ul><li>高可用</li><li>实时变更配置</li><li>跨地域同步</li></ul></li><li>简化配置<ul><li>使用field tag生成json</li><li>管理后台根据field json生成配置表单</li></ul></li></ul><p><img src="https://www.plantuml.com/plantuml/svg/TLBDRjD04BxlKmovD9LeVEcf1wGqYG2fIX5DXJXPQtiQhxJUDRkpk0Pnvm5u2Dw0DuBNODPnVfoaldWz-_tDZCKhPN8T2WnEGqbK-viaSRAPh1ML8GiUNMuDeQ59RgiaqxB0IYg3BgcrD1GgVUMfrNYLNoULzCGN-NNAsDgQoAeP8OIuk9j-ldzSfP_UhzwbTuktY-LS25Aa4HvQPbKmYpRF18MIQoShUB8EFiYslnRJdAmRvy6JhT2zXj6iFuxu_E_Nxxy__umkXLYmYAkTyfZUsc0AwThnAAQHfet8MN-y_2w0durukdYcSQQ-fRxxPDXjyDoZzpqWCgTQsyR3De47il1LOGFASDHAah86P6O30PMeN5S7QGgmhc3y9CRRUuvhsQOvnhXxszZlfWP-PxmgiV_gPi8vezIHqbeIDlmUIFN5WoQEjE9wOn-im2b11hAfGuDDTFWXnC5uyb8QWtflCDiK3dQqDN0eTIVPEx41OmjUTVJp5xtTRYWVMNP-iDh19XvAsq3jR15owk0HlKIrBhF1__3IE1r-2UYf9yxFZVti_EvZlYFsuzbHdqpccFfIv1CYvsNui0oJDsS2ti3IadfgXJYzsp86NUu89pSHlf_u5lSV"></p><h3 id="支付网关系统"><a href="#支付网关系统" class="headerlink" title="支付网关系统"></a>支付网关系统</h3><p><img src="https://www.plantuml.com/plantuml/svg/TLDDRzD04BtdLmova4g9VUcf1oIQG8L4eIKdLA5gl9xOAtRNpduqk8Z_pepjD6uGaYMFTzvx--R3RxHJ9fMKl84wnZPSvRd7GrRfMASY1VAgSP5Sp5HZyy9WIHQr8v-t1brCrgn2x0ojr6LkCKHEgCj7uVIeh6N4RBRjE6CVF_oAYrOjONw77IWM9J_dhu-DXq8_po-cE5MFk7MDpf49WZoGgZ7cQ7IBNPwSRXm7MPOnzqY-Rf8hqNUBK8mADnZfWDtyulSCO7sqji2Ay-zR_PBdpotv9wq8IXrKyqI-My8Q7Qk19qCOQ0btwD4IMm_0PJ8cyltmoRQ6B9SKeEX0kyfJ2FbpIeQj0RowkAr6O-DjSl4DSOPzGEDBxih5Aq8GmbPNRigGhjqof3PTVf_GioEElXFo2uA0qPLisz7XJ4w9t1gDAL3zd4f-8qNwYK0TSplVM53Z0B8p6RTZofScwjshIiQJsCXCppbDOCHNAH6sgHLIu1aAxJvnjuVg8KICQRpll7bA5CQTE5xRxyQ637ltm0l1LUyJ1Pa5nGEHWseOSUXxyh-2If7UN4-BsHJGj38OTdaoTABO_M0zzUXRdZbM17ivE5FV58jI5dA34GjU9C7RBkpDqkgoDEoED-RC44LLCanU0kV4JbSG-Zr_COCLh5RleArESPZ4gXfWxV1PXbEi90wJyp0vLvDpzU-vtL_1NGersA5cpZHXO1HNC1ccSDwEAI5jYVyQ-J_bxzbfR_lUCiZkUupRYR0n4s5-ogEsn0Mi7cfk6haVVWNIdTcVsQnLiFhC6AncQa2h-Yy0"></p><h3 id="支付调用时序图"><a href="#支付调用时序图" class="headerlink" title="支付调用时序图"></a>支付调用时序图</h3><p><img src="https://www.plantuml.com/plantuml/svg/fLDDSzem4BthLsovj3q0xKnEFdG63DXCqYQ4IQuTOM-29xBaweEK_lgkP85jwArScDrzx-tkM_b39GlXIdHQmDxQnYJJgURlazVAxjtE6TI5aXQbdHIgdku4Bx7cbKGzRGINrjLYREnHuBYucTRSM2eKDpy9soZfMGqX6FjetYhPSCrhg9LKnLwh6i5gXupnmYeDJzI94S9MHTMGC8pIFPSInGYuWUMmzC2FAOcZ_ZIl_dmEY1dRgTymMlkiv0Asg0zLWQChOiOjllDZ8CqlEd8XThnuwqDMrvtRkKmePyFo3sMhbq6B_8g_u9RlkC5GJbaPGnXzFsutTo6xODvqhGICDWuTGMTRM3EK9T2MZ7cpOFmDPWayy5Vq5bO7Qaeki9alp1D8DVhClIx9s3DWpkQn_eoQHZs76T9DEqARJnFOyiELICfINrrGTNFNfHTi4Kdtjwp4NZwDJORvD7R9ahO1FE8lXyPsYXdBF61v2SYYtYCQUcRadVUqBvr5wLc7wPVdqIRl8osnL--mqQag4UWbQYmhZOK5-YJw9F9sCfbqvY-z-KUsX345gmJQstV3hzWgRdTPYMjbvoE4S7NfJzOAa9zF3RqI_Dy3hAuF41haj8XM1Hf3knidUWV8MUuHwmGQP_PjS2MJUvbufbllH_GzslX4DbwwJSOzXbRj-sLCADKme5zFrOTTUo5EYLO_cXeuf2D32COLVf6G1fW5S1xcQZFvmD4potBhJgGK1Xpwqi-u5ru9B2FEZmnVlu2jQZnn_pqVYSYMTVeVk4V9lm00"></p><h3 id="签约"><a href="#签约" class="headerlink" title="签约"></a>签约</h3><p><img src="https://www.plantuml.com/plantuml/svg/VLJ9Rjim4BtpArYVRAIIBpdvKA1nWY8eq3Gsacj0aHE9i4IoNBpqwpka95loqei4pRmto-EZlaZ5wo0Ws9fMtXktcCyjs-Mbz5KeWWFBjVAWVCvrCozg9g1XKe6Tcvef7vewS_vGGyRlvmrp7XFy_YDo4YetY224SQyjdRnXkGbbZWPYcFMIIuCrw6HPCQMWJYbUZNFlqlh0wk_EWNVh0tPe4cxBt1ZucnsME2VOwOFyEqiOmqcXztJo7CEArNGDTYivJ2wOVIAnod5wBKirpBjpm9BLTS7uPWZYLufSmpbLNjMYmxXkZyjT7vbd1NDj5L4GK8BYigXry5g5fW1BIA3PDsGlQ6nFBVm9u3mnF8Pn3NftrwQcp9WFARxI41_6QX6uJm7MwA3yZ4GqaaIHEC_kQI-TTzE4xyb37c_Nc15aP5stB5lGbvzzALpgs7ymckjo2_e3q43C0tM8w3EykiOOD5Y1CrevQDkaMgCu5IXSaW1p8QNMbTxHrnL5YmffWNlgDSKBGKYUvvs8iUzIgqzf6q9ubGHKhO2_j9UV1n8_Jmgz1h27D3bEohKLHo7KIGWr4k8TRAnpNEW2s9L-CoAfufaFxbRPD78VIGF7THVqCIr825wVM19Vk5S5V4DXRp3N9r2WsEif1IbiyMPrftqwvTcParPuOBiM51TFYB5lRgjoPeyuGLiKhKv6DOwsG3fwl2jmue_TzH91_xTN0ywn4eOEkyAww75ZQjv71E1VJsvZ1_mFzKV0HvxXtMAzCkrAl3mEsNcYZmovhVRf00UHjaKSGMyIxMG4lVa7"></p><h3 id="数据库高可用"><a href="#数据库高可用" class="headerlink" title="数据库高可用"></a>数据库<span class="purple">高可用</span></h3><ul><li>跨DC同步：基于otter进行同步，双向同步（多机房使用星型结构）</li><li>同DC高可用：基于mycat和mgr，实现大容量、高可用db集群</li><li><span class="green">mgr</span>的心跳检测：二次开发mycat，对mgr节点状态实时检测并增删故障db</li><li>应用层：去除自增主键，按机房、机器生成无冲突、有序的流水号，防止多机房数据冲突</li></ul><p><img src="https://www.plantuml.com/plantuml/svg/hPDHQwD04CVVyodcyd86JgMc3qSeXQGvxgdSqN3qeHnbPrsgL5Tnrslaw7U_sMpMg0rUGWkIEF_vpyuu-lkKIfxLiQYh31AjIxK8mugz14-fJcgibQXu8RMGEk157cB6Of6pL8egB3CcTPrdlj9D9dn-6UPCQKhmoqTJitC59JacarLHovXLZSU-m3IDEIp1kzsvPzFPtmb0QtWsZkUl2cWgaxTfW4r3KUwL9lsJDV2TQV726fS6k74joMDCox9KK_hV6zLqjZUshNYYA7-JC2b51XjH_KcvK8SJksVovABZlHSyONhQKPIjRflqQwEESvcb9SrzSkssumo2OApmTNBujVjw_BRLNcxMSTjmcjWuJTvcr-Z5Q9BhbNlgjhFDcOUESRV6ggXBg4IPfNHGMiXzrq51T6x1_3y5PjfsOA_GPjmVsdmOTBDf98UOQRQpskiplIhm7v8qZeNylVQ1rc_bQ21lIQPl1Np_6dBcWbyKqH7zCEg7Mzig9s5DWbdK0kx3kxuM7T7cJgFBbC5LwxqxFBbDHYuv7oPTiPcSLh80J6LMFBco83WYpz_8hnqkSS_bQeWZZkE8f-289-A8v_28xm4ItqCaVW2IE8OaZY29voA9voA9voA9eqZIwxU4eGiiGtWnYAD1x2131myU83jeqH6j3nawoF08PEWWm-EGeOCCUpIXWsmWpz_811an1rTELhIVVm00"></p><h3 id="部署架构"><a href="#部署架构" class="headerlink" title="部署架构"></a>部署架构</h3><p><img src="https://www.plantuml.com/plantuml/svg/TPHDRzim38Rl-XNQAIVRMDVJW0Geqg67hKstPIXs2cYBRep9agSF54RH_px9-PAfDQU4ZrwIuYlcGwSQwGLw8_dUkS5-hYe3B-Lpv_Q-zXPDevL3vSf6zrKjGM0FdK9J3HAKyxqih1ib5irrrODr0JJNkt1sq2ggXd22iGN_TlDxyskxssuUTxURfuSO4jY6HAoHsWl-rTTe53gqhm7n0Pe_y8nyhGtoLyR3Hsc1_176Et3u0kCbzjsZoQC_iFLAPE6j0MLRD1bOWvHrg9g11-swDiyVEha51pLOZ0s_CPPqlGUbK5eEbZTf-qTGbkM4ZiSo_eG1kIny8xjXQc4gTkhY7bIeQNwEOVZzARun0iszLftJ9Zcx3fQWOIma4CVcUJ_Qlz6YWmzVN2FMyTjaWmtoU24CqOyqS4K3dzZYBHgxN2wvGGckqyh6NsnnhitBSdKfCe7ZQ2b9RQLiPYw5nEB_L3mPHz5i_E_0Wmdlm6ZidB3BpGk9hIjMwHjcoVMB0pe_gdGoVWX9py-5pKP3TVEvfRBvrAYEp3GLajt8f9Iduaox8Xl563MCfiyCJNkZ6y3pCMPyze_1qbsXQihcIfQ-fTZrj4l_0000"></p><h2 id="交互"><a href="#交互" class="headerlink" title="交互"></a>交互</h2><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>核心交易系统是将配置信息存储在<code>etcd</code>容器内</p><h4 id="渠道"><a href="#渠道" class="headerlink" title="渠道"></a>渠道</h4><ul><li>基础目录: <code>/foo/bar/pay/config</code></li><li>每个渠道占用一个文件夹，每个渠道账户占用一个<code>文件</code>，例如微信存放在<code>/foo/bar/pay/config/wechat</code>目录下，appId: 2088123456 所在的配置信息存储在<code>/foo/bar/pay/config/wechat/2088123456</code></li></ul></div><div class="popular-posts-header">相关文章</div><ul class="popular-posts"><li class="popular-posts-item"><div class="popular-posts-title"><a href="/2019/02/06/pay-summary/" rel="bookmark">支付系统-概述</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/2019/03/05/curl-debug/" rel="bookmark">curl网络耗时调试</a></div></li></ul><div><div style="padding:10px 0;margin:20px auto;width:90%;text-align:center"><div></div><button id="rewardButton" disable="enable" onclick="var qr = document.getElementById(&quot;QR&quot;); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}"><span>打赏</span></button><div id="QR" style="display:none"><div id="wechat" style="display:inline-block"><img id="wechat_qr" src="/images/reward/wechatpay.jpg" alt="blademainer 微信支付"><p>微信支付</p></div><div id="alipay" style="display:inline-block"><img id="alipay_qr" src="/images/reward/alipay.jpg" alt="blademainer 支付宝"><p>支付宝</p></div></div></div></div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者： </strong>blademainer</li><li class="post-copyright-link"><strong>本文链接：</strong> <a href="http://xiongyingqi.com/2019/02/06/pay-design-architecture/" title="支付系统-架构设计">http://xiongyingqi.com/2019/02/06/pay-design-architecture/</a></li><li class="post-copyright-license"><strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/pay/" rel="tag"># pay</a> <a href="/tags/design/" rel="tag"># design</a> <a href="/tags/payment/" rel="tag"># payment</a> <a href="/tags/architecture/" rel="tag"># architecture</a></div><div class="post-widgets"><div class="social_share"><div id="needsharebutton-postbottom"><span class="btn"><i class="fa fa-share-alt" aria-hidden="true"></i></span></div></div></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2019/02/06/pay-summary/" rel="next" title="支付系统-概述"><i class="fa fa-chevron-left"></i> 支付系统-概述</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"><a href="/2019/02/14/next-tips/" rel="prev" title="next主题的一些配置">next主题的一些配置 <i class="fa fa-chevron-right"></i></a></div></div></footer></div></article></div></div><div class="comments" id="gitalk-container"></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span> <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span> <span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap">站点概览</li></ul><div class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">blademainer</p><p class="site-description motion-element" itemprop="description">Blademainer's blog.</p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">47</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/index.html"><span class="site-state-item-count">25</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/index.html"><span class="site-state-item-count">112</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="cc-license motion-element" itemprop="license"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a></div><div class="links-of-blogroll motion-element links-of-blogroll-block"><div class="links-of-blogroll-title"><i class="fa fa-fw fa-link"></i> Links</div><ul class="links-of-blogroll-list"><li class="links-of-blogroll-item"><a href="http://blog.jia58960.com/" title="http://blog.jia58960.com/" rel="noopener" target="_blank">ethanZhang</a></li><li class="links-of-blogroll-item"><a href="https://zhangmingdong.com/" title="https://zhangmingdong.com/" rel="noopener" target="_blank">a栋</a></li><li class="links-of-blogroll-item"><a href="https://jimmysong.io/" title="https://jimmysong.io/" rel="noopener" target="_blank">jimmysong</a></li></ul></div></div></div><div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#设计"><span class="nav-number">1.</span> <span class="nav-text">设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#目标"><span class="nav-number">1.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拆分"><span class="nav-number">1.2.</span> <span class="nav-text">拆分</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网关体系"><span class="nav-number">2.1.</span> <span class="nav-text">网关体系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#渠道服务集合"><span class="nav-number">2.2.</span> <span class="nav-text">渠道服务集合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原则"><span class="nav-number">2.2.1.</span> <span class="nav-text">原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#微服务化"><span class="nav-number">2.2.2.</span> <span class="nav-text">微服务化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#面向协议编程"><span class="nav-number">2.2.3.</span> <span class="nav-text">面向协议编程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#扩展-amp-配置"><span class="nav-number">2.2.4.</span> <span class="nav-text">扩展&amp;配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#支付网关系统"><span class="nav-number">2.3.</span> <span class="nav-text">支付网关系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#支付调用时序图"><span class="nav-number">2.4.</span> <span class="nav-text">支付调用时序图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#签约"><span class="nav-number">2.5.</span> <span class="nav-text">签约</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库高可用"><span class="nav-number">2.6.</span> <span class="nav-text">数据库高可用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署架构"><span class="nav-number">2.7.</span> <span class="nav-text">部署架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交互"><span class="nav-number">3.</span> <span class="nav-text">交互</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">3.1.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#渠道"><span class="nav-number">3.1.1.</span> <span class="nav-text">渠道</span></a></li></ol></li></ol></li></ol></div></div></div><div class="back-to-top"><i class="fa fa-arrow-up"></i> <span id="scrollpercent"><span>0</span>%</span></div></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright"><a href="http://www.miitbeian.gov.cn" rel="noopener" target="_blank">粤ICP备15039562号 </a>&copy; <span itemprop="copyrightYear">2021</span> <span class="with-love" id="animate"><i class="fa fa-user"></i> </span><span class="author" itemprop="copyrightHolder">blademainer</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-area-chart"></i> </span><span class="post-meta-item-text">站点总字数：</span> <span title="站点总字数">206k</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-coffee"></i> </span><span class="post-meta-item-text">站点阅读时长 &asymp;</span> <span title="站点阅读时长">3:07</span></div><script type="text/javascript">function downloadJSAtOnload(){var e=document.createElement("script");e.src="//cdn.clustrmaps.com/map_v2.js?cl=5e5e5e&w=300&t=n&co=eeeeee&ct=808080&cmo=3acc3a&cmn=ff5353&d=0YMy0GZZDugC8YZp9hWvf4tVbWlAGPUEsDxEt2iIkwI&cl=5e5e5e&w=300&t=n&co=eeeeee&ct=808080&cmo=3acc3a&cmn=ff5353",e.id="clustrmaps",document.body.appendChild(e)}window.addEventListener?window.addEventListener("load",downloadJSAtOnload,!1):window.attachEvent?window.attachEvent("onload",downloadJSAtOnload):window.onload=downloadJSAtOnload</script><div class="busuanzi-count"><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span class="post-meta-item-icon"><i class="fa fa-user-circle-o"></i> </span><span class="site-uv" title="总访客量"><span class="busuanzi-value" id="busuanzi_value_site_uv"></span> </span><span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-eye"></i> </span><span class="site-pv" title="总访问量"><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span></div></div></footer><div id="needsharebutton-float"><span class="btn"><i class="fa fa-share-alt" aria-hidden="true"></i></span></div></div><script>"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script src="//cdn.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script><script src="//cdn.jsdelivr.net/npm/jquery-lazyload@1/jquery.lazyload.min.js"></script><script src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script src="/js/src/utils.js?v=7.0.0"></script><script src="/js/src/motion.js?v=7.0.0"></script><script src="/js/src/affix.js?v=7.0.0"></script><script src="/js/src/schemes/pisces.js?v=7.0.0"></script><script src="/js/src/scrollspy.js?v=7.0.0"></script><script src="/js/src/post-details.js?v=7.0.0"></script><script src="/js/src/bootstrap.js?v=7.0.0"></script><script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css"><script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script><script>var gitalk=new Gitalk({clientID:"5ed2a22925d0dc421548",clientSecret:"90c73f47bc8b33d992d0039af3291303c71c7aab",repo:"blademainer.github.com",owner:"blademainer",admin:["blademainer"],id:md5(location.pathname),distractionFreeMode:"true"});gitalk.render("gitalk-container")</script><script>// Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('100');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script><script src="/lib/needsharebutton/needsharebutton.js"></script><script>pbOptions={iconStyle:"box",boxForm:"horizontal",position:"bottomCenter",networks:"Weibo,Wechat,Douban,Twitter,Facebook"},new needShareButton("#needsharebutton-postbottom",pbOptions),flOptions={iconStyle:"box",boxForm:"horizontal",position:"middleRight",networks:"Weibo,Wechat,Douban,Twitter,Facebook"},new needShareButton("#needsharebutton-float",flOptions)</script><script src="/js/src/js.cookie.js?v=7.0.0"></script><script src="/js/src/scroll-cookie.js?v=7.0.0"></script><style>.copy-btn{display:inline-block;padding:6px 12px;font-size:13px;font-weight:700;line-height:20px;color:#333;white-space:nowrap;vertical-align:middle;cursor:pointer;background-color:#eee;background-image:linear-gradient(#fcfcfc,#eee);border:1px solid #d5d5d5;border-radius:3px;user-select:none;outline:0}.highlight-wrap .copy-btn{transition:opacity .3s ease-in-out;opacity:0;padding:2px 6px;position:absolute;right:4px;top:8px}.highlight-wrap .copy-btn:focus,.highlight-wrap:hover .copy-btn{opacity:1}.highlight-wrap{position:relative}</style><script>$(".highlight").each(function(e,t){var n=$("<div>").addClass("highlight-wrap");$(t).after(n),n.append($("<button>").addClass("copy-btn").append("复制").on("click",function(e){var t=$(this).parent().find(".code").find(".line").map(function(e,t){return $(t).text()}).toArray().join("\n"),n=document.createElement("textarea"),o=document.createRange(),a=window.getSelection(),i=window.pageYOffset||document.documentElement.scrollTop;n.style.top=i+"px",n.style.position="absolute",n.style.opacity="0",n.value=t,n.textContent=t,n.contentEditable=!0,n.readOnly=!1,document.body.appendChild(n),o.selectNode(n),a.removeAllRanges(),a.addRange(o),n.setSelectionRange(0,t.length),document.execCommand("copy")?$(this).text("复制成功"):$(this).text("复制失败"),n.blur(),$(this).blur()})).on("mouseleave",function(e){var t=$(this).find(".copy-btn");setTimeout(function(){t.text("复制")},300)}).append(t)})</script></body></html>

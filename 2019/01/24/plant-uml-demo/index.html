@@ -1,0 +1,317 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="zh-Hans"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#222"><link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css"><script src="/lib/pace/pace.min.js?v=1.0.2"></script><link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2"><link rel="stylesheet" href="/css/main.css?v=7.0.0"><link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.0.0"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.0"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.0"><link rel="mask-icon" href="/images/favicon.ico?v=7.0.0" color="#222"><script id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"7.0.0",sidebar:{position:"left",display:"post",offset:12,b2t:!0,scrollpercent:!0,onmobile:!1},fancybox:!1,fastclick:!1,lazyload:!0,tabs:!0,motion:{enable:!0,async:!0,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><meta name="description" content="plantuml支持使用代码的方式画图，支持流程图、时序图、架构图等，并且扩展良好，可以支持c4、k8s、aws、azure等样式。"><meta name="keywords" content="plantuml,demo"><meta property="og:type" content="article"><meta property="og:title" content="plantuml示例"><meta property="og:url" content="http://xiongyingqi.com/2019/01/24/plant-uml-demo/index.html"><meta property="og:site_name" content="Blademainer"><meta property="og:description" content="plantuml支持使用代码的方式画图，支持流程图、时序图、架构图等，并且扩展良好，可以支持c4、k8s、aws、azure等样式。"><meta property="og:locale" content="zh-Hans"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/bPBBRjim44Nt_0f6cog0OZLoLzqbQO4KVHanl3OcvDWcp1T8oebHvDzBIeejrN0JUKFutBcQ9raP4z3Hx_KZEeq1FPr9qE5gyVC7yGmaKWNFzFfZzOa-2HusXFYjq1OSAAeDHuysgZteG6yxI3xqlaikEAw4nXwQrKhIJGZMVovB1q-JjGYR-h7sw9ZH0NMOCADApi134ENsOBngQembbWfyBB_amWT2BeHcikPOE_bFbfvtUMUKCdfY8twt8nRp7CPOva9PALO2UUlwd-ttV5uUqNp7tamqT7pJwv6EcU4Z7Gz-fE4BMcds8qtt5hfn0Gl6qMmHJo6Zu6cwYHifm1E9gq23eKwiDu5ouP05OVJms6XSiZKwNf0dTx9EDxAyDRNcuFOvQq51ixwXXTab_KD-WK9lWU7HetqClmMsfLyrRu86yy-5NZlqAMXlQZVXHe7GwNgpYB9BCjXlxdSiujZIJZ0yYOZRoQtXrv6dvvnUjNfrJf-s-hJJ2Ur-_QNcpXTPLYJzL6vNcFFcARBsLN6cvmnnVVd6GintFxlfqgQ85_92o0FA_B35udLU6OqnINe5QJGDR6ZwrupY4DUHweHCZxRb8lKry1rGTOg6pgvTbtPvZ4njTKgB_m80"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/Syp9J4vLqBLJSCfFib9mB2t9ICqhoKnEBCdCprC8IYqiJIqkuGBAAUW2rJY256DHLLoGdrUSoiNbY6fONZvGNP528dP38OfjT7KXgXDngOOO3W00"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/JOux3W8n30Lxdy8Ne83z55iWBGK7G5p0cxL4f2WMYLDmUp0XAENpsFEy1kyO3sUyoBRWMlJ1KRqZzHBnni_2MO6SIiAho14sAN6dzB9q0YTHamGB0zYXVi48EobjbDdIz5aBWPqfimrcC9MLcWGNl0isRu-6YdubFHahgOqzc2fezJsQc-t_oni0"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/SyfFKj2rgr1mpCbCJkLo0lDGE2Yy62HEJ8mk4azVNnV6XMhCHvBD1of6aRP1iSK6hXe0"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/XL1BJWCn35qdftWNg3Hikq0AGgm0LN22DECfKTCun8wgtfxC32n6IE255tuV-zcb60YxUppmSG_Nz8Eonk0rSiORVJOIjTOdXRGGI6Hg2S4BMMkwP5QwsUANrdLsKHgjiPI487mXd6CUmHCc7rEh_teyVTFCgN8hUBc1hnd97obPOzpFwSzymdxfNjM7CqHzLMlGAp4Nt0t308qNadKubzi4VtnzXrl4AuFo-EU61L_QcivbxfTNwAtG9c3tsaOy9EhVGwL2NcVOTfil"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/TP8zJyCm48RdtA-mojo12T41oNPQ2Qb2Y0enN-EZM6djzEnG2kA_4wSLIHfOxtc_OYMKrbN8k1DhBCeD-zePxRUUnTLyFbUvXl2hU4Dd3cnZ92SYrmGz5cXVaoj8V44ccVtX598JLQlogBQDEfD5zAmy6-8_wDA-qj8wwWlMGtAvKDxcEbz01jaZShI5hT35Vmlwcekat9iDyKYsy2u-u8x4_Qx28exOodwIkBuPtKVpJbz-KOhx6i-eCuqVR53qUsbdIQpe0xu1C9t5So26gfiY9WlB8GgznH0c0eEGGxoYmZlJush8bpXmQu1K8QPtGiwQDtlnNAPg-uwn6GCW4r8pePdIvIdz4o5s4WMWaaIFtHgqc9xS2UJU4PZ6pFwOUbKBczPpvhd2D9f-kcnbQMHgQ2EwVJy0"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/AyxEp2j8B4hCLGX8B2h9JCuiICmh2KXCISdCIrSmCk0gXiixvLV0n0qDkBYIyYiKbDpoymsLk0eGEXKSSpAJKmqnXOouKlDI582Qu1gDK3KwvISPeWiWD46CLT2r0wjJi5B8ICt9oKSIzYyj0OhcbvO00000"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/VLFHQi8m57ssNt7famxg7-XWRNKoKAc-3149xQqDPebBqeb_loHDCq4ww4EQd7FkFUScccg6i4Fvmr13AhWcbAECel7B199a3d7AQ7dnW6b3UCMmmEyMbHvFuiX1EDvWIyuOHn6j8RRBgU0xB5j9zJrjiBp4e1la4K0oFsZPuZ70Lfmw9G3pMJfL2o5lH5QlWMHPN5YE52Kg1QLfL0gcBCto7D5kKjuYN3iKvUTUOcIz7EweZZ2RpOfydUN5QhqqQqj6fj13R1M7o5P5dkvFwNkUVlGmNj7Q5tGKszYmR0yFjc0hb0uT1MOVX3srGOnSfdwpC2eepJOG1TBzT8219ZihISYhKrdYdx8NUUZFUx6acfZrG08Ttaqu4qQceXBBu0U2dVx4GDmrCJFg6dxB5viYFsNvRbziFfsag-mLdwQUCAnraFN73wg3ilrq4adFZUwpwAA4gua4D7vT6T7uluepx6q_3YKpzQMu-_jlNahq2m00"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/NP0z2y8m48Rt_8gZNLJee7k5jdGG18KEpZ6DDfWs8HzAaVvtar2jRPR0tJtlSvp4oZ33H0U5w6fBZ53mHW2hpHgIP0zHmLbxrU06pXoRcr1jvDg-bQOfL5l_ZOLSl3GQ49A_pCpMZ7Q4GdnazyPKZpxdbWR1H0Ssav9ZMo_u-Ku-VpBl_imN_AGwKotLhl2DMexEaa-AD5GRXI4kt2lBO9Xo0dpeZ19-0KUCfiXTeOVMQaOYD7m0"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/NL4xSiCW5Ap5ALufDJu0Ab9u9fbq6li46hIo61DGuCaUtpvyX9Eu0jv-M9R0esSXZqQhwnd-Pi27PRIJmGdV6mAtNI-anPtMyO9Uw9dQ8UuEpfwXDg_vSLoWhXtn0aij-msT898xwTFgR46Kb3gyEtyV_VHM-TPref63TmeXa7AMlJEX5qsYfwEs6sWjkBQN_qAYm6uL3UoaPz4KbGw32_maFX0oioPAO4hKm0GyVIhwWHqiZdLyYcVuyf025VKyngKJPPJBcHnvJDf3lKI8TrIWlgVFBditKJY_b5EYoxspw9j_96VupIvBjlm_nFXQpSZuaxD4Iptz0000"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/fLLDRzim3BthLn3PC6m3dDsBr83dhes19JNcmQTSL9j9jDcI8Sdj0kp7Jv8_uWIk0QytatplYQHeKLMIQOJtJx4K6Ie5lwYyeJ8xif9g_F9KAyQDswkQC54jdYOedrc6LtXQLGNBg6Q2Uwf1d2cXA2l1aUi9KjPX2Ea1yEvhcmOirfJd1K9MK5Ok0AY2TGYhrNMUlZzE3scbQuaGyRsGfJkoKGcZ6IfReTd-jED1dZChGGj8DFsDHr7aADN22cw3P8PYIWkM6v-ZfZE84Nz6fTcXuyuf8wOdnud7ESHqzhENYnVkcVOCBLFRq4o7nWKm9iGqrfFiSDIUxpkYRSpPav9qO4LaY8ulPY28u-zH6FoC7hUmI3BAEUC7bxzg3LF6oFnTLd-X4jPAYn8bqBpaJ6dP3eJHpDfGa9Vi79f_WfrJDQRl0czJZoNZsjOzcqXFfVqDN-MHlgLUNNc-lVvN6Z80Z5NKHEsrJuJJgM14kcmRsmn5NtT7lt9CpCsTo6ehjkCRoka1c-_af3IMxbxkDibLL_eNQUAQ7v2ZfCMEXpys5tB6_W-vjMaqV83WXPf79XQ6wnwRONUS-Zg8WxVAtpDEUSPiycCdt4-UG6oxbdMr_EltV-7GrrqCiNreVUE3H5mj7MHa78XBfTDjHeAG0W_8SoXmhyctFxIip6xOIr62FY8i0ji0LKjJe5aPL24eNUVcqVluM25_aAAkFYr9WWZazfQi-YNemqtt7aAt-1oWste608EUGBVg6b2_vwvXv-M6TelPrFy1"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/TOv1QiCm44NNcLDyw28hczPqcPMJBWE5dc1gJuo8F3AI33PjxrxRCKag6Ys4c7d_FstnqLaJOJGwlABZHWBDDugXe70ssh7dTbaSsJT6yVASpD-6A5xPxfrr7etdCG5Avslnb_MdvUfCL5aE0IK7sSyl8kLMGiULG2NcTT-s8vuEoy4NRV8hYjrtbk5TV71AcwD8DDh0tSrI6Yj4z9DwJivDxRWvyqi9bjnQ23om_md-yvD9bmHdlDS-IBsAVW40"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/oyjFILN80nA6N7amfX62QOnWcY2Ofc2ceOAkBf9wGmKzFIGzXWfrTKZw31LiRI5w0G00"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/JSj13e0W30J0Ur_H3t201_WNXA8aQfDIJiQ_AvA8jzdDxaP9KHabBwjYp491Cn-GnE-4jP3O4uANYCAiNQNEzfE32thOo2Sxw03QnPZftGyxQCNZVlW5TmC0"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/AyxEp2j8B4hCLIXAJIv9p4lFILMevk8ioY_DIt7EByfBBRAnSSxFIqujAB6pKp0ovQhbuaAeL89AAVZcfwJcA2aWgmMPWb3eMf6OMm1a6A8gIYnMIAqmH57fc9TVaf5QX72F4bSj0000"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/YmueoY_9BwaiI5L8IItEJC-BLSX9B2ufLZ0qLKX9h2pcYWv9BIvHA82fWaiRWAK1"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/YmueoY_9BwaiI5L8IItEJC-BLSX9B2ufLZ0qLKX9h2pcYWv9BIvHA82fWaiRu90kBaai0iedbYX4OnYjNgoGcfS20000"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/YmueoY_9BwaiI5L8IItEJC-BLSX9B2ufLZ0qK4X9h2pcYdREJqbLA82fmf0EByeiILKeIGKAmkHCSUWiBaai0aedbYX4OzYgNgoGcfU2PXoI1ZIpWCh1aW00"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/TSsn2W9130JG_hvYEij3z0iipjR2HXQBi1iqk6oE92BtzufmXInsWJSpIIVJq5XcHc6NMxkYaeTZkqEXnOTqPW_CQshb_H_r8Fim1LAtl75mAqCF44VMgiO5qZ0zyzs5nacC3oRvWVxFR-DepEt2jUfh_Dvu0m00"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/VSon2i9048JXFayndQtw94BiZXGRRo72vMx9J8fxUnj5268z_tpfxXHYQshguHEAKSJbZ6oTGxfz5ZpQ6iNbUS9Y4Lu94zBXVoAyvY6DhZrWfAzpwIZF-hMlR_jdGzccV_GB"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/DSin3e9040NGdbFy6-XgOQsj52JQ4OgL_R9hLeRCZ2RSNXhRbxnEvSNHOHxL3Pw9mzupv0dZudm_g9k4KzDtAYw-BaIYbMaU40tz_NoxXW4rsjR34Ickrlor64QfeameCzhuvPoekxPCsI_rmny0"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/TKyx3i8m3DrxYhSnfa55mCe0AmCBgXYYrgA1AAbiLwYtvu-0mcQzlrjE1weKeevLe0rXdDkPoGkJppDnsd7jUZWcL249rPbqyGkv6oOcj_3o2HR6Jg7fbMddRv9opKcJzYsX9l7xk4DmSbbX2rmg92it98hsgNhI_zZ73qunJ1u9AFwilEv98J7Ly17Bhch4ExFqJ0lsrH73da_7YedYba989tExSGO0"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/YmueoY_9BwaiI5L8IItEJC-BLSX9B2ufLZ0qKKX9h2pcAib8pLE83aajBb4eW2c5gK5Huf9Qa9DVYQd83Am80000"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/YmueoY_9BwaiI5L8IItEJC-BLSX9B2ufLZ0qKKX9h2pcYdOgpSn9KIY0AOF9mwG3Yb8B4ejI5KfIYqjWScPmENIpTUqKC0p4fGx5P000"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/YtOloYyjCDI7K0eXYSNPXh4AEOd59SKAfWefYPN52ebvAGgPnGh9-JdvHQb0Pfw2MsboHd5cehvRPb6gKr5cSZPND5Y_4SGO8rHZp74PurwKcfeNcPgJar-k3sPZCyQ8e6jm6OFYAIE2hi7m5000"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/Ymv9BCusZ5N8IImkALOmD518IQmivYh9ICrJY0P96S6aJ20okheA0Hc9nQaA8UNv2hgwI2gDOIfDqSqmWScOWMK0"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/Ymv9BCusZ5N8prEeTip9J4wjLSX9B2ufLZ0qK4X9h2pcYWOfC88eSCfFWaaRWMKL4aiKJ0rK5RXACbBp5C1AZR6P1LTiPAeA0000"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/XP2z2y903CNt_XNP78k8WgiEAdHm41oE3gUDzQ3SbIHQ-j-R5i_lZosGztxl9MPDGOAqDKA1x4gVGsLP68OZA6pBO7q1Zc4Vga2eeuVCdj4NI6dcogFCgXCcPeCiK4TKP4o_8UQ1R9Kk2D7tMnPBge-H1q42yzPimA31YTcI4mJHI8v9utkIIdIG7_wbewiTcWv5Dypa0-OnJGbzrSIil9DUrzpNG5W7alpxiNzyrpSCknQmmuCIuFMriS9poNUHhYu0"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/NOyn3i8m34NtdEAhKplGeMC7f1w0Bi36uhQ61gLEbKI8uvEa5KX8KVBz_6t7xOcqe9iMBIt8RqgLLyy8CuFMrUYHWhPIfNHAL4h5s-5mH7aEv4Arnmbi-TmbWXyH6nXEF-O0Uz-ceCLbrXxna83VjAo6wt_hLWzqo7oCLZBUHZ8mhC3pYnqP62ti5SkKVNkN8W_8ChwZ5U4ny7IJOB-5TdX6wEiYxTStQjy9TPsYlaaYV-83"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/2orEBLAmiL7mACrDp5Emi-EoyatCp5DmIIn9J4eiJhLII2nMyAqCBim1AN8iACZ9J4uioSm7AzK8BaaiAj44oVZdfIe4P-INW8L3YrCLIZ9I5H8HoZL1ve0amAh1LW1LSeM2RDUrKu2Q1EM3141AkRWWDiC50000"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/AyfFAYqkKL0AJqrIUBQr_yNoZgSpLoWf91OhX3jn9UVd9MSMfq9adqzPyQnZEqGgb8lBmO0hF5GXirZX-SfTBwTluWftGk9mEHWQmENNTZxTr_fanrgeagTBMfvFQ0FnkHoCGQgSK5G10000"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/NO_12i8m38RlUOgmwn2guiM3bE954959wNchGGfZXMRgwzlEED5Ro9V_-ziKkpkFMErF5so8O_-WL67Bc1UG13hgqAJuP67EW8-33qnlPcTW0RG2Pp4m7guzWJFpM2e-C-XwgQR3nIxhS8ksEKhEjM4CmqsYvnGzCPT53grAoFnTPKLswtgZiaS-CVcaHOf_JUilA2zw0G00"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/AyfFAYqkKL0AJqrIS2hABozEBL9II2nM27VYIixFIyuiJeN8XS8bGhcu782o1WgPnGgPAJcfNDf61c1EG55-iXwNjY645vwOMPAPbmvI7Cg58g9j2b6Hdmq0"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/IyxFIyuiJbLG2azDKWWjJYrIKaWiLWWFvIfEJin9LJ0qC03nJGqK2Z8hKdEAkRWSW7862fb0DOcP9PbvwLpQfWPWVdus0000"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/LOon2W8n44Jx_OhbsZIdOA_fx6p2rabSPF78GZOYtDUR610ivysRgPfUrd0XJkYhlethWj6GF6GjMOnd5tv5022FOdWjqYHkiajv08M1BicuD81pdwy3o7rZSCVr6svLCviDtHqcejW_UkwB07_4dQQXpmy0"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/LOmn2y8m48Nt-nL7ro2aGXSHYTdSN4Bcf8PoM1F8HGIb_zsc0S7buDvxtvUJVtB1pWQFEgSNXzoXOxGQnXH7uj0wyoiCWDL8Z9T8XTnCRueJM5EZi-SG2u1QSLa3kiq1n5vkppMdCJ3NkUXRPDtggBXM4e-x4wf1uW4_wtqmpcvQgip0trWC3KvtK5MzSQ9lPB-XonS0"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/JOwn2iCm34HtVON85wHqwsIyTIkqmRFZg8aXiOgbKlhtZN4I2XBSlPFW7b5dGfsYu3hB5xK0cCWFb2yel11M0qzcFLWrCDD8QO1xGPjUTvV1lpHogX-R0SZSlqMnSTIZpVmHoWrwGMSXS0fHg6RT4NG0fWNNbOhNOQtdx271dDezSpvgJECMtp874Ya0pBaSsR-Z7m00"><meta property="og:image" content="http://www.plantuml.com/plantuml/svg/bLHTRziW57tdLx0t9ufZDTccgG-LS9nMQVEbEbdLgIy4qvGKWmMuLZTjltrWEucL9Olg1xZSU-wvbsFWKqAVcQ0GFSJpvMGCNup9z6KGA5nqryoyvAjSKqMaC5IOBf5fa38k_PI9XAfLEGOsrvzpB8mb21Jb56iQN7ppUtwl5oHC6m0-CK5udj1SyMsfm9AbKdIpFEL7uoZBE2FOC2bYgjuOeJf0AVuf1PgFRh2X1Nx_nt6QRY3JB3VKTJl6wIh1U-iZITLqdGlY6ZjOdYQAiC4hfqlLSFGkS2gZy63vyNphvRGQJoVVK44LvcuNXCiysHddKmXdziVNqtcuEopbS1eQHtSwkCLlE2QAPQPX_YV7I8NNsyt7_PtnWPHLJbwfgQSg3m3zoaI65KwXFOsP57QJI2bP32IN2eOSazTZcD3wrqhc8gc03o_Cq0PGo8IUmzZcpXDXPTWp9YTm02pZuRtdz6w1mNWqd2wybUs-ND-YxoWUt8_c2s-ZErRr5W1MdC5ujemyNEWM_0K0j1-Qe1-pQTptTD_vOFs5oy7TSE5fMwXJ54MN2Kr9hfXvjyz0wn36vLftt70CzxjPoDrLj1W-e4SFPwnLX-pzGfCmGXulBrIpaIfmlPmE5gFPrCE9rI1DhNYwqx2FL8eUfsWoYq8lAMzBatE1ml7G8rkUGn9BuqI5Fgpb1A0se9_uLz290Y_RxGlSRhVWcfedeOrzgSYJg9zAK4B-N46d2Roym9MZctUljfmbmQhTtbF3ZGOR3NrbIsnxSwZUlipM3NRnhcNSL317jYEmuZfdtwLQdNQf0BX8kOs6V0xwsQKtVGTjV77n8tM_kXA25llk_W80"><meta property="og:updated_time" content="2019-01-24T09:09:19.000Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="plantuml示例"><meta name="twitter:description" content="plantuml支持使用代码的方式画图，支持流程图、时序图、架构图等，并且扩展良好，可以支持c4、k8s、aws、azure等样式。"><meta name="twitter:image" content="http://www.plantuml.com/plantuml/svg/bPBBRjim44Nt_0f6cog0OZLoLzqbQO4KVHanl3OcvDWcp1T8oebHvDzBIeejrN0JUKFutBcQ9raP4z3Hx_KZEeq1FPr9qE5gyVC7yGmaKWNFzFfZzOa-2HusXFYjq1OSAAeDHuysgZteG6yxI3xqlaikEAw4nXwQrKhIJGZMVovB1q-JjGYR-h7sw9ZH0NMOCADApi134ENsOBngQembbWfyBB_amWT2BeHcikPOE_bFbfvtUMUKCdfY8twt8nRp7CPOva9PALO2UUlwd-ttV5uUqNp7tamqT7pJwv6EcU4Z7Gz-fE4BMcds8qtt5hfn0Gl6qMmHJo6Zu6cwYHifm1E9gq23eKwiDu5ouP05OVJms6XSiZKwNf0dTx9EDxAyDRNcuFOvQq51ixwXXTab_KD-WK9lWU7HetqClmMsfLyrRu86yy-5NZlqAMXlQZVXHe7GwNgpYB9BCjXlxdSiujZIJZ0yYOZRoQtXrv6dvvnUjNfrJf-s-hJJ2Ur-_QNcpXTPLYJzL6vNcFFcARBsLN6cvmnnVVd6GintFxlfqgQ85_92o0FA_B35udLU6OqnINe5QJGDR6ZwrupY4DUHweHCZxRb8lKry1rGTOg6pgvTbtPvZ4njTKgB_m80"><link rel="canonical" href="http://xiongyingqi.com/2019/01/24/plant-uml-demo/"><script id="page.configurations">CONFIG.page={sidebar:""}</script><title>plantuml示例 | Blademainer</title><script>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?401b87cd7ccfbae7934d36a06c2bb321";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><noscript><style>.sidebar-inner,.use-motion .brand,.use-motion .collection-title,.use-motion .comments,.use-motion .menu-item,.use-motion .motion-element,.use-motion .pagination,.use-motion .post-block,.use-motion .post-body,.use-motion .post-header{opacity:initial}.use-motion .logo,.use-motion .site-subtitle,.use-motion .site-title{opacity:initial;top:initial}.use-motion .logo-line-before i{left:initial}.use-motion .logo-line-after i{right:initial}</style></noscript></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans"><div class="container sidebar-position-left page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">Blademainer</span> <span class="logo-line-after"><i></i></span></a></div><h1 class="site-subtitle" itemprop="description">Thinking cap.</h1></div><div class="site-nav-toggle"><button aria-label="切换导航栏"><span class="btn-bar"></span> <span class="btn-bar"></span> <span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i><br>分类<span class="badge">25</span></a></li><li class="menu-item menu-item-tags"><a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签<span class="badge">112</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i><br>归档<span class="badge">47</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br>关于</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br>搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i> </span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://xiongyingqi.com/2019/01/24/plant-uml-demo/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="blademainer"><meta itemprop="description" content="Blademainer's blog."><meta itemprop="image" content="/images/avatar.gif"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Blademainer"></span><header class="post-header"><h2 class="post-title" itemprop="name headline">plantuml示例<a href="https://github.com/blademainer/blog/tree/master/source/_posts/plant-uml-demo.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil"></i></a></h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i> </span><span class="post-meta-item-text">发表于</span> <time title="创建时间：2019-01-24 17:09:19" itemprop="dateCreated datePublished" datetime="2019-01-24T17:09:19+08:00">2019-01-24</time> </span><span class="post-category"><span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-folder-o"></i> </span><span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a></span> </span><span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-file-o"></i> 阅读次数： <span class="busuanzi-value" id="busuanzi_value_page_pv"></span></span><div class="post-symbolscount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i> </span><span class="post-meta-item-text">本文字数：</span> <span title="本文字数">161</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i> </span><span class="post-meta-item-text">阅读时长 &asymp;</span> <span title="阅读时长">1 分钟</span></div></div></header><div class="post-body" itemprop="articleBody"><p>plantuml支持使用代码的方式画图，支持流程图、时序图、架构图等，并且扩展良好，可以支持c4、k8s、aws、azure等样式。<br><a id="more"></a></p><p>使用示例</p><h2 id="k8s"><a href="#k8s" class="headerlink" title="k8s"></a>k8s</h2><img src="http://www.plantuml.com/plantuml/svg/bPBBRjim44Nt_0f6cog0OZLoLzqbQO4KVHanl3OcvDWcp1T8oebHvDzBIeejrN0JUKFutBcQ9raP4z3Hx_KZEeq1FPr9qE5gyVC7yGmaKWNFzFfZzOa-2HusXFYjq1OSAAeDHuysgZteG6yxI3xqlaikEAw4nXwQrKhIJGZMVovB1q-JjGYR-h7sw9ZH0NMOCADApi134ENsOBngQembbWfyBB_amWT2BeHcikPOE_bFbfvtUMUKCdfY8twt8nRp7CPOva9PALO2UUlwd-ttV5uUqNp7tamqT7pJwv6EcU4Z7Gz-fE4BMcds8qtt5hfn0Gl6qMmHJo6Zu6cwYHifm1E9gq23eKwiDu5ouP05OVJms6XSiZKwNf0dTx9EDxAyDRNcuFOvQq51ixwXXTab_KD-WK9lWU7HetqClmMsfLyrRu86yy-5NZlqAMXlQZVXHe7GwNgpYB9BCjXlxdSiujZIJZ0yYOZRoQtXrv6dvvnUjNfrJf-s-hJJ2Ur-_QNcpXTPLYJzL6vNcFFcARBsLN6cvmnnVVd6GintFxlfqgQ85_92o0FA_B35udLU6OqnINe5QJGDR6ZwrupY4DUHweHCZxRb8lKry1rGTOg6pgvTbtPvZ4njTKgB_m80"><p><a href="http://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000" target="_blank" rel="noopener">online editor</a></p><img src="http://www.plantuml.com/plantuml/svg/Syp9J4vLqBLJSCfFib9mB2t9ICqhoKnEBCdCprC8IYqiJIqkuGBAAUW2rJY256DHLLoGdrUSoiNbY6fONZvGNP528dP38OfjT7KXgXDngOOO3W00"> <img src="http://www.plantuml.com/plantuml/svg/JOux3W8n30Lxdy8Ne83z55iWBGK7G5p0cxL4f2WMYLDmUp0XAENpsFEy1kyO3sUyoBRWMlJ1KRqZzHBnni_2MO6SIiAho14sAN6dzB9q0YTHamGB0zYXVi48EobjbDdIz5aBWPqfimrcC9MLcWGNl0isRu-6YdubFHahgOqzc2fezJsQc-t_oni0"> <img src="http://www.plantuml.com/plantuml/svg/SyfFKj2rgr1mpCbCJkLo0lDGE2Yy62HEJ8mk4azVNnV6XMhCHvBD1of6aRP1iSK6hXe0"> <img src="http://www.plantuml.com/plantuml/svg/XL1BJWCn35qdftWNg3Hikq0AGgm0LN22DECfKTCun8wgtfxC32n6IE255tuV-zcb60YxUppmSG_Nz8Eonk0rSiORVJOIjTOdXRGGI6Hg2S4BMMkwP5QwsUANrdLsKHgjiPI487mXd6CUmHCc7rEh_teyVTFCgN8hUBc1hnd97obPOzpFwSzymdxfNjM7CqHzLMlGAp4Nt0t308qNadKubzi4VtnzXrl4AuFo-EU61L_QcivbxfTNwAtG9c3tsaOy9EhVGwL2NcVOTfil"> <img src="http://www.plantuml.com/plantuml/svg/TP8zJyCm48RdtA-mojo12T41oNPQ2Qb2Y0enN-EZM6djzEnG2kA_4wSLIHfOxtc_OYMKrbN8k1DhBCeD-zePxRUUnTLyFbUvXl2hU4Dd3cnZ92SYrmGz5cXVaoj8V44ccVtX598JLQlogBQDEfD5zAmy6-8_wDA-qj8wwWlMGtAvKDxcEbz01jaZShI5hT35Vmlwcekat9iDyKYsy2u-u8x4_Qx28exOodwIkBuPtKVpJbz-KOhx6i-eCuqVR53qUsbdIQpe0xu1C9t5So26gfiY9WlB8GgznH0c0eEGGxoYmZlJush8bpXmQu1K8QPtGiwQDtlnNAPg-uwn6GCW4r8pePdIvIdz4o5s4WMWaaIFtHgqc9xS2UJU4PZ6pFwOUbKBczPpvhd2D9f-kcnbQMHgQ2EwVJy0"> <img src="http://www.plantuml.com/plantuml/svg/AyxEp2j8B4hCLGX8B2h9JCuiICmh2KXCISdCIrSmCk0gXiixvLV0n0qDkBYIyYiKbDpoymsLk0eGEXKSSpAJKmqnXOouKlDI582Qu1gDK3KwvISPeWiWD46CLT2r0wjJi5B8ICt9oKSIzYyj0OhcbvO00000"><h1 id="activity"><a href="#activity" class="headerlink" title="activity"></a>activity</h1><img src="http://www.plantuml.com/plantuml/svg/VLFHQi8m57ssNt7famxg7-XWRNKoKAc-3149xQqDPebBqeb_loHDCq4ww4EQd7FkFUScccg6i4Fvmr13AhWcbAECel7B199a3d7AQ7dnW6b3UCMmmEyMbHvFuiX1EDvWIyuOHn6j8RRBgU0xB5j9zJrjiBp4e1la4K0oFsZPuZ70Lfmw9G3pMJfL2o5lH5QlWMHPN5YE52Kg1QLfL0gcBCto7D5kKjuYN3iKvUTUOcIz7EweZZ2RpOfydUN5QhqqQqj6fj13R1M7o5P5dkvFwNkUVlGmNj7Q5tGKszYmR0yFjc0hb0uT1MOVX3srGOnSfdwpC2eepJOG1TBzT8219ZihISYhKrdYdx8NUUZFUx6acfZrG08Ttaqu4qQceXBBu0U2dVx4GDmrCJFg6dxB5viYFsNvRbziFfsag-mLdwQUCAnraFN73wg3ilrq4adFZUwpwAA4gua4D7vT6T7uluepx6q_3YKpzQMu-_jlNahq2m00"> <img src="http://www.plantuml.com/plantuml/svg/NP0z2y8m48Rt_8gZNLJee7k5jdGG18KEpZ6DDfWs8HzAaVvtar2jRPR0tJtlSvp4oZ33H0U5w6fBZ53mHW2hpHgIP0zHmLbxrU06pXoRcr1jvDg-bQOfL5l_ZOLSl3GQ49A_pCpMZ7Q4GdnazyPKZpxdbWR1H0Ssav9ZMo_u-Ku-VpBl_imN_AGwKotLhl2DMexEaa-AD5GRXI4kt2lBO9Xo0dpeZ19-0KUCfiXTeOVMQaOYD7m0"> <img src="http://www.plantuml.com/plantuml/svg/NL4xSiCW5Ap5ALufDJu0Ab9u9fbq6li46hIo61DGuCaUtpvyX9Eu0jv-M9R0esSXZqQhwnd-Pi27PRIJmGdV6mAtNI-anPtMyO9Uw9dQ8UuEpfwXDg_vSLoWhXtn0aij-msT898xwTFgR46Kb3gyEtyV_VHM-TPref63TmeXa7AMlJEX5qsYfwEs6sWjkBQN_qAYm6uL3UoaPz4KbGw32_maFX0oioPAO4hKm0GyVIhwWHqiZdLyYcVuyf025VKyngKJPPJBcHnvJDf3lKI8TrIWlgVFBditKJY_b5EYoxspw9j_96VupIvBjlm_nFXQpSZuaxD4Iptz0000"><h1 id="Archimate"><a href="#Archimate" class="headerlink" title="Archimate"></a>Archimate</h1><img src="http://www.plantuml.com/plantuml/svg/fLLDRzim3BthLn3PC6m3dDsBr83dhes19JNcmQTSL9j9jDcI8Sdj0kp7Jv8_uWIk0QytatplYQHeKLMIQOJtJx4K6Ie5lwYyeJ8xif9g_F9KAyQDswkQC54jdYOedrc6LtXQLGNBg6Q2Uwf1d2cXA2l1aUi9KjPX2Ea1yEvhcmOirfJd1K9MK5Ok0AY2TGYhrNMUlZzE3scbQuaGyRsGfJkoKGcZ6IfReTd-jED1dZChGGj8DFsDHr7aADN22cw3P8PYIWkM6v-ZfZE84Nz6fTcXuyuf8wOdnud7ESHqzhENYnVkcVOCBLFRq4o7nWKm9iGqrfFiSDIUxpkYRSpPav9qO4LaY8ulPY28u-zH6FoC7hUmI3BAEUC7bxzg3LF6oFnTLd-X4jPAYn8bqBpaJ6dP3eJHpDfGa9Vi79f_WfrJDQRl0czJZoNZsjOzcqXFfVqDN-MHlgLUNNc-lVvN6Z80Z5NKHEsrJuJJgM14kcmRsmn5NtT7lt9CpCsTo6ehjkCRoka1c-_af3IMxbxkDibLL_eNQUAQ7v2ZfCMEXpys5tB6_W-vjMaqV83WXPf79XQ6wnwRONUS-Zg8WxVAtpDEUSPiycCdt4-UG6oxbdMr_EltV-7GrrqCiNreVUE3H5mj7MHa78XBfTDjHeAG0W_8SoXmhyctFxIip6xOIr62FY8i0ji0LKjJe5aPL24eNUVcqVluM25_aAAkFYr9WWZazfQi-YNemqtt7aAt-1oWste608EUGBVg6b2_vwvXv-M6TelPrFy1"><h1 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h1><img src="http://www.plantuml.com/plantuml/svg/TOv1QiCm44NNcLDyw28hczPqcPMJBWE5dc1gJuo8F3AI33PjxrxRCKag6Ys4c7d_FstnqLaJOJGwlABZHWBDDugXe70ssh7dTbaSsJT6yVASpD-6A5xPxfrr7etdCG5Avslnb_MdvUfCL5aE0IK7sSyl8kLMGiULG2NcTT-s8vuEoy4NRV8hYjrtbk5TV71AcwD8DDh0tSrI6Yj4z9DwJivDxRWvyqi9bjnQ23om_md-yvD9bmHdlDS-IBsAVW40"><h1 id="Deploy"><a href="#Deploy" class="headerlink" title="Deploy"></a>Deploy</h1><img src="http://www.plantuml.com/plantuml/svg/oyjFILN80nA6N7amfX62QOnWcY2Ofc2ceOAkBf9wGmKzFIGzXWfrTKZw31LiRI5w0G00"> <img src="http://www.plantuml.com/plantuml/svg/JSj13e0W30J0Ur_H3t201_WNXA8aQfDIJiQ_AvA8jzdDxaP9KHabBwjYp491Cn-GnE-4jP3O4uANYCAiNQNEzfE32thOo2Sxw03QnPZftGyxQCNZVlW5TmC0"> <img src="http://www.plantuml.com/plantuml/svg/AyxEp2j8B4hCLIXAJIv9p4lFILMevk8ioY_DIt7EByfBBRAnSSxFIqujAB6pKp0ovQhbuaAeL89AAVZcfwJcA2aWgmMPWb3eMf6OMm1a6A8gIYnMIAqmH57fc9TVaf5QX72F4bSj0000"><h1 id="Gantt"><a href="#Gantt" class="headerlink" title="Gantt"></a>Gantt</h1><img src="http://www.plantuml.com/plantuml/svg/YmueoY_9BwaiI5L8IItEJC-BLSX9B2ufLZ0qLKX9h2pcYWv9BIvHA82fWaiRWAK1"> <img src="http://www.plantuml.com/plantuml/svg/YmueoY_9BwaiI5L8IItEJC-BLSX9B2ufLZ0qLKX9h2pcYWv9BIvHA82fWaiRu90kBaai0iedbYX4OnYjNgoGcfS20000"> <img src="http://www.plantuml.com/plantuml/svg/YmueoY_9BwaiI5L8IItEJC-BLSX9B2ufLZ0qK4X9h2pcYdREJqbLA82fmf0EByeiILKeIGKAmkHCSUWiBaai0aedbYX4OzYgNgoGcfU2PXoI1ZIpWCh1aW00"> <img src="http://www.plantuml.com/plantuml/svg/TSsn2W9130JG_hvYEij3z0iipjR2HXQBi1iqk6oE92BtzufmXInsWJSpIIVJq5XcHc6NMxkYaeTZkqEXnOTqPW_CQshb_H_r8Fim1LAtl75mAqCF44VMgiO5qZ0zyzs5nacC3oRvWVxFR-DepEt2jUfh_Dvu0m00"> <img src="http://www.plantuml.com/plantuml/svg/VSon2i9048JXFayndQtw94BiZXGRRo72vMx9J8fxUnj5268z_tpfxXHYQshguHEAKSJbZ6oTGxfz5ZpQ6iNbUS9Y4Lu94zBXVoAyvY6DhZrWfAzpwIZF-hMlR_jdGzccV_GB"> <img src="http://www.plantuml.com/plantuml/svg/DSin3e9040NGdbFy6-XgOQsj52JQ4OgL_R9hLeRCZ2RSNXhRbxnEvSNHOHxL3Pw9mzupv0dZudm_g9k4KzDtAYw-BaIYbMaU40tz_NoxXW4rsjR34Ickrlor64QfeameCzhuvPoekxPCsI_rmny0"> <img src="http://www.plantuml.com/plantuml/svg/TKyx3i8m3DrxYhSnfa55mCe0AmCBgXYYrgA1AAbiLwYtvu-0mcQzlrjE1weKeevLe0rXdDkPoGkJppDnsd7jUZWcL249rPbqyGkv6oOcj_3o2HR6Jg7fbMddRv9opKcJzYsX9l7xk4DmSbbX2rmg92it98hsgNhI_zZ73qunJ1u9AFwilEv98J7Ly17Bhch4ExFqJ0lsrH73da_7YedYba989tExSGO0"> <img src="http://www.plantuml.com/plantuml/svg/YmueoY_9BwaiI5L8IItEJC-BLSX9B2ufLZ0qKKX9h2pcAib8pLE83aajBb4eW2c5gK5Huf9Qa9DVYQd83Am80000"> <img src="http://www.plantuml.com/plantuml/svg/YmueoY_9BwaiI5L8IItEJC-BLSX9B2ufLZ0qKKX9h2pcYdOgpSn9KIY0AOF9mwG3Yb8B4ejI5KfIYqjWScPmENIpTUqKC0p4fGx5P000"> <img src="http://www.plantuml.com/plantuml/svg/YtOloYyjCDI7K0eXYSNPXh4AEOd59SKAfWefYPN52ebvAGgPnGh9-JdvHQb0Pfw2MsboHd5cehvRPb6gKr5cSZPND5Y_4SGO8rHZp74PurwKcfeNcPgJar-k3sPZCyQ8e6jm6OFYAIE2hi7m5000"> <img src="http://www.plantuml.com/plantuml/svg/Ymv9BCusZ5N8IImkALOmD518IQmivYh9ICrJY0P96S6aJ20okheA0Hc9nQaA8UNv2hgwI2gDOIfDqSqmWScOWMK0"> <img src="http://www.plantuml.com/plantuml/svg/Ymv9BCusZ5N8prEeTip9J4wjLSX9B2ufLZ0qK4X9h2pcYWOfC88eSCfFWaaRWMKL4aiKJ0rK5RXACbBp5C1AZR6P1LTiPAeA0000"> <img src="http://www.plantuml.com/plantuml/svg/XP2z2y903CNt_XNP78k8WgiEAdHm41oE3gUDzQ3SbIHQ-j-R5i_lZosGztxl9MPDGOAqDKA1x4gVGsLP68OZA6pBO7q1Zc4Vga2eeuVCdj4NI6dcogFCgXCcPeCiK4TKP4o_8UQ1R9Kk2D7tMnPBge-H1q42yzPimA31YTcI4mJHI8v9utkIIdIG7_wbewiTcWv5Dypa0-OnJGbzrSIil9DUrzpNG5W7alpxiNzyrpSCknQmmuCIuFMriS9poNUHhYu0"><h1 id="UseCase"><a href="#UseCase" class="headerlink" title="UseCase"></a>UseCase</h1><img src="http://www.plantuml.com/plantuml/svg/NOyn3i8m34NtdEAhKplGeMC7f1w0Bi36uhQ61gLEbKI8uvEa5KX8KVBz_6t7xOcqe9iMBIt8RqgLLyy8CuFMrUYHWhPIfNHAL4h5s-5mH7aEv4Arnmbi-TmbWXyH6nXEF-O0Uz-ceCLbrXxna83VjAo6wt_hLWzqo7oCLZBUHZ8mhC3pYnqP62ti5SkKVNkN8W_8ChwZ5U4ny7IJOB-5TdX6wEiYxTStQjy9TPsYlaaYV-83"> <img src="http://www.plantuml.com/plantuml/svg/2orEBLAmiL7mACrDp5Emi-EoyatCp5DmIIn9J4eiJhLII2nMyAqCBim1AN8iACZ9J4uioSm7AzK8BaaiAj44oVZdfIe4P-INW8L3YrCLIZ9I5H8HoZL1ve0amAh1LW1LSeM2RDUrKu2Q1EM3141AkRWWDiC50000"><h1 id="Timing"><a href="#Timing" class="headerlink" title="Timing"></a>Timing</h1><img src="http://www.plantuml.com/plantuml/svg/AyfFAYqkKL0AJqrIUBQr_yNoZgSpLoWf91OhX3jn9UVd9MSMfq9adqzPyQnZEqGgb8lBmO0hF5GXirZX-SfTBwTluWftGk9mEHWQmENNTZxTr_fanrgeagTBMfvFQ0FnkHoCGQgSK5G10000"> <img src="http://www.plantuml.com/plantuml/svg/NO_12i8m38RlUOgmwn2guiM3bE954959wNchGGfZXMRgwzlEED5Ro9V_-ziKkpkFMErF5so8O_-WL67Bc1UG13hgqAJuP67EW8-33qnlPcTW0RG2Pp4m7guzWJFpM2e-C-XwgQR3nIxhS8ksEKhEjM4CmqsYvnGzCPT53grAoFnTPKLswtgZiaS-CVcaHOf_JUilA2zw0G00"> <img src="http://www.plantuml.com/plantuml/svg/AyfFAYqkKL0AJqrIS2hABozEBL9II2nM27VYIixFIyuiJeN8XS8bGhcu782o1WgPnGgPAJcfNDf61c1EG55-iXwNjY645vwOMPAPbmvI7Cg58g9j2b6Hdmq0"> <img src="http://www.plantuml.com/plantuml/svg/IyxFIyuiJbLG2azDKWWjJYrIKaWiLWWFvIfEJin9LJ0qC03nJGqK2Z8hKdEAkRWSW7862fb0DOcP9PbvwLpQfWPWVdus0000"> <img src="http://www.plantuml.com/plantuml/svg/LOon2W8n44Jx_OhbsZIdOA_fx6p2rabSPF78GZOYtDUR610ivysRgPfUrd0XJkYhlethWj6GF6GjMOnd5tv5022FOdWjqYHkiajv08M1BicuD81pdwy3o7rZSCVr6svLCviDtHqcejW_UkwB07_4dQQXpmy0"> <img src="http://www.plantuml.com/plantuml/svg/LOmn2y8m48Nt-nL7ro2aGXSHYTdSN4Bcf8PoM1F8HGIb_zsc0S7buDvxtvUJVtB1pWQFEgSNXzoXOxGQnXH7uj0wyoiCWDL8Z9T8XTnCRueJM5EZi-SG2u1QSLa3kiq1n5vkppMdCJ3NkUXRPDtggBXM4e-x4wf1uW4_wtqmpcvQgip0trWC3KvtK5MzSQ9lPB-XonS0"> <img src="http://www.plantuml.com/plantuml/svg/JOwn2iCm34HtVON85wHqwsIyTIkqmRFZg8aXiOgbKlhtZN4I2XBSlPFW7b5dGfsYu3hB5xK0cCWFb2yel11M0qzcFLWrCDD8QO1xGPjUTvV1lpHogX-R0SZSlqMnSTIZpVmHoWrwGMSXS0fHg6RT4NG0fWNNbOhNOQtdx271dDezSpvgJECMtp874Ya0pBaSsR-Z7m00"> <img src="http://www.plantuml.com/plantuml/svg/bLHTRziW57tdLx0t9ufZDTccgG-LS9nMQVEbEbdLgIy4qvGKWmMuLZTjltrWEucL9Olg1xZSU-wvbsFWKqAVcQ0GFSJpvMGCNup9z6KGA5nqryoyvAjSKqMaC5IOBf5fa38k_PI9XAfLEGOsrvzpB8mb21Jb56iQN7ppUtwl5oHC6m0-CK5udj1SyMsfm9AbKdIpFEL7uoZBE2FOC2bYgjuOeJf0AVuf1PgFRh2X1Nx_nt6QRY3JB3VKTJl6wIh1U-iZITLqdGlY6ZjOdYQAiC4hfqlLSFGkS2gZy63vyNphvRGQJoVVK44LvcuNXCiysHddKmXdziVNqtcuEopbS1eQHtSwkCLlE2QAPQPX_YV7I8NNsyt7_PtnWPHLJbwfgQSg3m3zoaI65KwXFOsP57QJI2bP32IN2eOSazTZcD3wrqhc8gc03o_Cq0PGo8IUmzZcpXDXPTWp9YTm02pZuRtdz6w1mNWqd2wybUs-ND-YxoWUt8_c2s-ZErRr5W1MdC5ujemyNEWM_0K0j1-Qe1-pQTptTD_vOFs5oy7TSE5fMwXJ54MN2Kr9hfXvjyz0wn36vLftt70CzxjPoDrLj1W-e4SFPwnLX-pzGfCmGXulBrIpaIfmlPmE5gFPrCE9rI1DhNYwqx2FL8eUfsWoYq8lAMzBatE1ml7G8rkUGn9BuqI5Fgpb1A0se9_uLz290Y_RxGlSRhVWcfedeOrzgSYJg9zAK4B-N46d2Roym9MZctUljfmbmQhTtbF3ZGOR3NrbIsnxSwZUlipM3NRnhcNSL317jYEmuZfdtwLQdNQf0BX8kOs6V0xwsQKtVGTjV77n8tM_kXA25llk_W80"></div><div><div style="padding:10px 0;margin:20px auto;width:90%;text-align:center"><div></div><button id="rewardButton" disable="enable" onclick="var qr = document.getElementById(&quot;QR&quot;); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}"><span>打赏</span></button><div id="QR" style="display:none"><div id="wechat" style="display:inline-block"><img id="wechat_qr" src="/images/reward/wechatpay.jpg" alt="blademainer 微信支付"><p>微信支付</p></div><div id="alipay" style="display:inline-block"><img id="alipay_qr" src="/images/reward/alipay.jpg" alt="blademainer 支付宝"><p>支付宝</p></div></div></div></div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者： </strong>blademainer</li><li class="post-copyright-link"><strong>本文链接：</strong> <a href="http://xiongyingqi.com/2019/01/24/plant-uml-demo/" title="plantuml示例">http://xiongyingqi.com/2019/01/24/plant-uml-demo/</a></li><li class="post-copyright-license"><strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/plantuml/" rel="tag"># plantuml</a> <a href="/tags/demo/" rel="tag"># demo</a></div><div class="post-widgets"><div class="social_share"><div id="needsharebutton-postbottom"><span class="btn"><i class="fa fa-share-alt" aria-hidden="true"></i></span></div></div></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2019/01/19/2019-01-20-mysql-notes/" rel="next" title="MySQL笔记"><i class="fa fa-chevron-left"></i> MySQL笔记</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"><a href="/2019/01/25/kubernetes-notes-md/" rel="prev" title="kubernetes-notes">kubernetes-notes <i class="fa fa-chevron-right"></i></a></div></div></footer></div></article></div></div><div class="comments" id="gitalk-container"></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span> <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span> <span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap">站点概览</li></ul><div class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">blademainer</p><p class="site-description motion-element" itemprop="description">Blademainer's blog.</p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">47</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/index.html"><span class="site-state-item-count">25</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/index.html"><span class="site-state-item-count">112</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="cc-license motion-element" itemprop="license"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a></div><div class="links-of-blogroll motion-element links-of-blogroll-block"><div class="links-of-blogroll-title"><i class="fa fa-fw fa-link"></i> Links</div><ul class="links-of-blogroll-list"><li class="links-of-blogroll-item"><a href="http://blog.jia58960.com/" title="http://blog.jia58960.com/" rel="noopener" target="_blank">ethanZhang</a></li><li class="links-of-blogroll-item"><a href="https://zhangmingdong.com/" title="https://zhangmingdong.com/" rel="noopener" target="_blank">a栋</a></li><li class="links-of-blogroll-item"><a href="https://jimmysong.io/" title="https://jimmysong.io/" rel="noopener" target="_blank">jimmysong</a></li></ul></div></div></div><div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#k8s"><span class="nav-number">1.</span> <span class="nav-text">k8s</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#activity"><span class="nav-number"></span> <span class="nav-text">activity</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Archimate"><span class="nav-number"></span> <span class="nav-text">Archimate</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Class"><span class="nav-number"></span> <span class="nav-text">Class</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Deploy"><span class="nav-number"></span> <span class="nav-text">Deploy</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gantt"><span class="nav-number"></span> <span class="nav-text">Gantt</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UseCase"><span class="nav-number"></span> <span class="nav-text">UseCase</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Timing"><span class="nav-number"></span> <span class="nav-text">Timing</span></a></li></div></div></div><div class="back-to-top"><i class="fa fa-arrow-up"></i> <span id="scrollpercent"><span>0</span>%</span></div></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright"><a href="http://www.miitbeian.gov.cn" rel="noopener" target="_blank">粤ICP备15039562号 </a>&copy; <span itemprop="copyrightYear">2021</span> <span class="with-love" id="animate"><i class="fa fa-user"></i> </span><span class="author" itemprop="copyrightHolder">blademainer</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-area-chart"></i> </span><span class="post-meta-item-text">站点总字数：</span> <span title="站点总字数">206k</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-coffee"></i> </span><span class="post-meta-item-text">站点阅读时长 &asymp;</span> <span title="站点阅读时长">3:07</span></div><script type="text/javascript">function downloadJSAtOnload(){var e=document.createElement("script");e.src="//cdn.clustrmaps.com/map_v2.js?cl=5e5e5e&w=300&t=n&co=eeeeee&ct=808080&cmo=3acc3a&cmn=ff5353&d=0YMy0GZZDugC8YZp9hWvf4tVbWlAGPUEsDxEt2iIkwI&cl=5e5e5e&w=300&t=n&co=eeeeee&ct=808080&cmo=3acc3a&cmn=ff5353",e.id="clustrmaps",document.body.appendChild(e)}window.addEventListener?window.addEventListener("load",downloadJSAtOnload,!1):window.attachEvent?window.attachEvent("onload",downloadJSAtOnload):window.onload=downloadJSAtOnload</script><div class="busuanzi-count"><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span class="post-meta-item-icon"><i class="fa fa-user-circle-o"></i> </span><span class="site-uv" title="总访客量"><span class="busuanzi-value" id="busuanzi_value_site_uv"></span> </span><span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-eye"></i> </span><span class="site-pv" title="总访问量"><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span></div></div></footer><div id="needsharebutton-float"><span class="btn"><i class="fa fa-share-alt" aria-hidden="true"></i></span></div></div><script>"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script src="//cdn.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script><script src="//cdn.jsdelivr.net/npm/jquery-lazyload@1/jquery.lazyload.min.js"></script><script src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script src="/js/src/utils.js?v=7.0.0"></script><script src="/js/src/motion.js?v=7.0.0"></script><script src="/js/src/affix.js?v=7.0.0"></script><script src="/js/src/schemes/pisces.js?v=7.0.0"></script><script src="/js/src/scrollspy.js?v=7.0.0"></script><script src="/js/src/post-details.js?v=7.0.0"></script><script src="/js/src/bootstrap.js?v=7.0.0"></script><script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css"><script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script><script>var gitalk=new Gitalk({clientID:"5ed2a22925d0dc421548",clientSecret:"90c73f47bc8b33d992d0039af3291303c71c7aab",repo:"blademainer.github.com",owner:"blademainer",admin:["blademainer"],id:md5(location.pathname),distractionFreeMode:"true"});gitalk.render("gitalk-container")</script><script>// Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('100');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script><script src="/lib/needsharebutton/needsharebutton.js"></script><script>pbOptions={iconStyle:"box",boxForm:"horizontal",position:"bottomCenter",networks:"Weibo,Wechat,Douban,Twitter,Facebook"},new needShareButton("#needsharebutton-postbottom",pbOptions),flOptions={iconStyle:"box",boxForm:"horizontal",position:"middleRight",networks:"Weibo,Wechat,Douban,Twitter,Facebook"},new needShareButton("#needsharebutton-float",flOptions)</script><script src="/js/src/js.cookie.js?v=7.0.0"></script><script src="/js/src/scroll-cookie.js?v=7.0.0"></script><style>.copy-btn{display:inline-block;padding:6px 12px;font-size:13px;font-weight:700;line-height:20px;color:#333;white-space:nowrap;vertical-align:middle;cursor:pointer;background-color:#eee;background-image:linear-gradient(#fcfcfc,#eee);border:1px solid #d5d5d5;border-radius:3px;user-select:none;outline:0}.highlight-wrap .copy-btn{transition:opacity .3s ease-in-out;opacity:0;padding:2px 6px;position:absolute;right:4px;top:8px}.highlight-wrap .copy-btn:focus,.highlight-wrap:hover .copy-btn{opacity:1}.highlight-wrap{position:relative}</style><script>$(".highlight").each(function(e,t){var n=$("<div>").addClass("highlight-wrap");$(t).after(n),n.append($("<button>").addClass("copy-btn").append("复制").on("click",function(e){var t=$(this).parent().find(".code").find(".line").map(function(e,t){return $(t).text()}).toArray().join("\n"),n=document.createElement("textarea"),o=document.createRange(),a=window.getSelection(),i=window.pageYOffset||document.documentElement.scrollTop;n.style.top=i+"px",n.style.position="absolute",n.style.opacity="0",n.value=t,n.textContent=t,n.contentEditable=!0,n.readOnly=!1,document.body.appendChild(n),o.selectNode(n),a.removeAllRanges(),a.addRange(o),n.setSelectionRange(0,t.length),document.execCommand("copy")?$(this).text("复制成功"):$(this).text("复制失败"),n.blur(),$(this).blur()})).on("mouseleave",function(e){var t=$(this).find(".copy-btn");setTimeout(function(){t.text("复制")},300)}).append(t)})</script></body></html>
